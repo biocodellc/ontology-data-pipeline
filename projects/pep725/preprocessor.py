@@ -43,8 +43,6 @@ class PEP725PreProcessor(PreProcessor):
                            skipinitialspace=True)
 
         for chunk in data:
-            # specify columns - 'record_id'. If leave 'record_id' in the columns, pandas will print an extra
-            # empty column as 'record_id' is the dataFrame index, and pandas doesn't consider the index a column
             print("\tprocessing next {} records".format(len(chunk)))
 
             self.__transform_data(chunk).to_csv(self._out_file, columns=self.headers, mode='a', header=False,
