@@ -50,7 +50,7 @@ class ASUPreProcessor(PreProcessor):
 
         data['source'] = 'ASU'
         data['lower_count'] = 1
-        data["year"] = data["year"].astype(int)
-        data["day_of_year"] = data["startDayOfYear"].astype(int)
+        data["year"] = data["year"]
+        data["day_of_year"] = data["startDayOfYear"]
 
         return data.rename(columns=COLUMNS_MAP)

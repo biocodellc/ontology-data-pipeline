@@ -1,7 +1,19 @@
-import csv, argparse
+import os, csv, argparse
 import pandas as pd
 from zipfile import ZipFile
-from . import walk_files, INTENSITY_VALUE_FRAME, INTENSITY_FILE
+
+NEON_DATA_DIR = 'NEON_obs-phenology-plant'
+INTENSITY_FILE = os.path.join(os.path.dirname(__file__), 'intensity_values.csv')
+INTENSITY_VALUE_FRAME = pd.read_csv(INTENSITY_FILE, skipinitialspace=True, header=0) if os.path.exists(
+    INTENSITY_FILE) else None
+
+
+def walk_files(input_dir):
+    for root, dirs, files in os.walk(os.path.join(input_dir, NEON_DATA_DIR)):
+
+        for file in files:
+            if file.endswith(".zip"):
+                yield os.path.join(root, file)
 
 
 def generate_phen_descriptions(input_dir):
@@ -27,7 +39,7 @@ def generate_phen_descriptions(input_dir):
         for chunk in data:
             found_values.update(chunk.phenophaseName.unique().tolist())
 
-    with open('phenphase_names.csv', 'w') as out_file:
+    with open(os.path.join(os.path.dirname(__file__), 'phenphase_names.csv'), 'w') as out_file:
         writer = csv.writer(out_file)
         writer.writerow(['phenophaseName'])
 

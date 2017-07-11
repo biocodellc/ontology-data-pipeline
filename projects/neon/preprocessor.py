@@ -12,7 +12,8 @@ from xml.etree import ElementTree
 from zipfile import ZipFile
 from preprocessor import PreProcessor
 
-from . import walk_files, INTENSITY_VALUE_FRAME
+from .helpers import walk_files, INTENSITY_VALUE_FRAME
+import os
 
 COLUMNS_MAP = {
     'uid': 'record_id',
@@ -25,7 +26,7 @@ COLUMNS_MAP = {
 class NEONPreProcessor(PreProcessor):
     def _process_data(self):
         for file in walk_files(self.input_dir):
-            print("\tprocessing {}".format(file.name))
+            print("\tprocessing {}".format(file))
             self.__process_zip(file)
 
     def __process_zip(self, file):
