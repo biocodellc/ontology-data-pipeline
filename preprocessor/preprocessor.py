@@ -26,9 +26,8 @@ class PreProcessor(object):
 
     The __input_dir is available as a private class attribute.
     """
-    headers = ['observationID', 'occurrenceID', 'scientificName', 'genus', 'specificEpithet', 'year', 'startDayOfYear',
-               'latitude', 'longitude', 'source', 'phenophaseName', 'lower_count', 'upper_count',
-               'lower_percent', 'upper_percent']
+    headers = ['record_id', 'scientific_name', 'genus', 'specific_epithet', 'year', 'day_of_year', 'latitude',
+               'longitude', 'source', 'phenophase_name', 'lower_count', 'upper_count', 'lower_percent', 'upper_percent']
 
     def __init__(self, input_dir, output_dir):
         self.input_dir = input_dir
@@ -43,11 +42,11 @@ class PreProcessor(object):
         writer = csv.writer(self._out_file)
         writer.writerow(self.headers)
 
-        self.__process_data()
+        self._process_data()
 
         self._out_file.close()
 
-    def __process_data(self):
+    def _process_data(self):
         raise NotImplementedError("__process_data has not been implemented")
 
     def __clean(self):

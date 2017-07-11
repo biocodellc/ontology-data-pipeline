@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 
 
-"""Convenience wrapper for running process directly from source tree."""
+"""Convenience wrapper for running process.process.py directly from source tree."""
 
 
-from process.Process import main
+from process.process import main
 
 
 if __name__ == '__main__':
