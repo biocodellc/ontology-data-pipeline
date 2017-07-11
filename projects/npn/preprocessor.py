@@ -39,7 +39,7 @@ class NPNPreProcessor(PreProcessor):
                     # phenology data frame
                     if filename == 'status_intensity_observation_data.csv':
                         chunk_size = 100000
-                        tp = pd.read_csv(dirname + '/' + filename, sep=',', header=0, iterator=True,
+                        tp = pd.read_csv(os.path.join(dirname, filename), sep=',', header=0, iterator=True,
                                          chunksize=chunk_size, dtype=object)
 
                         for df in tp:
@@ -56,7 +56,7 @@ class NPNPreProcessor(PreProcessor):
 
         # translate values
         cols = ['value', 'lower_count', 'upper_count', 'lower_percent', 'upper_percent']
-        df = self.__translate('intensity_values.csv', cols, 'value', df,
+        df = self.__translate(os.path.join(os.path.dirname(__file__), 'intensity_values.csv'), cols, 'value', df,
                               'Intensity_Value')
 
         # set upper/lower counts for cases of no intensity value
