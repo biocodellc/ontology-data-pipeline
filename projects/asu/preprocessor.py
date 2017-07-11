@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 
-"""proprocessor.PreProcessor implementation for preprocessing pep725 data"""
+"""proprocessor.PreProcessor implementation for preprocessing asu data"""
 
-import re, uuid, os
+import uuid, os
 import pandas as pd
 from preprocessor import PreProcessor
 
