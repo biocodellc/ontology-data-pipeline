@@ -26,10 +26,12 @@ class Config(object):
         if self.log_file:
             self.log_file = open(os.path.join(self.output_dir, 'log.txt'), 'w')
 
+        self.invalid_data_file = open(os.path.join(self.output_dir, 'invalid_data.csv'), 'w')
         self.base_dir = base_dir
         self.config_dir = os.path.join(base_dir, "config")
-        self.__parse_lists()
         self.__parse_rules()
+        self.__parse_pheno_descriptions()
+        self.__add_default_rules()
 
     def __getattr__(self, item):
         """
@@ -57,27 +59,41 @@ class Config(object):
                 if not rule['list']:
                     raise AttributeError(
                         "Invalid rule in \"{}\". ControlledVocabulary rule must specify a list".format(file))
-                elif not self.lists[rule['list']]:
-                    raise AttributeError(
-                        "Invalid rule in \"{}\". Can't find specified list \"{}\"".format(file, rule['list']))
+
+                self.__parse_list(rule['list'])
 
             if not rule['columns']:
                 raise AttributeError("Invalid rule in \"{}\". All rules must specify columns.".format(file))
 
-    def __parse_lists(self):
-        file = os.path.join(self.config_dir, 'lists.csv')
+    def __parse_list(self, file_name):
+        if not self.lists[file_name]:
+            file_path = os.path.join(self.config_dir, file_name)
 
-        self.lists = {}
+            if not os.path.exists(file_path):
+                raise AttributeError(
+                    "Invalid rule. Can't find specified list \"{}\"".format(file_path))
+
+            with open(file_path) as file:
+                reader = csv.reader(file)
+                self.lists[file_name] = [r[0].strip() for r in reader]
+
+    def __parse_pheno_descriptions(self):
+        file = os.path.join(self.config_dir, 'phenophase_descriptions.csv')
+
         if not os.path.exists(file):
+            self.rules = []
             return
 
         with open(file) as f:
-            reader = csv.reader(f)
+            reader = csv.DictReader(f)
+            self.pheno_descriptions = {'field': r['defined_by'] for r in reader}
 
-            for row in reader:
-                name = row[0]
+    def __add_default_rules(self):
+        self.rules.append({
+            'rule': 'ControlledVocabulary',
+            'columns': 'phenophase_name',
+            'level': 'error',
+            'list': 'phenophase_names'
+        })
 
-                if name in self.lists:
-                    raise AttributeError("Lists file contains duplicate lists with name `{}`".format(name))
-
-                self.lists[name] = [s.strip() for s in row[1]]
+        self.lists[list_name] = [f for f in self.pheno_descriptions]

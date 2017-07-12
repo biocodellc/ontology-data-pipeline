@@ -18,6 +18,7 @@ class Validator(object):
     def __init__(self, config, df):
         self.config = config
         self.data = df
+        self.invalid_data = pd.DataFrame()
 
     def validate(self):
         return self.__validate_columns() and self.__validate_data()
@@ -38,20 +39,23 @@ class Validator(object):
             rule_name = rule['rule']
 
             if rule_name == 'RequiredValue':
-                if not self.__required_value_rule(rule['columns'], rule['level']):
+                if self.__required_value_rule(rule['columns'], rule['level']):
                     error = True
             elif rule_name == 'UniqueValue':
-                if not self.__unique_value_rule(rule['columns'], rule['level']):
+                if self.__unique_value_rule(rule['columns'], rule['level']):
                     error = True
             elif rule_name == 'ControlledVocabulary':
-                if not self.__controlled_vocab_rule(rule['columns'], rule['level'], rule['list']):
+                if self.__controlled_vocab_rule(rule['columns'], rule['level'], rule['list']):
                     error = True
             elif rule_name == 'Integer':
-                if not self.__integer_rule(rule['columns'], rule['level']):
+                if self.__integer_rule(rule['columns'], rule['level']):
                     error = True
             elif rule_name == 'Float':
-                if not self.__float_rule(rule['columns'], rule['level']):
+                if self.__float_rule(rule['columns'], rule['level']):
                     error = True
+
+        if len(self.invalid_data) > 0:
+            self.invalid_data.to_csv(self.config.invalid_data_file, header=True, index=False)
 
         return error
 
@@ -64,6 +68,7 @@ class Validator(object):
             if len(invalid_data) > 0:
                 self.__log_error("Value missing in required column `{}`".format(col), error_level)
 
+                self.invalid_data = self.invalid_data.merge(invalid_data, how='outer')
                 if self.config.drop_invalid:
                     # remove all rows that are in the invalid_data DataFrame
                     self.data = self.data[~self.data.index.isin(invalid_data.index)]
@@ -81,6 +86,7 @@ class Validator(object):
             if len(invalid_data) > 0:
                 self.__log_error("Duplicate values in column `{}`".format(col), error_level)
 
+                self.invalid_data = self.invalid_data.merge(invalid_data, how='outer')
                 if self.config.drop_invalid:
                     # remove all rows that are in the invalid_data DataFrame
                     self.data = self.data[~self.data.index.isin(invalid_data.index)]
@@ -96,6 +102,7 @@ class Validator(object):
         for col in columns:
             invalid_data = self.data.loc[~self.data[col].isin(list)]
 
+            self.invalid_data = self.invalid_data.merge(invalid_data, how='outer')
             for val in invalid_data[col]:
                 self.__log_error("Value `{}` is not in the controlled vocab list: `{}`".format(val, list_name),
                                  error_level)
@@ -122,6 +129,7 @@ class Validator(object):
             # returns rows where value isn't an int
             invalid_data = self.data[self.data[col].apply(lambda x: False if not x or isinstance(x, int) else True)]
 
+            self.invalid_data = self.invalid_data.merge(invalid_data, how='outer')
             for val in invalid_data[col]:
                 self.__log_error("Value `{}` is not an integer".format(val), error_level)
 
@@ -147,6 +155,7 @@ class Validator(object):
             # returns rows where value isn't a float
             invalid_data = self.data[self.data[col].apply(lambda x: False if not x or isinstance(x, float) else True)]
 
+            self.invalid_data = self.invalid_data.merge(invalid_data, how='outer')
             for val in invalid_data[col]:
                 self.__log_error("Value `{}` is not an integer".format(val), error_level)
 

@@ -3,8 +3,10 @@
 import argparse
 import importlib
 import os
+import pandas as pd
 
 from process.config import Config
+from process.validator import Validator
 
 """process.Process: provides entry point main()."""
 __version__ = "0.1.0"
@@ -13,15 +15,38 @@ PROJECT_BASE = os.path.join(os.path.dirname(__file__), '../projects')
 
 
 def run(config):
+    if not config.data_file:
+        config.data_file = __preprocess_data(config)
+
+    data = pd.read_csv(config.data_file, header=0, skipinitialspace=True, chunksize=100000)
+
+    for chunk in data:
+        if config.verbose:
+            print("\tvalidating {} records".format(len(chunk)), file=config.log_file)
+
+        validator = Validator(config, chunk)
+        valid = validator.validate()
+
+        if not valid:
+            invalid_data_path = os.path.realpath(config.invalid_data_file.name)
+            if config.log_file:
+                log_path = os.path.realpath(config.log_file.name)
+                print("Validation Failed! The logs are located {} and {}".format(invalid_data_path, log_path))
+            else:
+                print("Validation Failed! The logs are located {}".format(invalid_data_path))
+            exit()
+
+
+def __preprocess_data(config):
     if config.preprocessor:
         PreProcessor = __loadClass(config.preprocessor)
     else:
         PreProcessor = __loadPreprocessorFromProject(config.base_dir)
 
     preprocessor = PreProcessor(config.input_dir, config.output_dir)
-
     preprocessor.run()
-    print(preprocessor.output_file_path)
+
+    return preprocessor.output_file_path
 
 
 def __loadClass(python_path):
@@ -71,13 +96,22 @@ def main():
              "must be placed in the `projects` directory."
     )
     parser.add_argument(
-        "input_dir",
-        help="path of the directory containing the data to process"
-    )
-    parser.add_argument(
         "output_dir",
         help="path of the directory to place the processed data"
     )
+
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument(
+        "--input_dir",
+        help="path of the directory containing the data to process"
+    )
+    group.add_argument(
+        "--data_file",
+        help="optionally specify the data file to load. This will skip the preprocessor step and used the supplied data "
+             "file instead",
+        dest="data_file"
+    )
+
     parser.add_argument(
         "--preprocessor",
         help="optionally specify the dotted python path of the preprocessor class. This will be loaded instead of "
@@ -94,6 +128,13 @@ def main():
         "--log_file",
         help="log all output to a log.txt file in the output_dir. default is to log output to the console",
         dest="log_file",
+        action="store_true"
+    )
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        help="verbose logging output",
+        dest="verbose",
         action="store_true"
     )
     args = parser.parse_args()

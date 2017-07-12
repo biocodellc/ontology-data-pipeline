@@ -41,8 +41,41 @@ Running from the process.py script:
 
 TODO update with help output
 ```shell
-usage: process.py [-h] [--preprocessor PREPROCESSOR]
-                  project input_dir output_dir
+$ python process.py -h
+usage: process.py [-h] (--input_dir INPUT_DIR | --data_file DATA_FILE)
+                  [--preprocessor PREPROCESSOR] [--drop_invalid] [--log_file]
+                  [-v]
+                  project output_dir
+
+PPO data pipeline cmd line application.
+
+positional arguments:
+  project               This is the name of the directory containing the
+                        project specific files. All project config
+                        directoriesmust be placed in the `projects` directory.
+  output_dir            path of the directory to place the processed data
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --input_dir INPUT_DIR
+                        path of the directory containing the data to process
+  --data_file DATA_FILE
+                        optionally specify the data file to load. This will
+                        skip the preprocessor step and used the supplied data
+                        file instead
+  --preprocessor PREPROCESSOR
+                        optionally specify the dotted python path of the
+                        preprocessor class. This will be loaded instead of
+                        looking for a PreProcessor in the supplied project
+                        directory. Ex: projects.asu.proprocessor.PreProcessor
+  --drop_invalid        Drop any data that does not pass validation, log the
+                        results, and continue the process
+  --log_file            log all output to a log.txt file in the output_dir.
+                        default is to log output to the console
+  -v, --verbose         verbose logging output
+
+As an alternative to the commandline, params can be placed in a file, one per
+line, and specified on the commandline like 'process.py @params.conf'.
 ```
 
 
@@ -52,14 +85,17 @@ Each project should have a config directory under `projects/{projectName}/config
 for data validation and triplifying. The following file must exist:
 
 1. `entities.csv`
+2. <a name="pheno_descriptions"></a>`phenophase_descriptions.csv`
 
 The following files are optional:
 
 1. `rules.csv` - This file is used to setup basic validation rules for the data. The file expects the following columns:
 
-   * `rules`
+   * `rule`
    
-      The name of the validation rule to apply. See [rule types below](#rules).
+      The name of the validation rule to apply. See [rule types below](#rules). Note: a default `ControlledVocabulary`
+      rule will be applied to the `phenophase_name` column for the names found in the [phenophase_descriptions.csv](#pheno_descriptions) 
+      file
       
    * `columns`
    
@@ -72,7 +108,7 @@ The following files are optional:
       
    * `list`
    
-      Only applicable for `ControlledVocabulary` rules. This refers to the name of the list in `lists.csv` containing 
+      Only applicable for `ControlledVocabulary` rules. This refers to the name of the file that contains the list of
       the controlled vocab
       
    ##### <a name="rules"></a>Rule Types
@@ -81,19 +117,7 @@ The following files are optional:
    * `UniqueValue` - Checks that the values in a column are unique
    * `ControlledVocabulary` - Checks columns against a list of controlled vocabulary. The name of the list is specified in 
    the `list` column in `rules.csv`
-   * `Integer` - Checks that all values are integers
-   * `Float` - Checks that all values are floating point numbers (ex. 1.00)
+   * `Integer` - Checks that all values are integers. Will coerce values to integers if possible
+   * `Float` - Checks that all values are floating point numbers (ex. 1.00). Will coerce values to floats if possible
 
-2. `lists.csv` - Required if using the `ControlledVocabulary` rule. The following columns are expected:
- 
-   * `name`
-   
-     The name of the list.
-     
-   * `list`
-   
-     Pipe `|` delimited vocab list 
-   
-   * `case_sensitive`
-   
-     `true` or `false`. If this list is case sensitive or not. Defaults to `false`
+2. Any file specified in `rules.csv` `list` column is required. Each file contains a single column 1 field per line.
