@@ -44,3 +44,56 @@ TODO update with help output
 usage: process.py [-h] [--preprocessor PREPROCESSOR]
                   project input_dir output_dir
 ```
+
+
+## Project Config Files
+
+Each project should have a config directory under `projects/{projectName}/config`. This will contain the files necessary
+for data validation and triplifying. The following file must exist:
+
+1. `entities.csv`
+
+The following files are optional:
+
+1. `rules.csv` - This file is used to setup basic validation rules for the data. The file expects the following columns:
+
+   * `rules`
+   
+      The name of the validation rule to apply. See [rule types below](#rules).
+      
+   * `columns`
+   
+      Pipe `|` delimited list of columns to apply the rule to
+      
+   * `level`
+   
+      Either `WARNING` or `ERROR`. `ERROR` will terminate the program after validation. `WARNINGS` will be logged.
+      Case-Insensitive. Defaults to `WARNING`
+      
+   * `list`
+   
+      Only applicable for `ControlledVocabulary` rules. This refers to the name of the list in `lists.csv` containing 
+      the controlled vocab
+      
+   ##### <a name="rules"></a>Rule Types
+   
+   * `RequiredValue` - Specifies columns which can not be empty
+   * `UniqueValue` - Checks that the values in a column are unique
+   * `ControlledVocabulary` - Checks columns against a list of controlled vocabulary. The name of the list is specified in 
+   the `list` column in `rules.csv`
+   * `Integer` - Checks that all values are integers
+   * `Float` - Checks that all values are floating point numbers (ex. 1.00)
+
+2. `lists.csv` - Required if using the `ControlledVocabulary` rule. The following columns are expected:
+ 
+   * `name`
+   
+     The name of the list.
+     
+   * `list`
+   
+     Pipe `|` delimited vocab list 
+   
+   * `case_sensitive`
+   
+     `true` or `false`. If this list is case sensitive or not. Defaults to `false`

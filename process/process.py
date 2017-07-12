@@ -4,19 +4,21 @@ import argparse
 import importlib
 import os
 
+from process.config import Config
+
 """process.Process: provides entry point main()."""
 __version__ = "0.1.0"
 
 PROJECT_BASE = os.path.join(os.path.dirname(__file__), '../projects')
 
 
-def run(args):
-    if args.preprocessor:
-        PreProcessor = __loadClass(args.preprocessor)
+def run(config):
+    if config.preprocessor:
+        PreProcessor = __loadClass(config.preprocessor)
     else:
-        PreProcessor = __loadPreprocessorFromProject(os.path.join(PROJECT_BASE, args.project))
+        PreProcessor = __loadPreprocessorFromProject(config.base_dir)
 
-    preprocessor = PreProcessor(args.input_dir, args.output_dir)
+    preprocessor = PreProcessor(config.input_dir, config.output_dir)
 
     preprocessor.run()
     print(preprocessor.output_file_path)
@@ -82,6 +84,19 @@ def main():
              "looking for a PreProcessor in the supplied project directory. \n Ex:\t projects.asu.proprocessor.PreProcessor",
         dest="preprocessor"
     )
+    parser.add_argument(
+        "--drop_invalid",
+        help="Drop any data that does not pass validation, log the results, and continue the process",
+        dest="drop_invalid",
+        action="store_true"
+    )
+    parser.add_argument(
+        "--log_file",
+        help="log all output to a log.txt file in the output_dir. default is to log output to the console",
+        dest="log_file",
+        action="store_true"
+    )
     args = parser.parse_args()
 
-    run(args)
+    config = Config(os.path.join(PROJECT_BASE, args.project), args)
+    run(config)
