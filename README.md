@@ -11,7 +11,7 @@ The processing pipeline implements the following steps:
 
     This step involves transforming the data into a common format for triplifying. This will usually involve writing a 
     custom `PreProcessor` for each project to be ingested. The `preprocessor` module contains an abstract class 
-    `PreProcessor` that is meant to be inherited by the project preprocessor. That class contains information about the 
+    `AbstractPreProcessor` that is meant to be inherited by the project preprocessor. That class contains information about the 
     expected input format for the triplifying step
     
 2. Triplifyer
@@ -34,3 +34,13 @@ The processing pipeline implements the following steps:
     TODO flesh this out
     1. BlazeGraph
     2. ElasticSearch
+    
+## Usage
+
+Running from the process.py script:
+
+TODO update with help output
+```shell
+usage: process.py [-h] [--preprocessor PREPROCESSOR]
+                  project input_dir output_dir
+```

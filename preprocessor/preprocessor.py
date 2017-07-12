@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
 
-"""proprocessor.PreProcessor: abstract class for preprocessing data before triplifying."""
+"""proprocessor.AbstractPreProcessor: abstract class for preprocessing data before triplifying."""
 
 import os, shutil, csv
 
 
-class PreProcessor(object):
+class AbstractPreProcessor(object):
     """
     This is an abstract class that all data preprocessors need to implement.
 

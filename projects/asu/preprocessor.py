@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 
-"""proprocessor.PreProcessor implementation for preprocessing asu data"""
+"""proprocessor.AbstractPreProcessor implementation for preprocessing asu data"""
 
 import uuid, os
 import pandas as pd
-from preprocessor import PreProcessor
+from preprocessor import AbstractPreProcessor
 
 ASU_DATA_DIR = 'ASU_Phenology_DWCA'
 
@@ -26,7 +26,7 @@ FILES = {
 }
 
 
-class ASUPreProcessor(PreProcessor):
+class PreProcessor(AbstractPreProcessor):
     def _process_data(self):
         self.occurrences = pd.read_csv(self.input_dir + FILES['occurrences'], header=0, skipinitialspace=True,
                                        usecols=['occurrenceID', 'scientificName', 'genus', 'specificEpithet', 'year',

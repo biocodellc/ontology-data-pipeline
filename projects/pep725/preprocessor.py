@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 
-"""proprocessor.PreProcessor implementation for preprocessing pep725 data"""
+"""proprocessor.AbstractPreProcessor implementation for preprocessing pep725 data"""
 
 import re, uuid
 import pandas as pd
-from preprocessor import PreProcessor
+from preprocessor import AbstractPreProcessor
 
 FILE_PREFIX = "pep725_"
 COLUMNS_MAP = {
@@ -24,7 +24,7 @@ FILES = {
 }
 
 
-class PEP725PreProcessor(PreProcessor):
+class PreProcessor(AbstractPreProcessor):
     def _process_data(self):
         self.frames = {
             'genus': pd.read_csv(self.input_dir + FILES['genus'], sep=';', header=0, usecols=['genus_id', 'genus'],

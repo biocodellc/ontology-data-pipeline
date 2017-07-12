@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-"""proprocessor.PreProcessor implementation for preprocessing neon data
+"""proprocessor.AbstractPreProcessor implementation for preprocessing neon data
 
 Also contains a few help functions that can be run directly from this script
 """
@@ -10,10 +10,9 @@ import pandas as pd
 
 from xml.etree import ElementTree
 from zipfile import ZipFile
-from preprocessor import PreProcessor
+from preprocessor import AbstractPreProcessor
 
 from .helpers import walk_files, INTENSITY_VALUE_FRAME
-import os
 
 COLUMNS_MAP = {
     'uid': 'record_id',
@@ -23,7 +22,7 @@ COLUMNS_MAP = {
 }
 
 
-class NEONPreProcessor(PreProcessor):
+class PreProcessor(AbstractPreProcessor):
     def _process_data(self):
         for file in walk_files(self.input_dir):
             print("\tprocessing {}".format(file))

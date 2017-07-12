@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 
-"""proprocessor.PreProcessor implementation for preprocessing npn data"""
+"""proprocessor.AbstractPreProcessor implementation for preprocessing npn data"""
 
 import os, csv
 import pandas as pd
-from preprocessor import PreProcessor
+from preprocessor import AbstractPreProcessor
 
 headers = ['record_id', 'scientific_name', 'genus', 'specific_epithet', 'year', 'day_of_year', 'latitude',
            'longitude', 'source', 'phenophase_name', 'lower_count', 'upper_count', 'lower_percent', 'upper_percent']
@@ -21,7 +21,7 @@ COLUMNS_MAP = {
 }
 
 
-class NPNPreProcessor(PreProcessor):
+class PreProcessor(AbstractPreProcessor):
     def _process_data(self):
         # Loop each directory off of input directory
         for dirname in os.listdir(self.input_dir):

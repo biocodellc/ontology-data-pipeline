@@ -1,1 +1,1 @@
-from .preprocessor import PreProcessor
+from .preprocessor import AbstractPreProcessor
