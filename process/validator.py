@@ -21,7 +21,8 @@ class Validator(object):
         self.invalid_data = pd.DataFrame()
 
     def validate(self):
-        return self.__validate_columns() and self.__validate_data()
+        self.__validate_columns()
+        return self.__validate_data()
 
     def __validate_columns(self):
         data_columns = self.data.columns.values.tolist()
@@ -33,34 +34,38 @@ class Validator(object):
         return True
 
     def __validate_data(self):
-        error = False
+        valid = True
 
         for rule in self.config.rules:
             rule_name = rule['rule']
 
             if rule_name == 'RequiredValue':
-                if self.__required_value_rule(rule['columns'], rule['level']):
-                    error = True
+                if not self.__required_value_rule(rule['columns'], rule['level']):
+                    valid = False
             elif rule_name == 'UniqueValue':
-                if self.__unique_value_rule(rule['columns'], rule['level']):
-                    error = True
+                if not self.__unique_value_rule(rule['columns'], rule['level']):
+                    valid = False
             elif rule_name == 'ControlledVocabulary':
-                if self.__controlled_vocab_rule(rule['columns'], rule['level'], rule['list']):
-                    error = True
+                if not self.__controlled_vocab_rule(rule['columns'], rule['level'], rule['list']):
+                    valid = False
             elif rule_name == 'Integer':
-                if self.__integer_rule(rule['columns'], rule['level']):
-                    error = True
+                if not self.__integer_rule(rule['columns'], rule['level']):
+                    valid = False
             elif rule_name == 'Float':
-                if self.__float_rule(rule['columns'], rule['level']):
-                    error = True
+                if not self.__float_rule(rule['columns'], rule['level']):
+                    valid = False
 
         if len(self.invalid_data) > 0:
-            self.invalid_data.to_csv(self.config.invalid_data_file, header=True, index=False)
+            self.invalid_data.to_csv(self.config.invalid_data_file, index=False)
 
-        return error
+            if self.config.drop_invalid:
+                # remove all rows that are in the invalid_data DataFrame
+                self.data.drop(self.invalid_data.index, inplace=True)
+
+        return valid
 
     def __required_value_rule(self, columns, error_level):
-        error = False
+        valid = True
 
         for col in columns:
             invalid_data = self.data.loc[self.data[col].isnull()]
@@ -68,104 +73,92 @@ class Validator(object):
             if len(invalid_data) > 0:
                 self.__log_error("Value missing in required column `{}`".format(col), error_level)
 
-                self.invalid_data = self.invalid_data.merge(invalid_data, how='outer')
-                if self.config.drop_invalid:
-                    # remove all rows that are in the invalid_data DataFrame
-                    self.data = self.data[~self.data.index.isin(invalid_data.index)]
-                elif error_level.lower() == 'error':
-                    error = True
+                self.invalid_data = self.invalid_data.append(invalid_data.drop(self.invalid_data.index, errors='ignore'))
+                if error_level.lower() == 'error':
+                    valid = False
 
-        return error
+        return valid
 
     def __unique_value_rule(self, columns, error_level):
-        error = False
+        valid = True
 
         for col in columns:
             invalid_data = pd.concat(g for _, g in self.data.groupby(col) if len(g) > 1)
 
             if len(invalid_data) > 0:
-                self.__log_error("Duplicate values in column `{}`".format(col), error_level)
+                self.__log_error("Duplicate values {} in column `{}`".format(invalid_data[col].unique(), col),
+                                 error_level)
 
-                self.invalid_data = self.invalid_data.merge(invalid_data, how='outer')
-                if self.config.drop_invalid:
-                    # remove all rows that are in the invalid_data DataFrame
-                    self.data = self.data[~self.data.index.isin(invalid_data.index)]
-                elif error_level.lower() == 'error':
-                    error = True
+                self.invalid_data = self.invalid_data.append(invalid_data.drop(self.invalid_data.index, errors='ignore'))
+                if error_level.lower() == 'error':
+                    valid = False
 
-        return error
+        return valid
 
     def __controlled_vocab_rule(self, columns, error_level, list_name):
-        error = False
+        valid = True
 
         list = self.config.lists[list_name]
         for col in columns:
             invalid_data = self.data.loc[~self.data[col].isin(list)]
 
-            self.invalid_data = self.invalid_data.merge(invalid_data, how='outer')
+            self.invalid_data = self.invalid_data.append(invalid_data.drop(self.invalid_data.index, errors='ignore'))
             for val in invalid_data[col]:
-                self.__log_error("Value `{}` is not in the controlled vocab list: `{}`".format(val, list_name),
-                                 error_level)
+                self.__log_error(
+                    "Value `{}` in column `{}` is not in the controlled vocabulary list `{}`".format(val, col,
+                                                                                                     list_name),
+                    error_level)
 
-                if self.config.drop_invalid:
-                    # remove all rows that are in the invalid_data DataFrame
-                    self.data = self.data[~self.data.index.isin(invalid_data.index)]
-                elif error_level.lower() == 'error':
-                    error = True
+                if error_level.lower() == 'error':
+                    valid = False
 
-        return error
+        return valid
 
     def __integer_rule(self, columns, error_level):
-        # the float is necessary for the case of 0.0. This will convert all numbers to ints if possible, otherwise
-        # return a str. does not perform any rounding
-        mapper = lambda x: int(float(x)) if re.fullmatch("[+-]?\d+(\.0+)?", str(x)) else str(x)
+        # lambda x: int(float(x)) if re.fullmatch("[+-]?\d+(\.0+)?", str(x)) else x
 
-        error = False
+        valid = True
 
         for col in columns:
-            # first coerce values to ints if possible
-            self.data[col] = self.data[col].apply(mapper)
+            # pandas can't store ints along floats and strings. The only way to coerce to ints is to drop all strings
+            # and null values. We don't want to do this in the case of a warning. We will need to do the coercion later
 
-            # returns rows where value isn't an int
-            invalid_data = self.data[self.data[col].apply(lambda x: False if not x or isinstance(x, int) else True)]
+            # returns rows where value isn't an int, ignoring empty values
+            invalid_data = self.data[self.data[col].apply(
+                lambda x: False if not x or pd.isnull(x) or re.fullmatch("[+-]?\d+(\.0+)?", str(x)) else True
+            )]
 
-            self.invalid_data = self.invalid_data.merge(invalid_data, how='outer')
+            self.invalid_data = self.invalid_data.append(invalid_data.drop(self.invalid_data.index, errors='ignore'))
             for val in invalid_data[col]:
-                self.__log_error("Value `{}` is not an integer".format(val), error_level)
+                self.__log_error("Value `{}` in column `{}` is not an integer".format(val, col), error_level)
 
-                if self.config.drop_invalid:
-                    # remove all rows that are in the invalid_data DataFrame
-                    self.data = self.data[~self.data.index.isin(invalid_data.index)]
-                elif error_level.lower() == 'error':
-                    error = True
+                if error_level.lower() == 'error':
+                    valid = False
 
-        return error
+        return valid
 
     def __float_rule(self, columns, error_level):
-        # the float is necessary for the case of 0.0. This will convert all numbers to ints if possible, otherwise
-        # return a str. does not perform any rounding
-        mapper = lambda x: float(x) if re.fullmatch("[+-]?\d+(\.\d+)?", str(x)) else str(x)
+        # This will convert all numbers to floats if possible, otherwise return a the value
+        mapper = lambda x: float(x) if re.fullmatch("[+-]?\d+(\.\d+)?", str(x)) else x
 
-        error = False
+        valid = True
 
         for col in columns:
-            # first coerce values to ints if possible
+            # first coerce values to floats if possible
             self.data[col] = self.data[col].apply(mapper)
 
-            # returns rows where value isn't a float
-            invalid_data = self.data[self.data[col].apply(lambda x: False if not x or isinstance(x, float) else True)]
+            # returns rows where value isn't a float, ignoring empty values
+            invalid_data = self.data[
+                self.data[col].apply(lambda x: False if not x or pd.isnull(x) or isinstance(x, float) else True)]
 
-            self.invalid_data = self.invalid_data.merge(invalid_data, how='outer')
+            self.invalid_data = self.invalid_data.append(invalid_data.drop(self.invalid_data.index, errors='ignore'))
             for val in invalid_data[col]:
-                self.__log_error("Value `{}` is not an integer".format(val), error_level)
+                self.__log_error("Value `{}` in column `{}` is not a float".format(val, col), error_level)
 
-                if self.config.drop_invalid:
-                    # remove all rows that are in the invalid_data DataFrame
-                    self.data = self.data[~self.data.index.isin(invalid_data.index)]
-                elif error_level.lower() == 'error':
-                    error = True
+                if error_level.lower() == 'error':
+                    valid = False
 
-        return error
+        return valid
 
     def __log_error(self, msg, level):
         print("{}: {}".format(level.upper(), msg), file=self.config.log_file)

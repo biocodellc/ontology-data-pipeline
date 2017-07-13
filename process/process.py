@@ -139,5 +139,5 @@ def main():
     )
     args = parser.parse_args()
 
-    config = Config(os.path.join(PROJECT_BASE, args.project), args)
+    config = Config(os.path.join(PROJECT_BASE, args.project), **args.__dict__)
     run(config)

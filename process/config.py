@@ -25,10 +25,14 @@ class Config(object):
 
         if self.log_file:
             self.log_file = open(os.path.join(self.output_dir, 'log.txt'), 'w')
+        else:
+            self.log_file = None
 
         self.invalid_data_file = open(os.path.join(self.output_dir, 'invalid_data.csv'), 'w')
         self.base_dir = base_dir
         self.config_dir = os.path.join(base_dir, "config")
+        self.lists = {}
+        self.rules = []
         self.__parse_rules()
         self.__parse_pheno_descriptions()
         self.__add_default_rules()
@@ -43,7 +47,6 @@ class Config(object):
         file = os.path.join(self.config_dir, 'rules.csv')
 
         if not os.path.exists(file):
-            self.rules = []
             return
 
         with open(file) as f:
@@ -64,6 +67,11 @@ class Config(object):
 
             if not rule['columns']:
                 raise AttributeError("Invalid rule in \"{}\". All rules must specify columns.".format(file))
+            else:
+                rule['columns'] = [c.strip() for c in rule['columns'].split('|')]
+
+            if not rule['level']:
+                rule['level'] = 'warning'
 
     def __parse_list(self, file_name):
         if not self.lists[file_name]:
@@ -86,14 +94,15 @@ class Config(object):
 
         with open(file) as f:
             reader = csv.DictReader(f)
-            self.pheno_descriptions = {'field': r['defined_by'] for r in reader}
+            self.pheno_descriptions = {r['field']: r['defined_by'] for r in reader}
 
     def __add_default_rules(self):
+        list_name = 'phenophase_names'
         self.rules.append({
             'rule': 'ControlledVocabulary',
-            'columns': 'phenophase_name',
+            'columns': ['phenophase_name'],
             'level': 'error',
-            'list': 'phenophase_names'
+            'list': list_name
         })
 
         self.lists[list_name] = [f for f in self.pheno_descriptions]

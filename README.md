@@ -40,7 +40,7 @@ The processing pipeline implements the following steps:
 Running from the process.py script:
 
 TODO update with help output
-```shell
+```
 $ python process.py -h
 usage: process.py [-h] (--input_dir INPUT_DIR | --data_file DATA_FILE)
                   [--preprocessor PREPROCESSOR] [--drop_invalid] [--log_file]
