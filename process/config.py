@@ -47,6 +47,7 @@ class Config(object):
 
         self.entities = []
         self.__parse_entities()
+        self.__parse_mapping()
         self.relations = []
         self.__parse_relations()
 
@@ -149,8 +150,35 @@ class Config(object):
                     "listed.".format(file))
 
             entity['concept_uri'] = self.__get_uri_from_label(entity['concept_uri'])
+            entity['columns'] = []
+
+    def __parse_mapping(self):
+        """
+        Parse mapping.csv file for the project, and add the columns to the specified entities. Used to define the
+        mapping of the data csv to entities for triplifying.
+        Expected columns are: column,entity_alias
+        """
+        file = os.path.join(self.config_dir, 'mapping.csv')
+
+        if not os.path.exists(file):
+            raise RuntimeError("mapping.csv file missing from project configuration directory")
+
+        with open(file) as f:
+            reader = csv.DictReader(f, skipinitialspace=True)
+
+            for mapping in reader:
+                entity = self.get_entity(mapping['entity_alias'])
+
+                if not entity:
+                    raise RuntimeError('Invalid entity_alias "{}" defined in {}'.format(mapping['entity_alias'], file))
+
+                entity['columns'].append((mapping['column'], self.__get_uri_from_label(mapping['uri'])))
 
     def __parse_relations(self):
+        """
+        Parse relations.csv file for the project. Used to define the relations between entities for triplifying
+        Expected columns are: subject_entity_alias,predicate,object_entity_alias
+        """
         file = os.path.join(self.config_dir, 'relations.csv')
 
         if not os.path.exists(file):
@@ -168,6 +196,14 @@ class Config(object):
 
             r['predicate'] = self.__get_uri_from_label(r['predicate'])
 
+    def get_entity(self, alias):
+        """
+        Return the entity with a matching alias
+        """
+        for entity in self.entities:
+            if entity['alias'] == alias:
+                return entity
+
     def __get_uri_from_label(self, def_text):
         """
         Fetches a URI given a label by searching
@@ -180,7 +216,7 @@ class Config(object):
 
         newdef = ''
         for defpart in defparts:
-            if labelre.match(defpart) is not None:
+            if labelre.match(defpart):
                 label = defpart.strip("{}")
 
                 # Get the class IRI associated with this label.
