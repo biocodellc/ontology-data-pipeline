@@ -93,7 +93,7 @@ class LabelMap:
         if label not in self.lmap:
             self.lmap[label] = termIRI
         else:
-            if not (self.lmap[label].equals(termIRI)):
+            if not (self.lmap[label] == termIRI):
                 self.__addAmbiguousLabel(label, termIRI)
                 logging.warning(
                     'The label "' + label +
@@ -142,10 +142,10 @@ class LabelMap:
                 if response.status_code is not 200:
                     raise RuntimeError("Failed to fetch external resource {}".format(path))
 
-                self.__importLabels(etree.fromstring(response.content).getroot())
+                self.__importLabels(etree.fromstring(response.content))
 
     def __importLabels(self, root):
         for annotation_axiom in root.findall('owl:Class', root.nsmap):
             label = annotation_axiom.find('rdfs:label', annotation_axiom.nsmap)
-            if label and label.text:
+            if label is not None and label.text:
                 self.add(label.text, annotation_axiom.attrib["{{{}}}about".format(annotation_axiom.nsmap['rdf'])])

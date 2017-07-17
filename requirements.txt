@@ -1,3 +1,4 @@
+rfc3987
 lxml
 requests
 appnope==0.1.0

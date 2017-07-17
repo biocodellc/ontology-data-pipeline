@@ -3,6 +3,7 @@
 import os
 import csv
 import re
+import rfc3987
 from .labelmap import LabelMap
 
 VALID_RULES = ['RequiredValue', 'ControlledVocabulary', 'UniqueValue', 'Integer', 'Float']
@@ -183,7 +184,11 @@ class Config(object):
                 label = defpart.strip("{}")
 
                 # Get the class IRI associated with this label.
-                labelIRI = self.__label_map.lookupIRI(label)
+                try:
+                    labelIRI = self.__label_map.lookupIRI(label)
+                except KeyError:
+                    raise RuntimeError('The class label, "' + label
+                                       + '", could not be matched to a term IRI.')
 
                 newdef = str(labelIRI)
             else:
