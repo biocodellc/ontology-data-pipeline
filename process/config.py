@@ -2,8 +2,11 @@
 
 import os
 import csv
+import re
+from .labelmap import LabelMap
 
 VALID_RULES = ['RequiredValue', 'ControlledVocabulary', 'UniqueValue', 'Integer', 'Float']
+DEFAULT_ONTOLOGY = "https://github.com/PlantPhenoOntology/PPO/raw/master/ontology/ppo-reasoned.owl"
 
 
 class Config(object):
@@ -37,6 +40,15 @@ class Config(object):
         self.__parse_pheno_descriptions()
         self.__add_default_rules()
 
+        if not self.ontology:
+            self.ontology = DEFAULT_ONTOLOGY
+        self.__label_map = LabelMap(self.ontology)
+
+        self.entities = []
+        self.__parse_entities()
+        self.relations = []
+        self.__parse_relations()
+
     def __getattr__(self, item):
         """
         fallback if attribute isn't found
@@ -44,6 +56,10 @@ class Config(object):
         return None
 
     def __parse_rules(self):
+        """
+        Parse rules.csv file for the project. Used to define data validation rules.
+        Expected columns are: rule,columns,level,list
+        """
         file = os.path.join(self.config_dir, 'rules.csv')
 
         if not os.path.exists(file):
@@ -74,6 +90,10 @@ class Config(object):
                 rule['level'] = 'warning'
 
     def __parse_list(self, file_name):
+        """
+        Parse list_name.csv file. The file name is specified in the list column of the rules.csv file and contains the
+        controlled vocabulary, 1 field per line.
+        """
         if not self.lists[file_name]:
             file_path = os.path.join(self.config_dir, file_name)
 
@@ -106,3 +126,74 @@ class Config(object):
         })
 
         self.lists[list_name] = [f for f in self.pheno_descriptions]
+
+    def __parse_entities(self):
+        """
+        Parse entity.csv file for the project. Used to define the entities for triplifying
+        Expected columns are: alias,concept_uri,unique_key,identifier_root
+        """
+        file = os.path.join(self.config_dir, 'entity.csv')
+
+        if not os.path.exists(file):
+            raise RuntimeError("entity.csv file missing from project configuration directory")
+
+        with open(file) as f:
+            reader = csv.DictReader(f, skipinitialspace=True)
+            self.entities = [d for d in reader]
+
+        for entity in self.entities:
+            if not entity['alias'] or not entity['concept_uri'] or not entity['unique_key']:
+                raise RuntimeError(
+                    "Invalid entity in {}. alias, concept_uri, and unique_key are required for each entity"
+                    "listed.".format(file))
+
+            entity['concept_uri'] = self.__get_uri_from_label(entity['concept_uri'])
+
+    def __parse_relations(self):
+        file = os.path.join(self.config_dir, 'relations.csv')
+
+        if not os.path.exists(file):
+            raise RuntimeError("relations.csv file missing from project configuration directory")
+
+        with open(file) as f:
+            reader = csv.DictReader(f, skipinitialspace=True)
+            self.relations = [d for d in reader]
+
+        for r in self.relations:
+            if not r['subject_entity_alias'] or not r['predicate'] or not r['object_entity_alias']:
+                raise RuntimeError(
+                    "Invalid relation in {}. subject_entity_alias, predicate, and object_entity_alias are required for "
+                    "each relation listed.".format(file))
+
+            r['predicate'] = self.__get_uri_from_label(r['predicate'])
+
+    def __get_uri_from_label(self, def_text):
+        """
+        Fetches a URI given a label by searching
+        all term labels in braces ('{' and '}').  For
+        example, if we encounter "{whole plant phenological stage}",
+        it will be converted to "http://purl.obolibrary.org/obo/PPO_0000001".
+        """
+        labelre = re.compile(r'(\{[A-Za-z0-9\- _]+\})')
+        defparts = labelre.split(def_text)
+
+        newdef = ''
+        for defpart in defparts:
+            if labelre.match(defpart) is not None:
+                label = defpart.strip("{}")
+
+                # Get the class IRI associated with this label.
+                labelIRI = self.__label_map.lookupIRI(label)
+
+                newdef = str(labelIRI)
+            else:
+                newdef += defpart
+
+        if len(defparts) == 0:
+            newdef = def_text
+
+        if len(newdef) != 0:
+            # attempt parsing wlth the rfc3987 library and throws error if not a valid IRI
+            rfc3987.parse(newdef, rule='IRI')
+
+        return newdef

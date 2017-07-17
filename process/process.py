@@ -113,28 +113,28 @@ def main():
     )
 
     parser.add_argument(
+        "--ontology",
+        help="optionally specify a filepath/url of the ontology to use for reasoning/triplifying"
+    )
+    parser.add_argument(
         "--preprocessor",
         help="optionally specify the dotted python path of the preprocessor class. This will be loaded instead of "
              "looking for a PreProcessor in the supplied project directory. \n Ex:\t projects.asu.proprocessor.PreProcessor",
-        dest="preprocessor"
     )
     parser.add_argument(
         "--drop_invalid",
         help="Drop any data that does not pass validation, log the results, and continue the process",
-        dest="drop_invalid",
         action="store_true"
     )
     parser.add_argument(
         "--log_file",
         help="log all output to a log.txt file in the output_dir. default is to log output to the console",
-        dest="log_file",
         action="store_true"
     )
     parser.add_argument(
         "-v",
         "--verbose",
         help="verbose logging output",
-        dest="verbose",
         action="store_true"
     )
     args = parser.parse_args()
