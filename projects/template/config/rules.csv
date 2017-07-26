@@ -1,0 +1,3 @@
+rule,columns,level,list
+UniqueValue,record_id,error,
+RequiredValue,record_id|day_of_year,error

@@ -1,0 +1,3 @@
+alias,concept_uri,unique_key,identifier_root
+wholePlant,http://purl.obolibrary.org/obo/PO_0000003,record_id,http://n2t.net/ark:/21547/Ano2,
+phenologicalObservingProcess,http://purl.obolibrary.org/obo/PPO_0002000,record_id,http://n2t.net/ark:/21547/Anm2,
