@@ -1,6 +1,6 @@
 # Plant Phenology Ontology Data Processor
 
-This repo is a python cli processing pipeline.
+python cli processing pipeline for processing ontology data.
 
 `process.Process` is the main entry point for the application. `process.py` is a convince wrapper script for running the
 app from the source tree.
@@ -20,9 +20,14 @@ The processing pipeline implements the following steps:
     for the reasoning phase. Each project will need to contain a `config` directory with the following files that will 
     be used to triplify the preprocessed data:
     
-    TODO finish the following and give more information about each file
-    1. entities.csv
-    2. rules.csv
+    NOTE: Wherever there is a uri expressed in any of the following files, you have the option of using ontology label substitution
+    If the uri is of the format `{label name here}`, the appropriate uri will be substituted from the provided ontology
+    
+    1. [entity.csv](#entity.csv)
+    2. [mapping.csv](#mapping.csv)
+    3. [relations.csv](#relations.csv)
+    4. [phenophase_descriptions.csv](#descriptions)
+    5. [rules.csv](#rules.csv)
     
 3. Reasoning
 
@@ -82,12 +87,72 @@ line, and specified on the commandline like 'process.py @params.conf'.
 ## Project Config Files
 
 Each project should have a config directory under `projects/{projectName}/config`. This will contain the files necessary
-for data validation and triplifying. The following file must exist:
+for data validation and triplifying. The following files are required:
 
-1. `entities.csv`
-2. <a name="pheno_descriptions"></a>`phenophase_descriptions.csv`
+##### <a name="entity.csv"></a>
+
+1. `entity.csv` - This file specifies the entities to create when triplifying. The file expects the following columns:
+
+    * `alias`
+        
+        The name used to refer to the entity
+        
+    * `concept_uri`
+    
+        The uri which defines this entity
+        
+    * `unique_key`
+    
+        The column used to uniquely identify the entity
+        
+    * `identifier_root`
+    
+        The identifier root for each unique entity. This is typically an [BCID](http://biscicol.org) identifier
+    
+##### <a name="mapping.csv"></a>
+2. `mapping.csv`
+
+    * `column`
+    
+        The name of the column in the csv file to be used for triplifying
+        
+    * `uri`
+    
+        The uri which defines this column
+        
+    * `entity_alias`
+    
+        The alias of the entity this column is a property of
+        
+##### <a name="relations.csv"></a>
+3. `relations.csv`
+
+    * `subject_entity_alias`
+    
+        The alias of the entity which is the subject of this relationship
+    * `predicate`
+    
+        The uri which defines the relationship
+        
+    * `object_entity_alias`
+    
+        The alias of the entity which is the object of this relationship
+        
+##### <a name="descriptions"></a>
+4. <a name="pheno_descriptions"></a>`phenophase_descriptions.csv`
+
+    * `field`
+    
+        The name of the field in the input csv file
+        
+    * `defined_by`
+    
+        The uri which defines the field
+    
 
 The following files are optional:
+
+##### <a name="rules.csv"></a>
 
 1. `rules.csv` - This file is used to setup basic validation rules for the data. The file expects the following columns:
 
@@ -120,4 +185,7 @@ The following files are optional:
    * `Integer` - Checks that all values are integers. Will coerce values to integers if possible
    * `Float` - Checks that all values are floating point numbers (ex. 1.00). Will coerce values to floats if possible
 
-2. Any file specified in `rules.csv` `list` column is required. Each file contains a single column 1 field per line.
+2. Any file specified in `rules.csv` `list` column is required. The file expects the following columns:
+
+    * `field` - Specifies a valid value. This is the values expected in the input data file
+    * `defined_by` - Optional value which will replace the field when writing triples

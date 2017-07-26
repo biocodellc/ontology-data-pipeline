@@ -145,7 +145,9 @@ class LabelMap:
                 self.__importLabels(etree.fromstring(response.content))
 
     def __importLabels(self, root):
-        for annotation_axiom in root.findall('owl:Class', root.nsmap):
-            label = annotation_axiom.find('rdfs:label', annotation_axiom.nsmap)
+        # for annotation_axiom in root.findall('owl:Class', root.nsmap):
+        for annotation_axiom in root.getchildren():
+            #     label = annotation_axiom.find('rdfs:label', annotation_axiom.nsmap)
+            label = annotation_axiom.find('rdfs:label', root.nsmap)
             if label is not None and label.text:
                 self.add(label.text, annotation_axiom.attrib["{{{}}}about".format(annotation_axiom.nsmap['rdf'])])

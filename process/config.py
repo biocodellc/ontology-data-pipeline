@@ -35,15 +35,15 @@ class Config(object):
         self.invalid_data_file = open(os.path.join(self.output_dir, 'invalid_data.csv'), 'w')
         self.base_dir = base_dir
         self.config_dir = os.path.join(base_dir, "config")
-        self.lists = {}
-        self.rules = []
-        self.__parse_rules()
-        self.__parse_pheno_descriptions()
-        self.__add_default_rules()
 
         if not self.ontology:
             self.ontology = DEFAULT_ONTOLOGY
         self.__label_map = LabelMap(self.ontology)
+
+        self.lists = {}
+        self.rules = []
+        self.__parse_rules()
+        self.__add_default_rules()
 
         self.entities = []
         self.__parse_entities()
@@ -56,6 +56,24 @@ class Config(object):
         fallback if attribute isn't found
         """
         return None
+
+    def get_entity(self, alias):
+        """
+        Return the entity with a matching alias
+        """
+
+        for entity in self.entities:
+            if entity['alias'] == alias:
+                return entity
+
+    def get_list(self, column):
+        """
+        Return the list for a given column
+        """
+
+        for rule in self.rules:
+            if rule['rule'] == 'ControlledVocabulary' and column in rule['columns']:
+                return self.lists[rule['list']]
 
     def __parse_rules(self):
         """
@@ -96,7 +114,7 @@ class Config(object):
         Parse list_name.csv file. The file name is specified in the list column of the rules.csv file and contains the
         controlled vocabulary, 1 field per line.
         """
-        if not self.lists[file_name]:
+        if file_name not in self.lists:
             file_path = os.path.join(self.config_dir, file_name)
 
             if not os.path.exists(file_path):
@@ -104,22 +122,16 @@ class Config(object):
                     "Invalid rule. Can't find specified list \"{}\"".format(file_path))
 
             with open(file_path) as file:
-                reader = csv.reader(file)
-                self.lists[file_name] = [r[0].strip() for r in reader]
+                reader = csv.DictReader(file)
+                self.lists[file_name] = []
 
-    def __parse_pheno_descriptions(self):
-        file = os.path.join(self.config_dir, 'phenophase_descriptions.csv')
-
-        if not os.path.exists(file):
-            self.rules = []
-            return
-
-        with open(file) as f:
-            reader = csv.DictReader(f)
-            self.pheno_descriptions = {r['field']: r['defined_by'] for r in reader}
+                for r in reader:
+                    if r['defined_by']:
+                        r['defined_by'] = self.__get_uri_from_label(r['defined_by'])
+                        self.lists[file_name].append(r)
 
     def __add_default_rules(self):
-        list_name = 'phenophase_names'
+        list_name = 'phenophase_descriptions.csv'
         self.rules.append({
             'rule': 'ControlledVocabulary',
             'columns': ['phenophase_name'],
@@ -127,7 +139,7 @@ class Config(object):
             'list': list_name
         })
 
-        self.lists[list_name] = [f for f in self.pheno_descriptions]
+        self.__parse_list(list_name)
 
     def __parse_entities(self):
         """
@@ -195,14 +207,6 @@ class Config(object):
                     "each relation listed.".format(file))
 
             r['predicate'] = self.__get_uri_from_label(r['predicate'])
-
-    def get_entity(self, alias):
-        """
-        Return the entity with a matching alias
-        """
-        for entity in self.entities:
-            if entity['alias'] == alias:
-                return entity
 
     def __get_uri_from_label(self, def_text):
         """

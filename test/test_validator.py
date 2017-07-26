@@ -46,7 +46,7 @@ def test_should_return_false_for_invalid_data(config, capsys):
                   "WARNING: Value missing in required column `source`\n" + \
                   "WARNING: Value `invalid_year` in column `year` is not an integer\n" + \
                   "ERROR: Value `string` in column `latitude` is not a float\n" + \
-                  "ERROR: Value `invalid_name` in column `phenophase_name` is not in the controlled vocabulary list `phenophase_names`\n"
+                  "ERROR: Value `invalid_name` in column `phenophase_name` is not in the controlled vocabulary list `phenophase_descriptions.csv`\n"
 
     # verify invalid_data_file contents
     config.invalid_data_file.close()

@@ -99,8 +99,9 @@ class Validator(object):
         valid = True
 
         list = self.config.lists[list_name]
+        list_values = [i['field'] for i in list]
         for col in columns:
-            invalid_data = self.data.loc[~self.data[col].isin(list)]
+            invalid_data = self.data.loc[~self.data[col].isin(list_values)]
 
             self.invalid_data = self.invalid_data.append(invalid_data.drop(self.invalid_data.index, errors='ignore'))
             for val in invalid_data[col]:

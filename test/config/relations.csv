@@ -1,2 +1,2 @@
-subject_entity_alias,predicate,object_entity_alias,notes
-plantStructurePresence,{is_specified_input_of},phenologicalObservingProcess,
+subject_entity_alias,predicate,object_entity_alias
+plantStructurePresence,{is_specified_input_of},phenologicalObservingProcess

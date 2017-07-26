@@ -30,36 +30,38 @@ def test_config(tmpdir):
         assert rule['level'] in ["error", "warning"]
 
     # should parse phenophase_descriptions file
-    assert config.pheno_descriptions == {
-        'Reproductive': '{reproductive structure presence}',
-        'Flowering': '{open flower presence}',
-        'Fruiting': '{ripening fruit presence}',
-    }
+    descriptions = config.lists['phenophase_descriptions.csv']
+    assert {'field': 'Reproductive', 'defined_by': 'http://purl.obolibrary.org/obo/PPO_0002025'} in descriptions
+    assert {'field': 'Flowering', 'defined_by': 'http://purl.obolibrary.org/obo/PPO_0002039'} in descriptions
+    assert {'field': 'Fruiting', 'defined_by': 'http://purl.obolibrary.org/obo/PPO_0002043'} in descriptions
 
-    # should be 3 valid phenophase_names list items
-    assert len(config.lists['phenophase_names']) == 3
+    # should be 3 valid phenophase_descriptions list items
+    assert len(descriptions) == 3
+    # assert len(config.lists['phenophase_descriptions']) == 3
 
     # should parse entities and perform label substitution
-    assert config.entities == [
-        {
+    assert {
             'alias': 'plantStructurePresence',
             'concept_uri': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
             'unique_key': 'record_id',
-            'identifier': 'http://n2t.net/ark:/21547/Anl2'
-        },
-        {
+            'identifier_root': 'http://n2t.net/ark:/21547/Anl2',
+            'columns': [('phenophase_name', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type')]
+        } in config.entities
+    assert {
             'alias': 'phenologicalObservingProcess',
-            'concept_uri': 'http://purl.obolibrary.org/obo/BCO_0000003"',
+            'concept_uri': 'http://purl.obolibrary.org/obo/BCO_0000003',
             'unique_key': 'record_id',
-            'identifier': 'http://n2t.net/ark:/21547/Anm2'
-        }
-    ]
+            'identifier_root': 'http://n2t.net/ark:/21547/Anm2',
+            'columns': [('record_id', 'http://rs.tdwg.org/dwc/terms/EventID'), ('latitude', 'http://rs.tdwg.org/dwc/terms/decimalLatitude'),
+                        ('longitude', 'http://rs.tdwg.org/dwc/terms/decimalLongitude'), ('year', 'http://rs.tdwg.org/dwc/terms/year'),
+                        ('day_of_year', 'http://rs.tdwg.org/dwc/terms/startDayOfYear'), ('source', 'http://purl.org/dc/elements/1.1/creator')]
+        } in config.entities
+
+    assert len(config.entities) == 2
 
     # should parse relations and perform label substitution
-    assert config.entities == [
-        {
+    assert {
             'subject_entity_alias': 'plantStructurePresence',
             'predicate': 'http://purl.obolibrary.org/obo/OBI_0000295',
             'object_entity_alias': 'phenologicalObservingProcess'
-        }
-    ]
+        } in config.relations

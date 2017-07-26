@@ -1,7 +1,7 @@
 field,defined_by,Notes
-Reproductive,{reproductive structure presence},Derived from the measurementOrFAct Value field
-Flowering,{open flower presence},Derived from the measurementOrFAct Value field
-Fruiting,{ripening fruit presence},Derived from the measurementOrFAct Value field
-Budding,{breaking bud presence},Derived from the measurementOrFAct Value field
-"Mostly old",{plant structure presence},Derived from the measurementOrFAct Value field
-"mostly young",{plant structure presence},Derived from the measurementOrFAct Value field
+Reproductive,{non-dormant leaf bud presence},Derived from the measurementOrFAct Value field
+Flowering,{vascular leaf presence},Derived from the measurementOrFAct Value field
+Fruiting,{unfolded true leaf presence},Derived from the measurementOrFAct Value field
+Budding,{new shoot system emerging from ground in later growth cycle presence},Derived from the measurementOrFAct Value field
+"Mostly old",{abscised leaf presence},Derived from the measurementOrFAct Value field
+"mostly young",{abscised plant structure presence},Derived from the measurementOrFAct Value field
