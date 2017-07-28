@@ -8,6 +8,7 @@ from .labelmap import LabelMap
 
 VALID_RULES = ['RequiredValue', 'ControlledVocabulary', 'UniqueValue', 'Integer', 'Float']
 DEFAULT_ONTOLOGY = "https://github.com/PlantPhenoOntology/PPO/raw/master/ontology/ppo-reasoned.owl"
+DEFAULT_REASONER_CONFIG = os.path.join(os.path.dirname(__file__), "../reasoner.conf")
 
 
 class Config(object):
@@ -35,6 +36,9 @@ class Config(object):
         self.invalid_data_file = open(os.path.join(self.output_dir, 'invalid_data.csv'), 'w')
         self.base_dir = base_dir
         self.config_dir = os.path.join(base_dir, "config")
+
+        if not self.reasoner_config:
+            self.reasoner_config = DEFAULT_REASONER_CONFIG
 
         if not self.ontology:
             self.ontology = DEFAULT_ONTOLOGY

@@ -4,9 +4,14 @@ import argparse
 import importlib
 import os
 import pandas as pd
+import tempfile
 
-from process.config import Config
-from process.validator import Validator
+import shutil
+
+from .config import Config
+from .reasoner import run_reasoner
+from .triplifier import Triplifier
+from .validator import Validator
 
 """process.Process: provides entry point main()."""
 __version__ = "0.1.0"
@@ -20,21 +25,53 @@ def run(config):
 
     data = pd.read_csv(config.data_file, header=0, skipinitialspace=True, chunksize=100000)
 
-    for chunk in data:
+    triplifier = Triplifier(config)
+
+    tmp_triples_dir = tempfile.mkdtemp()
+    tmp_reasoned_dir = tempfile.mkdtemp()
+    try:
+        for chunk in data:
+            if config.verbose:
+                print("\tvalidating {} records".format(len(chunk)), file=config.log_file)
+
+            validator = Validator(config, chunk)
+            valid = validator.validate()
+
+            if not valid:
+                invalid_data_path = os.path.realpath(config.invalid_data_file.name)
+                if config.log_file:
+                    log_path = os.path.realpath(config.log_file.name)
+                    print("Validation Failed! The logs are located {} and {}".format(invalid_data_path, log_path))
+                else:
+                    print("Validation Failed! The logs are located {}".format(invalid_data_path))
+                exit()
+
+            if config.verbose:
+                print("\ttriplifying {} records".format(len(chunk)), file=config.log_file)
+
+            triples = triplifier.triplify(chunk)
+
+            with tempfile.NamedTemporaryFile(mode="w", dir=tmp_triples_dir, delete=False) as tmp:
+                for t in triples:
+                    tmp.write("{} .\n".format(t))
+
+        for root, dirs, files in os.walk(tmp_triples_dir):
+            c = 0
+            for f in files:
+                c += 1
+                if config.verbose:
+                    print("\trunning reasoner on {} of {} files".format(c, len(files)), file=config.log_file)
+
+                out_file = tempfile.NamedTemporaryFile(dir=tmp_reasoned_dir, delete=False).name
+                run_reasoner(os.path.join(root, f), out_file, config.reasoner_config)
+
+    finally:
         if config.verbose:
-            print("\tvalidating {} records".format(len(chunk)), file=config.log_file)
-
-        validator = Validator(config, chunk)
-        valid = validator.validate()
-
-        if not valid:
-            invalid_data_path = os.path.realpath(config.invalid_data_file.name)
-            if config.log_file:
-                log_path = os.path.realpath(config.log_file.name)
-                print("Validation Failed! The logs are located {} and {}".format(invalid_data_path, log_path))
-            else:
-                print("Validation Failed! The logs are located {}".format(invalid_data_path))
-            exit()
+            print("\tremoving temporary files", file=config.log_file)
+        shutil.rmtree(tmp_triples_dir)
+        shutil.rmtree(tmp_reasoned_dir)
+        # os.remove(tmp_triples_dir)
+        # os.remove(tmp_reasoned_dir)
 
 
 def __preprocess_data(config):
@@ -132,12 +169,19 @@ def main():
         action="store_true"
     )
     parser.add_argument(
+        "--reasoner_config",
+        help="optionally specify the reasoner configuration file"
+    )
+    parser.add_argument(
         "-v",
         "--verbose",
         help="verbose logging output",
         action="store_true"
     )
     args = parser.parse_args()
+
+    if args.verbose:
+        print("configuring...")
 
     config = Config(os.path.join(PROJECT_BASE, args.project), **args.__dict__)
     run(config)

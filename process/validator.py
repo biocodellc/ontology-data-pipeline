@@ -56,11 +56,12 @@ class Validator(object):
                     valid = False
 
         if len(self.invalid_data) > 0:
-            self.invalid_data.to_csv(self.config.invalid_data_file, index=False)
+            self.invalid_data.to_csv(self.config.invalid_data_file.name, index=False)
 
             if self.config.drop_invalid:
                 # remove all rows that are in the invalid_data DataFrame
                 self.data.drop(self.invalid_data.index, inplace=True)
+                valid = len(self.data) > 0
 
         return valid
 
@@ -83,9 +84,12 @@ class Validator(object):
         valid = True
 
         for col in columns:
-            invalid_data = pd.concat(g for _, g in self.data.groupby(col) if len(g) > 1)
+            dups = [g for _, g in self.data.groupby(col) if len(g) > 1]
 
-            if len(invalid_data) > 0:
+            if len(dups) > 0:
+                print(dups)
+                invalid_data = pd.concat(dups)
+
                 self.__log_error("Duplicate values {} in column `{}`".format(invalid_data[col].unique(), col),
                                  error_level)
 

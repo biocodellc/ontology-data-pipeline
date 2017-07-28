@@ -22,7 +22,7 @@ FILES = {
     'data': 'data.csv',
     'occurrences': os.path.join(ASU_DATA_DIR, 'occurrences.csv'),
     'identifications': os.path.join(ASU_DATA_DIR, 'identifications.csv'),
-    'measurements': os.path.join(ASU_DATA_DIR, 'measurementOrFact.csv')
+    'measurements': os.path.join(ASU_DATA_DIR, 'measurementOrFact_sample.csv')
 }
 
 
@@ -36,7 +36,7 @@ class PreProcessor(AbstractPreProcessor):
                            usecols=['coreid', 'measurementValue'])
 
         for chunk in data:
-            print("\tprocessing {} records".format(len(chunk)))
+            print("\tpreprocessing {} records".format(len(chunk)))
             self.__transform_data(chunk).to_csv(self._out_file, columns=self.headers, mode='a', header=False,
                                                 index=False)
 
@@ -50,7 +50,5 @@ class PreProcessor(AbstractPreProcessor):
 
         data['source'] = 'ASU'
         data['lower_count'] = 1
-        data["year"] = data["year"]
-        data["day_of_year"] = data["startDayOfYear"]
 
         return data.rename(columns=COLUMNS_MAP)

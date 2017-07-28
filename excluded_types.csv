@@ -1,0 +1,12 @@
+ID,Exclude class,Exclude superclasses
+'plant phenological trait',N,Y
+'plant structure presence',Y,N
+'plant structures present',Y,N
+'abscised plant structure presence',Y,N
+'abscised plant structures present',Y,N
+'abscised plant structures absent',Y,N
+'plant phenological stage',N,Y
+'whole plant',N,Y
+'phenology observing process',N,Y
+'measurement datum',N,Y
+'specifically dependent continuant',Y,Y
