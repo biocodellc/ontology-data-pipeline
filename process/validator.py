@@ -37,21 +37,21 @@ class Validator(object):
         valid = True
 
         for rule in self.config.rules:
-            rule_name = rule['rule']
+            rule_name = rule['rule'].lower()
 
-            if rule_name == 'RequiredValue':
+            if rule_name == 'requiredvalue':
                 if not self.__required_value_rule(rule['columns'], rule['level']):
                     valid = False
-            elif rule_name == 'UniqueValue':
+            elif rule_name == 'uniquevalue':
                 if not self.__unique_value_rule(rule['columns'], rule['level']):
                     valid = False
-            elif rule_name == 'ControlledVocabulary':
+            elif rule_name == 'controlledvocabulary':
                 if not self.__controlled_vocab_rule(rule['columns'], rule['level'], rule['list']):
                     valid = False
-            elif rule_name == 'Integer':
+            elif rule_name == 'integer':
                 if not self.__integer_rule(rule['columns'], rule['level']):
                     valid = False
-            elif rule_name == 'Float':
+            elif rule_name == 'float':
                 if not self.__float_rule(rule['columns'], rule['level']):
                     valid = False
 

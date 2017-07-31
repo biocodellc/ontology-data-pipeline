@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import re
 import pandas as pd
 
 
@@ -28,13 +29,13 @@ class Triplifier(object):
         row_triples = []
 
         for entity in self.config.entities:
-            s = "<{}{}>".format(entity['identifier_root'], row[entity['unique_key']])
+            s = "<{}{}>".format(entity['identifier_root'], self.__get_value(row, entity['unique_key']))
             if entity['concept_uri'] != 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type':
                 o = "<{}>".format(entity['concept_uri'])
                 row_triples.append("{} <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> {}".format(s, o))
 
             for column, uri in entity['columns']:
-                val = row[column]
+                val = self.__get_value(row, column)
 
                 list_for_column = self.config.get_list(column)
 
@@ -51,7 +52,8 @@ class Triplifier(object):
                 if val and not pd.isnull(val):
                     p = "<{}>".format(uri)
                     if literal_val:
-                        o = "\"{}\"".format(val)
+                        type = self.__get_type(val)
+                        o = "\"{}\"^^<http://www.w3.org/2001/XMLSchema#{}>".format(val, type)
                     else:
                         o = "<{}>".format(val)
                     row_triples.append("{} {} {}".format(s, p, o))
@@ -59,9 +61,9 @@ class Triplifier(object):
         for relation in self.config.relations:
             subject_entity = self.config.get_entity(relation['subject_entity_alias'])
             object_entity = self.config.get_entity(relation['object_entity_alias'])
-            s = "<{}{}>".format(subject_entity['identifier_root'], row[subject_entity['unique_key']])
+            s = "<{}{}>".format(subject_entity['identifier_root'], self.__get_value(row, subject_entity['unique_key']))
             p = "<{}>".format(relation['predicate'])
-            o = "<{}{}>".format(object_entity['identifier_root'], row[object_entity['unique_key']])
+            o = "<{}{}>".format(object_entity['identifier_root'], self.__get_value(row, object_entity['unique_key']))
             row_triples.append("{} {} {}".format(s, p, o))
 
         return row_triples
@@ -122,3 +124,29 @@ class Triplifier(object):
             property_triples.append("{} {} {}".format(s, p2, s))
 
         return property_triples
+
+    def __get_value(self, row_data, column):
+        coerce_integer = False
+
+        for rule in self.config.rules:
+            if rule['rule'].lower() == 'integer' and column in rule['columns']:
+                coerce_integer = True
+                break
+
+        val = row_data[column]
+
+        # need to perform coercion here as pandas can't store ints along floats and strings. The only way to coerce
+        # to ints is to drop all strings and null values. We don't want to do this in the case of a warning.
+        if coerce_integer:
+            return int(float(val)) if re.fullmatch("[+-]?\d+(\.0+)?", str(val)) else val
+
+        return val
+
+    @staticmethod
+    def __get_type(val):
+        if re.fullmatch("[+-]?\d+(\.0+)?", str(val)):
+            return 'integer'
+        elif re.fullmatch("[+-]?\d+\.\d+", str(val)):
+            return 'float'
+        else:
+            return 'string'

@@ -64,14 +64,13 @@ def run(config):
 
                 out_file = tempfile.NamedTemporaryFile(dir=tmp_reasoned_dir, delete=False).name
                 run_reasoner(os.path.join(root, f), out_file, config.reasoner_config)
+                print (out_file)
 
     finally:
         if config.verbose:
             print("\tremoving temporary files", file=config.log_file)
         shutil.rmtree(tmp_triples_dir)
         shutil.rmtree(tmp_reasoned_dir)
-        # os.remove(tmp_triples_dir)
-        # os.remove(tmp_reasoned_dir)
 
 
 def __preprocess_data(config):
