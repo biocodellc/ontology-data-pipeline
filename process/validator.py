@@ -87,7 +87,6 @@ class Validator(object):
             dups = [g for _, g in self.data.groupby(col) if len(g) > 1]
 
             if len(dups) > 0:
-                print(dups)
                 invalid_data = pd.concat(dups)
 
                 self.__log_error("Duplicate values {} in column `{}`".format(invalid_data[col].unique(), col),

@@ -64,7 +64,6 @@ def run(config):
 
                 out_file = tempfile.NamedTemporaryFile(dir=tmp_reasoned_dir, delete=False).name
                 run_reasoner(os.path.join(root, f), out_file, config.reasoner_config)
-                print (out_file)
 
     finally:
         if config.verbose:
