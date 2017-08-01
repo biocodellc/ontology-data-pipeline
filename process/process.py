@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import argparse
-import importlib
 import os
 import pandas as pd
-import tempfile
 
-import shutil
-
+from process.splitter import split_file
+from process.utils import loadPreprocessorFromProject, loadClass, clean_dir
 from .config import Config, DEFAULT_CONFIG_DIR
 from .reasoner import run_reasoner
 from .triplifier import Triplifier
@@ -19,104 +17,99 @@ __version__ = "0.1.0"
 PROJECT_BASE = os.path.join(os.path.dirname(__file__), '../projects')
 
 
-def run(config):
-    if not config.data_file:
-        config.data_file = __preprocess_data(config)
+class Process(object):
+    def __init__(self, config):
+        self.config = config
 
-    data = pd.read_csv(config.data_file, header=0, skipinitialspace=True, chunksize=100000)
+        if not self.config.data_file:
+            self.config.data_file = self.__preprocess_data()
 
-    triplifier = Triplifier(config)
+        self.triplifier = Triplifier(config)
 
-    tmp_triples_dir = tempfile.mkdtemp()
-    tmp_reasoned_dir = tempfile.mkdtemp()
-    try:
-        for chunk in data:
-            if config.verbose:
-                print("\tvalidating {} records".format(len(chunk)), file=config.log_file)
+    def run(self):
+        clean_dir(self.config.output_unreasoned_dir)
+        clean_dir(self.config.output_reasoned_dir)
 
-            validator = Validator(config, chunk)
-            valid = validator.validate()
+        if self.config.split_data_column:
+            self.__split_and_triplify_data()
+        else:
+            self.__triplify_data()
 
-            if not valid:
-                invalid_data_path = os.path.realpath(config.invalid_data_file.name)
-                if config.log_file:
-                    log_path = os.path.realpath(config.log_file.name)
-                    print("Validation Failed! The logs are located {} and {}".format(invalid_data_path, log_path))
-                else:
-                    print("Validation Failed! The logs are located {}".format(invalid_data_path))
-                exit()
-
-            if config.verbose:
-                print("\ttriplifying {} records".format(len(chunk)), file=config.log_file)
-
-            triples = triplifier.triplify(chunk)
-
-            with tempfile.NamedTemporaryFile(mode="w", dir=tmp_triples_dir, delete=False) as tmp:
-                for t in triples:
-                    tmp.write("{} .\n".format(t))
-
-        for root, dirs, files in os.walk(tmp_triples_dir):
+        for root, dirs, files in os.walk(self.config.output_unreasoned_dir):
             c = 0
             for f in files:
                 c += 1
-                if config.verbose:
-                    print("\trunning reasoner on {} of {} files".format(c, len(files)), file=config.log_file)
+                if self.config.verbose:
+                    print("\trunning reasoner on {} of {} files".format(c, len(files)), file=self.config.log_file)
 
-                out_file = tempfile.NamedTemporaryFile(dir=tmp_reasoned_dir, delete=False).name
-                run_reasoner(os.path.join(root, f), out_file, config.reasoner_config)
+                # out_file = os.path.join(self.config.output_reasoned_dir, f.replace('.n3', '.ttl'))
+                # run_reasoner(os.path.join(root, f), out_file, self.config.reasoner_config)
 
-    finally:
-        if config.verbose:
-            print("\tremoving temporary files", file=config.log_file)
-        shutil.rmtree(tmp_triples_dir)
-        shutil.rmtree(tmp_reasoned_dir)
+    def __split_and_triplify_data(self):
+        if self.config.verbose:
+            print("\tsplitting input data on {}".format(self.config.split_data_column), file=self.config.log_file)
 
+        clean_dir(self.config.output_csv_split_dir)
 
-def __preprocess_data(config):
-    if config.preprocessor:
-        PreProcessor = __loadClass(config.preprocessor)
-    else:
-        PreProcessor = __loadPreprocessorFromProject(config.base_dir)
+        split_file(self.config.data_file, self.config.output_csv_split_dir, self.config.split_data_column,
+                   self.config.chunk_size)
 
-    preprocessor = PreProcessor(config.input_dir, config.output_dir)
-    preprocessor.run()
+        for root, dirs, files in os.walk(self.config.output_csv_split_dir):
+            for f in files:
+                data = pd.read_csv(os.path.join(root, f), header=0, skipinitialspace=True)
 
-    return preprocessor.output_file_path
+                if self.config.verbose:
+                    print("\tvalidating records in {}".format(f), file=self.config.log_file)
 
+                triples_file = os.path.join(self.config.output_unreasoned_dir, f.replace('.csv', '.n3'))
+                self.__triplify(data, triples_file)
 
-def __loadClass(python_path):
-    """
-    dynamically loads a class given a dotted python path
-    :param python_path:
-    :return:
-    """
-    module_name, class_name = python_path.rsplit('.', 1)
-    mod = importlib.import_module(module_name)
-    return getattr(mod, class_name)
+    def __triplify_data(self):
+        data = pd.read_csv(self.config.data_file, header=0, skipinitialspace=True, chunksize=self.config.chunk_size)
 
+        i = 1
+        for chunk in data:
+            if self.config.verbose:
+                print("\tvalidating {} records".format(len(chunk)), file=self.config.log_file)
 
-def __loadPreprocessorFromProject(base_dir):
-    """
-    loads a PreProcessor from the specified base_dir
+            triples_file = os.path.join(self.config.output_unreasoned_dir, 'data_' + i)
+            self.__triplify(chunk, triples_file)
+            i += 1
 
-    Assumptions:
-        1. base_dir contains a file `preprocessor.py`
-        2. in this file, there is a class named *PreProcessor
+    def __triplify(self, data, triples_file):
 
-    :param base_dir:
-    :return:
-    """
-    path = os.path.join(base_dir, 'preprocessor.py')
-    if not os.path.exists(path):
-        raise ImportError("Error loading preprocessor. File does not exist `{}`.".format(path))
+        validator = Validator(self.config, data)
+        valid = validator.validate()
 
-    spec = importlib.util.spec_from_file_location(path, path)
-    module = spec.loader.load_module()
-    try:
-        return getattr(module, 'PreProcessor')
-    except AttributeError:
-        raise ImportError(
-            "Error loading preprocessor. Could not find a PreProcessor class in the file `{}`".format(path))
+        if not valid:
+            invalid_data_path = os.path.realpath(self.config.invalid_data_file.name)
+            if self.config.log_file:
+                log_path = os.path.realpath(self.config.log_file.name)
+                print("Validation Failed! The logs are located {} and {}".format(invalid_data_path, log_path))
+            else:
+                print("Validation Failed! The logs are located {}".format(invalid_data_path))
+            exit()
+
+        if self.config.verbose:
+            print("\ttriplifying {} records".format(len(data)), file=self.config.log_file)
+
+        triples = self.triplifier.triplify(data)
+
+        with open(triples_file, 'w') as f:
+            for t in triples:
+                f.write("{} .\n".format(t))
+
+    def __preprocess_data(self):
+        clean_dir(self.config.output_csv_dir)
+        if self.config.preprocessor:
+            PreProcessor = loadClass(self.config.preprocessor)
+        else:
+            PreProcessor = loadPreprocessorFromProject(self.config.base_dir)
+
+        preprocessor = PreProcessor(self.config.input_dir, self.config.output_csv_dir)
+        preprocessor.run()
+
+        return preprocessor.output_file_path
 
 
 def main():
@@ -149,7 +142,7 @@ def main():
 
     group.add_argument(
         "--config_dir",
-        help="path of the directory containing the configuration files. defaults to " + DEFAULT_CONFIG_DIR
+        help="optionally specify the path of the directory containing the configuration files. defaults to " + DEFAULT_CONFIG_DIR
     )
     parser.add_argument(
         "--ontology",
@@ -180,10 +173,24 @@ def main():
         help="verbose logging output",
         action="store_true"
     )
+    parser.add_argument(
+        "-c",
+        "--chunk_size",
+        help="chunk size to use when processing data. defaults to 50,000"
+    )
+    parser.add_argument(
+        "-s",
+        "--split_data",
+        help="column to split the data on. This will split the data file into many files with each file containing no "
+             "more records then the specified chunk_size, using the specified column values as the filenames",
+        dest="split_data_column"
+    )
     args = parser.parse_args()
 
     if args.verbose:
         print("configuring...")
 
     config = Config(os.path.join(PROJECT_BASE, args.project), **args.__dict__)
-    run(config)
+
+    process = Process(config)
+    process.run()

@@ -8,7 +8,7 @@ from .labelmap import LabelMap
 
 VALID_RULES = ['RequiredValue', 'ControlledVocabulary', 'UniqueValue', 'Integer', 'Float']
 DEFAULT_ONTOLOGY = "https://github.com/PlantPhenoOntology/PPO/raw/master/ontology/ppo-reasoned.owl"
-DEFAULT_CONFIG_DIR = os.path.join(os.path.dirname(__file__), "../reasoner.conf")
+DEFAULT_CONFIG_DIR = os.path.join(os.path.dirname(__file__), "../config")
 
 DEFAULT_HEADERS = ['record_id', 'scientific_name', 'genus', 'specific_epithet', 'year', 'day_of_year', 'latitude',
                    'longitude', 'source', 'phenophase_name', 'lower_count', 'upper_count', 'lower_percent',
@@ -17,7 +17,7 @@ DEFAULT_HEADERS = ['record_id', 'scientific_name', 'genus', 'specific_epithet', 
 
 class Config(object):
     """
-    class containg config values. All config data is accessible as attributes on this class
+    class containing config values. All config data is accessible as attributes on this class
     """
 
     def __init__(self, base_dir, *initial_data, **kwargs):
@@ -32,21 +32,31 @@ class Config(object):
         for key in kwargs:
             setattr(self, key, kwargs[key])
 
+        if not self.config_dir:
+            self.config_dir = DEFAULT_CONFIG_DIR
+        if not self.ontology:
+            self.ontology = DEFAULT_ONTOLOGY
+        if not self.headers:
+            self.headers = DEFAULT_HEADERS
+        if not self.chunk_size:
+            self.chunk_size = 50000
+
         if self.log_file:
             self.log_file = open(os.path.join(self.output_dir, 'log.txt'), 'w')
-        else:
-            self.log_file = None
 
         self.invalid_data_file = open(os.path.join(self.output_dir, 'invalid_data.csv'), 'w')
         self.base_dir = base_dir
-        if not self.config_dir:
-            self.config_dir = DEFAULT_CONFIG_DIR
+
+        # output directories
+        self.output_csv_dir = os.path.join(self.output_dir, 'output_csv')
+        self.output_csv_split_dir = os.path.join(self.output_dir, 'output_csv_split')
+        self.output_unreasoned_dir = os.path.join(self.output_dir, 'output_unreasoned')
+        self.output_reasoned_dir = os.path.join(self.output_dir, 'output_reasoned')
+        self.output_reasoned_csv_dir = os.path.join(self.output_dir, 'output_reasoned_csv')
 
         if not self.reasoner_config:
             self.reasoner_config = os.path.join(self.config_dir, "reasoner.conf")
 
-        if not self.ontology:
-            self.ontology = DEFAULT_ONTOLOGY
         self.__label_map = LabelMap(self.ontology)
 
         self.__parse_headers()
@@ -257,10 +267,7 @@ class Config(object):
     def __parse_headers(self):
         file = os.path.join(self.config_dir, 'headers.csv')
 
-        if not os.path.exists(file):
-            self.headers = DEFAULT_HEADERS
-            return
-
-        with open(file) as f:
-            reader = csv.reader(f)
-            self.headers = reader[0]
+        if os.path.exists(file):
+            with open(file) as f:
+                reader = csv.reader(f, skipinitialspace=True)
+                self.headers = next(reader)
