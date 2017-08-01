@@ -8,7 +8,7 @@ import tempfile
 
 import shutil
 
-from .config import Config
+from .config import Config, DEFAULT_CONFIG_DIR
 from .reasoner import run_reasoner
 from .triplifier import Triplifier
 from .validator import Validator
@@ -147,6 +147,10 @@ def main():
         dest="data_file"
     )
 
+    group.add_argument(
+        "--config_dir",
+        help="path of the directory containing the configuration files. defaults to " + DEFAULT_CONFIG_DIR
+    )
     parser.add_argument(
         "--ontology",
         help="optionally specify a filepath/url of the ontology to use for reasoning/triplifying"

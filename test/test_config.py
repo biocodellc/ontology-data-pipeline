@@ -7,7 +7,7 @@ def test_config(tmpdir):
     config = Config(base_dir, {
         'output_dir': tmpdir,
         'data_file': os.path.join(base_dir, "data/invalid_input.csv"),
-        # 'ontology': os.path.join(base_dir, "config/ppo-reasoned-no-imports.owl"),
+        'config_dir': os.path.join(base_dir, "config")
     }, kw=False)
 
     # verify that passed in args & kwargs are accessible as attributes

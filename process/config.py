@@ -8,7 +8,11 @@ from .labelmap import LabelMap
 
 VALID_RULES = ['RequiredValue', 'ControlledVocabulary', 'UniqueValue', 'Integer', 'Float']
 DEFAULT_ONTOLOGY = "https://github.com/PlantPhenoOntology/PPO/raw/master/ontology/ppo-reasoned.owl"
-DEFAULT_REASONER_CONFIG = os.path.join(os.path.dirname(__file__), "../reasoner.conf")
+DEFAULT_CONFIG_DIR = os.path.join(os.path.dirname(__file__), "../reasoner.conf")
+
+DEFAULT_HEADERS = ['record_id', 'scientific_name', 'genus', 'specific_epithet', 'year', 'day_of_year', 'latitude',
+                   'longitude', 'source', 'phenophase_name', 'lower_count', 'upper_count', 'lower_percent',
+                   'upper_percent']
 
 
 class Config(object):
@@ -35,14 +39,17 @@ class Config(object):
 
         self.invalid_data_file = open(os.path.join(self.output_dir, 'invalid_data.csv'), 'w')
         self.base_dir = base_dir
-        self.config_dir = os.path.join(base_dir, "config")
+        if not self.config_dir:
+            self.config_dir = DEFAULT_CONFIG_DIR
 
         if not self.reasoner_config:
-            self.reasoner_config = DEFAULT_REASONER_CONFIG
+            self.reasoner_config = os.path.join(self.config_dir, "reasoner.conf")
 
         if not self.ontology:
             self.ontology = DEFAULT_ONTOLOGY
         self.__label_map = LabelMap(self.ontology)
+
+        self.__parse_headers()
 
         self.lists = {}
         self.rules = []
@@ -119,7 +126,7 @@ class Config(object):
         controlled vocabulary, 1 field per line.
         """
         if file_name not in self.lists:
-            file_path = os.path.join(self.config_dir, file_name)
+            file_path = os.path.join(self.base_dir, file_name)
 
             if not os.path.exists(file_path):
                 raise AttributeError(
@@ -246,3 +253,14 @@ class Config(object):
             rfc3987.parse(newdef, rule='IRI')
 
         return newdef
+
+    def __parse_headers(self):
+        file = os.path.join(self.config_dir, 'headers.csv')
+
+        if not os.path.exists(file):
+            self.headers = DEFAULT_HEADERS
+            return
+
+        with open(file) as f:
+            reader = csv.reader(f)
+            self.headers = reader[0]

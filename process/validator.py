@@ -2,7 +2,6 @@
 
 import re
 import pandas as pd
-from preprocessor import AbstractPreProcessor
 
 
 class InvalidData(Exception):
@@ -12,7 +11,7 @@ class InvalidData(Exception):
 class Validator(object):
     """
     performs basic data validation. Ensures that the data adheres to the specified rules and contains all of the columns
-    specified in the preprocess.AbstractPreProcessor.headers list
+    specified in the config.headers
     """
 
     def __init__(self, config, df):
@@ -27,7 +26,7 @@ class Validator(object):
     def __validate_columns(self):
         data_columns = self.data.columns.values.tolist()
 
-        for col in AbstractPreProcessor.headers:
+        for col in self.config.headers:
             if col not in data_columns:
                 raise InvalidData("Missing required column: `{}`".format(col))
 
@@ -74,7 +73,8 @@ class Validator(object):
             if len(invalid_data) > 0:
                 self.__log_error("Value missing in required column `{}`".format(col), error_level)
 
-                self.invalid_data = self.invalid_data.append(invalid_data.drop(self.invalid_data.index, errors='ignore'))
+                self.invalid_data = self.invalid_data.append(
+                    invalid_data.drop(self.invalid_data.index, errors='ignore'))
                 if error_level.lower() == 'error':
                     valid = False
 
@@ -92,7 +92,8 @@ class Validator(object):
                 self.__log_error("Duplicate values {} in column `{}`".format(invalid_data[col].unique(), col),
                                  error_level)
 
-                self.invalid_data = self.invalid_data.append(invalid_data.drop(self.invalid_data.index, errors='ignore'))
+                self.invalid_data = self.invalid_data.append(
+                    invalid_data.drop(self.invalid_data.index, errors='ignore'))
                 if error_level.lower() == 'error':
                     valid = False
 

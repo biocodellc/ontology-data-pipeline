@@ -14,6 +14,7 @@ def config(tmpdir):
         return Config(base_dir, {
             'output_dir': tmpdir,
             'data_file': os.path.join(base_dir, data_file),
+            'config_dir': os.path.join(base_dir, "config"),
             'ontology': os.path.join(base_dir, 'config/ppo-reasoned-no-imports.owl')
         })
 
