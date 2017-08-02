@@ -42,8 +42,8 @@ class Process(object):
                 if self.config.verbose:
                     print("\trunning reasoner on {} of {} files".format(c, len(files)), file=self.config.log_file)
 
-                # out_file = os.path.join(self.config.output_reasoned_dir, f.replace('.n3', '.ttl'))
-                # run_reasoner(os.path.join(root, f), out_file, self.config.reasoner_config)
+                out_file = os.path.join(self.config.output_reasoned_dir, f.replace('.n3', '.ttl'))
+                run_reasoner(os.path.join(root, f), out_file, self.config.reasoner_config)
 
     def __split_and_triplify_data(self):
         if self.config.verbose:
