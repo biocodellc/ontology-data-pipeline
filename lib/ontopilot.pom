@@ -1,0 +1,16 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.biocode</groupId>
+    <artifactId>ontopilot</artifactId>
+    <version>2017-08-04</version>
+    <description>
+        This is a hosted version of the elk_pipeline branch of ontopilot found at https://github.com/stuckyb/ontopilot/tree/elk_pipeline.
+        This fat jar contains all dependencies for running ontopilot.
+    </description>
+    <distributionManagement>
+        <repository>
+            <id>biocode.repo</id>
+            <url>http://repo.biocodellc.com/repository/3rd-party/</url>
+        </repository>
+    </distributionManagement>
+</project>

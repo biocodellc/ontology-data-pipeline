@@ -4,7 +4,13 @@ import os
 import csv
 import re
 import rfc3987
+import shutil
+
 from .labelmap import LabelMap
+
+ONTOPILOT_VERSION = '2017-08-04'
+ONTOPILOT_REPO_URL = 'http://repo.biocodellc.com/repository/3rd-party/org/biocode/ontopilot/{}/'.format(
+    ONTOPILOT_VERSION)
 
 VALID_RULES = ['RequiredValue', 'ControlledVocabulary', 'UniqueValue', 'Integer', 'Float']
 DEFAULT_ONTOLOGY = "https://github.com/PlantPhenoOntology/PPO/raw/master/ontology/ppo-reasoned.owl"
@@ -41,12 +47,20 @@ class Config(object):
         if not self.chunk_size:
             self.chunk_size = 50000
 
+        self.ontopilot = os.path.join(os.path.dirname(__file__), '../lib/ontopilot-{}.jar'.format(ONTOPILOT_VERSION))
+        self.ontopilot_repo_url = ONTOPILOT_REPO_URL
+
         if self.log_file:
             self.log_file = open(os.path.join(self.output_dir, 'log.txt'), 'w')
         else:
             self.log_file = None
 
-        self.invalid_data_file = open(os.path.join(self.output_dir, 'invalid_data.csv'), 'w')
+        data_file_path = os.path.join(self.output_dir, 'invalid_data.csv')
+        if os.path.exists(data_file_path):
+            os.remove(data_file_path)
+
+        self.invalid_data_file = open(os.path.join(self.output_dir, 'invalid_data.csv'), 'a')
+        csv.writer(self.invalid_data_file).writerow(self.headers)
         self.base_dir = base_dir
 
         # output directories

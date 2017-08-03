@@ -6,7 +6,7 @@ import pandas as pd
 
 from process.rdf2csv import convert_rdf2csv
 from process.splitter import split_file
-from process.utils import loadPreprocessorFromProject, loadClass, clean_dir
+from process.utils import loadPreprocessorFromProject, loadClass, clean_dir, fetch_ontopilot
 from .config import Config, DEFAULT_CONFIG_DIR
 from .reasoner import run_reasoner
 from .triplifier import Triplifier
@@ -28,6 +28,8 @@ class Process(object):
         self.triplifier = Triplifier(config)
 
     def run(self):
+        fetch_ontopilot(self.config.ontopilot, self.config.ontopilot_repo_url)
+
         clean_dir(self.config.output_unreasoned_dir)
         clean_dir(self.config.output_reasoned_dir)
         if self.config.reasoned_sparql:
@@ -46,13 +48,13 @@ class Process(object):
                     print("\trunning reasoner on {} of {} files".format(c, len(files)), file=self.config.log_file)
 
                 out_file = os.path.join(self.config.output_reasoned_dir, f.replace('.n3', '.ttl'))
-                run_reasoner(os.path.join(root, f), out_file, self.config.reasoner_config)
+                run_reasoner(os.path.join(root, f), out_file, self.config.reasoner_config, self.config.ontopilot)
 
                 if self.config.reasoned_sparql:
                     if self.config.verbose:
                         print("\tconverting reasoned data to csv for file {}".format(f), file=self.config.log_file)
 
-                    convert_rdf2csv(out_file, self.config.output_reasoned_csv_dir, self.config.reasoned_sparql)
+                    # convert_rdf2csv(out_file, self.config.output_reasoned_csv_dir, self.config.reasoned_sparql)
 
     def __split_and_triplify_data(self):
         if self.config.verbose:
@@ -81,7 +83,7 @@ class Process(object):
             if self.config.verbose:
                 print("\tvalidating {} records".format(len(chunk)), file=self.config.log_file)
 
-            triples_file = os.path.join(self.config.output_unreasoned_dir, 'data_' + i)
+            triples_file = os.path.join(self.config.output_unreasoned_dir, "data_{}.ttl".format(i))
             self.__triplify(chunk, triples_file)
             i += 1
 

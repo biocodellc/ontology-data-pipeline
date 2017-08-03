@@ -4,11 +4,14 @@ import os
 
 import shutil
 
+import requests
+
 
 def clean_dir(dir):
     if os.path.exists(dir):
         shutil.rmtree(dir)
     os.makedirs(dir)
+
 
 def loadClass(python_path):
     """
@@ -43,3 +46,29 @@ def loadPreprocessorFromProject(base_dir):
     except AttributeError:
         raise ImportError(
             "Error loading preprocessor. Could not find a PreProcessor class in the file `{}`".format(path))
+
+
+def fetch_ontopilot(ontopilot_path, repo_url):
+    if not os.path.exists(ontopilot_path):
+        print(ontopilot_path)
+        split_path = ontopilot_path.rsplit('/', 1)
+        print(split_path)
+        jar = split_path[-1]
+
+        if not repo_url.endswith('/'):
+            repo_url = repo_url + '/'
+
+        s = input('Could not find ontopilot dependency version: `{}`. Would you like to download this dependency from '
+                  '`{}`? (y/n):'.format(jar, repo_url + jar))
+
+        if s.lower() not in ['y', 'yes']:
+            print('missing dependency `{}` in directory `{}`\n exiting...'.format(jar, split_path[0]))
+            exit()
+
+        print('downloading...\t' + repo_url + jar)
+        r = requests.get(repo_url + jar, stream=True)
+        with open(ontopilot_path, 'wb') as f:
+            for chunk in r.iter_content(chunk_size=1024):
+                f.write(chunk)
+
+        r.close()
