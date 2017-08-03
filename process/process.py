@@ -4,6 +4,7 @@ import argparse
 import os
 import pandas as pd
 
+from process.rdf2csv import convert_rdf2csv
 from process.splitter import split_file
 from process.utils import loadPreprocessorFromProject, loadClass, clean_dir
 from .config import Config, DEFAULT_CONFIG_DIR
@@ -29,6 +30,8 @@ class Process(object):
     def run(self):
         clean_dir(self.config.output_unreasoned_dir)
         clean_dir(self.config.output_reasoned_dir)
+        if self.config.reasoned_sparql:
+            clean_dir(self.config.output_reasoned_csv_dir)
 
         if self.config.split_data_column:
             self.__split_and_triplify_data()
@@ -44,6 +47,12 @@ class Process(object):
 
                 out_file = os.path.join(self.config.output_reasoned_dir, f.replace('.n3', '.ttl'))
                 run_reasoner(os.path.join(root, f), out_file, self.config.reasoner_config)
+
+                if self.config.reasoned_sparql:
+                    if self.config.verbose:
+                        print("\tconverting reasoned data to csv for file {}".format(f), file=self.config.log_file)
+
+                    convert_rdf2csv(out_file, self.config.output_reasoned_csv_dir, self.config.reasoned_sparql)
 
     def __split_and_triplify_data(self):
         if self.config.verbose:

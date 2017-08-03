@@ -72,6 +72,8 @@ class Config(object):
         self.relations = []
         self.__parse_relations()
 
+        self.__parse_sparql()
+
     def __getattr__(self, item):
         """
         fallback if attribute isn't found
@@ -271,3 +273,14 @@ class Config(object):
             with open(file) as f:
                 reader = csv.reader(f, skipinitialspace=True)
                 self.headers = next(reader)
+
+    def __parse_sparql(self):
+        file = os.path.join(self.config_dir, 'fetch_reasoned.sparql')
+
+        if not os.path.exists(file):
+            print("\tdid not find fetch_reasoned.sparql in config directory. will not convert reasoned data to csv",
+                  file=self.config.log_file)
+            return
+
+        with open(file) as f:
+            self.reasoned_sparql = f.read();

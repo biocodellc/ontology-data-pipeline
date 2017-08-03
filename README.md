@@ -84,7 +84,7 @@ line, and specified on the commandline like 'process.py @params.conf'.
 ```
 
 
-## Project Config Files
+## Config Files
 
 Each project should have a config directory under `projects/{projectName}/config`. This will contain the files necessary
 for data validation and triplifying. The following files are required:
