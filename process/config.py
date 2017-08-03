@@ -43,6 +43,8 @@ class Config(object):
 
         if self.log_file:
             self.log_file = open(os.path.join(self.output_dir, 'log.txt'), 'w')
+        else:
+            self.log_file = None
 
         self.invalid_data_file = open(os.path.join(self.output_dir, 'invalid_data.csv'), 'w')
         self.base_dir = base_dir
