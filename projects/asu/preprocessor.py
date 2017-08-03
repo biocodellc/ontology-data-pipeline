@@ -22,7 +22,7 @@ FILES = {
     'data': 'data.csv',
     'occurrences': os.path.join(ASU_DATA_DIR, 'occurrences.csv'),
     'identifications': os.path.join(ASU_DATA_DIR, 'identifications.csv'),
-    'measurements': os.path.join(ASU_DATA_DIR, 'measurementOrFact_sample.csv')
+    'measurements': os.path.join(ASU_DATA_DIR, 'measurementOrFact.csv')
 }
 
 

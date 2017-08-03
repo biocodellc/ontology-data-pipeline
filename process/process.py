@@ -149,7 +149,7 @@ def main():
         dest="data_file"
     )
 
-    group.add_argument(
+    parser.add_argument(
         "--config_dir",
         help="optionally specify the path of the directory containing the configuration files. defaults to " + DEFAULT_CONFIG_DIR
     )
