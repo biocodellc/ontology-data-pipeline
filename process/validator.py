@@ -55,12 +55,12 @@ class Validator(object):
                     valid = False
 
         if len(self.invalid_data) > 0:
-            self.invalid_data.to_csv(self.config.invalid_data_file.name, index=False)
+            self.invalid_data.to_csv(self.config.invalid_data_file, index=False, header=False)
 
             if self.config.drop_invalid:
                 # remove all rows that are in the invalid_data DataFrame
                 self.data.drop(self.invalid_data.index, inplace=True)
-                valid = len(self.data) > 0
+                valid = True
 
         return valid
 

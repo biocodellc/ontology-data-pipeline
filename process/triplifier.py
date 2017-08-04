@@ -4,8 +4,11 @@ import pandas as pd
 
 
 class Triplifier(object):
+    set_integer_columns = False
+
     def __init__(self, config):
         self.config = config
+        self.integer_columns = []
 
     def triplify(self, data_frame):
         """
@@ -128,10 +131,15 @@ class Triplifier(object):
     def __get_value(self, row_data, column):
         coerce_integer = False
 
-        for rule in self.config.rules:
-            if rule['rule'].lower() == 'integer' and column in rule['columns']:
-                coerce_integer = True
-                break
+        if not self.set_integer_columns:
+            self.set_integer_columns = True
+
+            for rule in self.config.rules:
+                if rule['rule'].lower() == 'integer':
+                    self.integer_columns.extend(rule['columns'])
+
+        if column in self.integer_columns:
+            coerce_integer = True
 
         val = row_data[column]
 
@@ -144,7 +152,7 @@ class Triplifier(object):
 
     @staticmethod
     def __get_type(val):
-        if re.fullmatch("[+-]?\d+(\.0+)?", str(val)):
+        if re.fullmatch("[+-]?\d+", str(val)):
             return 'integer'
         elif re.fullmatch("[+-]?\d+\.\d+", str(val)):
             return 'float'
