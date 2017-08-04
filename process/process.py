@@ -54,7 +54,7 @@ class Process(object):
                     if self.config.verbose:
                         print("\tconverting reasoned data to csv for file {}".format(f), file=self.config.log_file)
 
-                    # convert_rdf2csv(out_file, self.config.output_reasoned_csv_dir, self.config.reasoned_sparql)
+                    convert_rdf2csv(out_file, self.config.output_reasoned_csv_dir, self.config.reasoned_sparql)
 
     def __split_and_triplify_data(self):
         if self.config.verbose:
