@@ -50,9 +50,7 @@ def loadPreprocessorFromProject(base_dir):
 
 def fetch_ontopilot(ontopilot_path, repo_url):
     if not os.path.exists(ontopilot_path):
-        print(ontopilot_path)
         split_path = ontopilot_path.rsplit('/', 1)
-        print(split_path)
         jar = split_path[-1]
 
         if not repo_url.endswith('/'):
