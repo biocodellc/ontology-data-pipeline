@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import argparse
+import logging
 import os
 
 import multiprocessing
-from functools import partial
 from itertools import repeat
 
 import pandas as pd
@@ -37,6 +37,7 @@ class Process(object):
             self.config.data_file = self.__preprocess_data()
 
         self.triplifier = Triplifier(config)
+        self.validator = Validator(config)
 
     def run(self):
         fetch_ontopilot(self.config.ontopilot, self.config.ontopilot_repo_url)
@@ -47,7 +48,7 @@ class Process(object):
             clean_dir(self.config.output_reasoned_csv_dir)
 
         if self.config.split_data_column:
-            self.__split_and_triplify_data()
+            self._split_and_triplify_data()
         else:
             self.__triplify_data()
 
@@ -77,9 +78,13 @@ class Process(object):
 
             # convert_rdf2csv(out_file, self.config.output_reasoned_csv_dir, self.config.reasoned_sparql)
 
-    def __split_and_triplify_data(self):
-        if self.config.verbose:
-            print("\tsplitting input data on {}".format(self.config.split_data_column), file=self.config.log_file)
+    def _split_and_triplify_data(self):
+        """
+        splits the parent dataframe into many files based on the config.split_data_column. There will be a minimum of
+        1 file for each unique value in the split_data_column column, with config.chunk_size being the max number of
+        records in each file
+        """
+        logging.debug("\tsplitting input data on {}".format(self.config.split_data_column))
 
         clean_dir(self.config.output_csv_split_dir)
 
@@ -90,8 +95,7 @@ class Process(object):
             for f in files:
                 data = pd.read_csv(os.path.join(root, f), header=0, skipinitialspace=True)
 
-                if self.config.verbose:
-                    print("\tvalidating records in {}".format(f), file=self.config.log_file)
+                logging.debug("\tvalidating records in {}".format(f))
 
                 triples_file = os.path.join(self.config.output_unreasoned_dir, f.replace('.csv', '.n3'))
                 self.__triplify(data, triples_file)
@@ -101,8 +105,7 @@ class Process(object):
 
         i = 1
         for chunk in data:
-            if self.config.verbose:
-                print("\tvalidating {} records".format(len(chunk)), file=self.config.log_file)
+            logging.debug("\tvalidating {} records".format(len(chunk)))
 
             triples_file = os.path.join(self.config.output_unreasoned_dir, "data_{}.ttl".format(i))
             self.__triplify(chunk, triples_file)
@@ -110,8 +113,7 @@ class Process(object):
 
     def __triplify(self, data, triples_file):
 
-        validator = Validator(self.config, data)
-        valid = validator.validate()
+        valid = self.validator.validate(data)
 
         if not valid:
             invalid_data_path = os.path.realpath(self.config.invalid_data_file.name)
@@ -122,8 +124,7 @@ class Process(object):
                 print("Validation Failed! The logs are located {}".format(invalid_data_path))
             exit()
 
-        if self.config.verbose:
-            print("\ttriplifying {} records".format(len(data)), file=self.config.log_file)
+        logging.debug("\ttriplifying {} records".format(len(data)))
 
         triples = self.triplifier.triplify(data)
 

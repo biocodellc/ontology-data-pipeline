@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
-
+import logging
 import os
 import csv
 import re
 import rfc3987
-import shutil
 
 from .labelmap import LabelMap
 
@@ -51,16 +50,16 @@ class Config(object):
         self.ontopilot_repo_url = ONTOPILOT_REPO_URL
 
         if self.log_file:
-            self.log_file = open(os.path.join(self.output_dir, 'log.txt'), 'w')
-        else:
-            self.log_file = None
+            logging.basicConfig(filename=os.path.join(self.output_dir, 'log.txt'), filemode='w')
+
+        if self.verbose:
+            logging.basicConfig(level=logging.DEBUG)
 
         data_file_path = os.path.join(self.output_dir, 'invalid_data.csv')
         if os.path.exists(data_file_path):
             os.remove(data_file_path)
 
-        self.invalid_data_file = open(os.path.join(self.output_dir, 'invalid_data.csv'), 'a')
-        csv.writer(self.invalid_data_file).writerow(self.headers)
+        self.invalid_data_file = os.path.join(self.output_dir, 'invalid_data.csv')
         self.base_dir = base_dir
 
         # output directories
@@ -94,21 +93,7 @@ class Config(object):
         """
         fallback if attribute isn't found
         """
-        if item.startswith('__'):
-            return super.__getattr__(item)
         return None
-
-    def __getstate__(self):
-        """ This is called before pickling. """
-        state = self.__dict__.copy()
-        del state['log_file']
-        del state['invalid_data_file']
-        return state
-
-    def __setstate__(self, state):
-        """ This is called while unpickling. """
-        print(state)
-        self.__dict__.update(state)
 
     def get_entity(self, alias):
         """
@@ -308,8 +293,8 @@ class Config(object):
         file = os.path.join(self.config_dir, 'fetch_reasoned.sparql')
 
         if not os.path.exists(file):
-            print("\tdid not find fetch_reasoned.sparql in config directory. will not convert reasoned data to csv",
-                  file=self.config.log_file)
+            logging.warning(
+                "did not find fetch_reasoned.sparql in config directory. will not convert reasoned data to csv")
             return
 
         with open(file) as f:
