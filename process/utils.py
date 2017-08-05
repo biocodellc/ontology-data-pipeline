@@ -68,7 +68,7 @@ def fetch_ontopilot(ontopilot_path, repo_url):
 
         if r.status_code is not 200:
             print('error downloading ontopilot: status_code: {}\n{}'.format(r.status_code, r.content))
-            
+
         with open(ontopilot_path, 'wb') as f:
             for chunk in r.iter_content(chunk_size=1024):
                 f.write(chunk)

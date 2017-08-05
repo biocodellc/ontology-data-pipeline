@@ -1,14 +1,18 @@
 # -*- coding: utf-8 -*-
 import re
 import pandas as pd
+import multiprocessing
+from multiprocessing.dummy import Pool as ThreadPool
+
 
 
 class Triplifier(object):
-    set_integer_columns = False
-
     def __init__(self, config):
         self.config = config
         self.integer_columns = []
+        for rule in self.config.rules:
+            if rule['rule'].lower() == 'integer':
+                self.integer_columns.extend(rule['columns'])
 
     def triplify(self, data_frame):
         """
@@ -19,26 +23,52 @@ class Triplifier(object):
         """
         triples = []
 
-        for index, row in data_frame.iterrows():
-            triples.extend(self.__generate_triples_for_row(row))
+        # parallelize the process
+        # https://stackoverflow.com/questions/40357434/pandas-df-iterrow-parallelization
+        num_processes = multiprocessing.cpu_count()
+        chunk_size = int(data_frame.shape[0]/num_processes)
 
-        triples.extend(self.__generate_triples_for_relation_predicates())
-        triples.extend(self.__generate_triples_for_entities())
-        triples.append(self.__generate_ontology_import_triple())
+        # this solution was reworked from the above link.
+        # will work even if the length of the dataframe is not evenly divisible by num_processes
+        chunks = [data_frame.ix[data_frame.index[i:i + chunk_size]] for i in range(0, data_frame.shape[0], chunk_size)]
+
+        # pool = multiprocessing.Pool(processes=num_processes)
+        pool = ThreadPool(9)
+
+        # apply our function to each chunk in the list
+        results = pool.map(self._generate_triples_for_chunk, chunks)
+        # results = []
+        # for c in chunks:
+        #     results.append(self._generate_triples_for_chunk(c))
+
+        # join the array of results
+        for t in results:
+            triples.extend(t)
+
+        triples.extend(self._generate_triples_for_relation_predicates())
+        triples.extend(self._generate_triples_for_entities())
+        triples.append(self._generate_ontology_import_triple())
 
         return triples
 
-    def __generate_triples_for_row(self, row):
+    def _generate_triples_for_chunk(self, chunk):
+        triples = []
+        for index, row in chunk.iterrows():
+            triples.extend(self._generate_triples_for_row(row))
+
+        return triples
+
+    def _generate_triples_for_row(self, row):
         row_triples = []
 
         for entity in self.config.entities:
-            s = "<{}{}>".format(entity['identifier_root'], self.__get_value(row, entity['unique_key']))
+            s = "<{}{}>".format(entity['identifier_root'], self._get_value(row, entity['unique_key']))
             if entity['concept_uri'] != 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type':
                 o = "<{}>".format(entity['concept_uri'])
                 row_triples.append("{} <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> {}".format(s, o))
 
             for column, uri in entity['columns']:
-                val = self.__get_value(row, column)
+                val = self._get_value(row, column)
 
                 list_for_column = self.config.get_list(column)
 
@@ -55,7 +85,7 @@ class Triplifier(object):
                 if val and not pd.isnull(val):
                     p = "<{}>".format(uri)
                     if literal_val:
-                        type = self.__get_type(val)
+                        type = self._get_type(val)
                         o = "\"{}\"^^<http://www.w3.org/2001/XMLSchema#{}>".format(val, type)
                     else:
                         o = "<{}>".format(val)
@@ -64,14 +94,14 @@ class Triplifier(object):
         for relation in self.config.relations:
             subject_entity = self.config.get_entity(relation['subject_entity_alias'])
             object_entity = self.config.get_entity(relation['object_entity_alias'])
-            s = "<{}{}>".format(subject_entity['identifier_root'], self.__get_value(row, subject_entity['unique_key']))
+            s = "<{}{}>".format(subject_entity['identifier_root'], self._get_value(row, subject_entity['unique_key']))
             p = "<{}>".format(relation['predicate'])
-            o = "<{}{}>".format(object_entity['identifier_root'], self.__get_value(row, object_entity['unique_key']))
+            o = "<{}{}>".format(object_entity['identifier_root'], self._get_value(row, object_entity['unique_key']))
             row_triples.append("{} {} {}".format(s, p, o))
 
         return row_triples
 
-    def __generate_triples_for_relation_predicates(self):
+    def _generate_triples_for_relation_predicates(self):
         predicate_triples = []
 
         for relation in self.config.relations:
@@ -82,17 +112,17 @@ class Triplifier(object):
 
         return predicate_triples
 
-    def __generate_triples_for_entities(self):
+    def _generate_triples_for_entities(self):
         entity_triples = []
 
         for entity in self.config.entities:
-            entity_triples.extend(self.__generate_property_triples(entity['columns']))
+            entity_triples.extend(self._generate_property_triples(entity['columns']))
             if entity['concept_uri'] != 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type':
-                entity_triples.append(self.__generate_class_triple(entity['concept_uri']))
+                entity_triples.append(self._generate_class_triple(entity['concept_uri']))
 
         return entity_triples
 
-    def __generate_ontology_import_triple(self):
+    def _generate_ontology_import_triple(self):
         s = "<urn:importInstance>"
         p = "<http://www.w3.org/2002/07/owl#imports>"
         o = "<{}>".format(self.config.ontology)
@@ -100,7 +130,7 @@ class Triplifier(object):
         return "{} {} {}".format(s, p, o)
 
     @staticmethod
-    def __generate_class_triple(concept_uri):
+    def _generate_class_triple(concept_uri):
         s = "<{}>".format(concept_uri)
         p = "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>"
         o = "<http://www.w3.org/2000/01/rdf-schema#Class>"
@@ -108,7 +138,7 @@ class Triplifier(object):
         return "{} {} {}".format(s, p, o)
 
     @staticmethod
-    def __generate_property_triples(properties):
+    def _generate_property_triples(properties):
         """
         generate triples for the properties of each entity
         """
@@ -128,15 +158,8 @@ class Triplifier(object):
 
         return property_triples
 
-    def __get_value(self, row_data, column):
+    def _get_value(self, row_data, column):
         coerce_integer = False
-
-        if not self.set_integer_columns:
-            self.set_integer_columns = True
-
-            for rule in self.config.rules:
-                if rule['rule'].lower() == 'integer':
-                    self.integer_columns.extend(rule['columns'])
 
         if column in self.integer_columns:
             coerce_integer = True
@@ -151,7 +174,7 @@ class Triplifier(object):
         return val
 
     @staticmethod
-    def __get_type(val):
+    def _get_type(val):
         if re.fullmatch("[+-]?\d+", str(val)):
             return 'integer'
         elif re.fullmatch("[+-]?\d+\.\d+", str(val)):

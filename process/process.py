@@ -2,6 +2,11 @@
 
 import argparse
 import os
+
+import multiprocessing
+from functools import partial
+from itertools import repeat
+
 import pandas as pd
 
 from process.rdf2csv import convert_rdf2csv
@@ -16,6 +21,12 @@ from .validator import Validator
 __version__ = "0.1.0"
 
 PROJECT_BASE = os.path.join(os.path.dirname(__file__), '../projects')
+
+
+def reason(file, root, config):
+    out_file = os.path.join(config['output_reasoned_dir'], file.replace('.n3', '.ttl'))
+    run_reasoner(os.path.join(root, file), out_file, config['reasoner_config'], config['ontopilot'])
+
 
 
 class Process(object):
@@ -40,21 +51,31 @@ class Process(object):
         else:
             self.__triplify_data()
 
+        exit()
         for root, dirs, files in os.walk(self.config.output_unreasoned_dir):
             c = 0
-            for f in files:
-                c += 1
-                if self.config.verbose:
-                    print("\trunning reasoner on {} of {} files".format(c, len(files)), file=self.config.log_file)
+            # prod_reason = partial(reason, config=self.config, root=root)
+            c_map = {
+                'output_reasoned_dir': self.config.output_reasoned_dir,
+                'reasoner_config': self.config.reasoner_config,
+                'ontopilot': self.config.ontopilot
+            }
+            with multiprocessing.Pool(processes=4) as pool:
+                print(pool.starmap(reason, zip(files, repeat(root), repeat(c_map))))
 
-                out_file = os.path.join(self.config.output_reasoned_dir, f.replace('.n3', '.ttl'))
-                run_reasoner(os.path.join(root, f), out_file, self.config.reasoner_config, self.config.ontopilot)
+            # for f in files:
+            #     c += 1
+            #     if self.config.verbose:
+            #         print("\trunning reasoner on {} of {} files".format(c, len(files)), file=self.config.log_file)
+            #
+            #     out_file = os.path.join(self.config.output_reasoned_dir, f.replace('.n3', '.ttl'))
+            #     run_reasoner(os.path.join(root, f), out_file, self.config.reasoner_config, self.config.ontopilot)
+            #
+            #     if self.config.reasoned_sparql:
+            #         if self.config.verbose:
+            #             print("\tconverting reasoned data to csv for file {}".format(f), file=self.config.log_file)
 
-                if self.config.reasoned_sparql:
-                    if self.config.verbose:
-                        print("\tconverting reasoned data to csv for file {}".format(f), file=self.config.log_file)
-
-                    convert_rdf2csv(out_file, self.config.output_reasoned_csv_dir, self.config.reasoned_sparql)
+            # convert_rdf2csv(out_file, self.config.output_reasoned_csv_dir, self.config.reasoned_sparql)
 
     def __split_and_triplify_data(self):
         if self.config.verbose:
@@ -187,7 +208,9 @@ def main():
     parser.add_argument(
         "-c",
         "--chunk_size",
-        help="chunk size to use when processing data. defaults to 50,000"
+        help="chunk size to use when processing data",
+        type=int,
+        default=50000
     )
     parser.add_argument(
         "-s",

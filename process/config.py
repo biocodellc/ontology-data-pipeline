@@ -94,7 +94,21 @@ class Config(object):
         """
         fallback if attribute isn't found
         """
+        if item.startswith('__'):
+            return super.__getattr__(item)
         return None
+
+    def __getstate__(self):
+        """ This is called before pickling. """
+        state = self.__dict__.copy()
+        del state['log_file']
+        del state['invalid_data_file']
+        return state
+
+    def __setstate__(self, state):
+        """ This is called while unpickling. """
+        print(state)
+        self.__dict__.update(state)
 
     def get_entity(self, alias):
         """
