@@ -33,23 +33,46 @@ The processing pipeline implements the following steps:
 
     This step uses the [ontopilot](https://github.com/stuckyb/ontopilot) project to perform inferencing using the
     [Plant Phenology Ontology](https://github.com/PlantPhenoOntology/ppo)
+    
+4. RDF2CSV
 
-4. Uploading
+    This step takes the provided [sparql query](#fetch_reasoned.sparql) and generates csv files for each file outputted
+    by in the Reasoning step. If no sparql query is found, then this step is skipped.
+    
+## Data loader
+
+This cli is used for loading reasoned data into elasticsearch and/or blazegraph.
+
+`loader.loader` is the main entry point for the application. `loader.py` is a convince wrapper script for running the
+app from the source tree.
+
+1. Uploading
 
     TODO flesh this out
     1. BlazeGraph
     2. ElasticSearch
     
+## Dependencies
+
+The python dependencies are found in `requirements.txt`. These can be installed by running `pip install -r requirements.txt`.
+
+Additional dependencies:
+
+    * Java 8
+    * [ontopilot](https://github.com/stuckyb/ontopilot) (Will be propted to download during cli exectuion if not found)
+    * [query_fetcher](https://github.com/biocodellc/query_fetcher) (Will be propted to download during cli exectuion if not found)
+
 ## Usage
 
 Running from the process.py script:
 
-TODO update with help output
 ```
-$ python process.py -h
+16:17 $ python process.py --help
 usage: process.py [-h] (--input_dir INPUT_DIR | --data_file DATA_FILE)
+                  [--config_dir CONFIG_DIR] [--ontology ONTOLOGY]
                   [--preprocessor PREPROCESSOR] [--drop_invalid] [--log_file]
-                  [-v]
+                  [--reasoner_config REASONER_CONFIG] [-v] [-c CHUNK_SIZE]
+                  [--num_processes NUM_PROCESSES] [-s SPLIT_DATA_COLUMN]
                   project output_dir
 
 PPO data pipeline cmd line application.
@@ -68,6 +91,13 @@ optional arguments:
                         optionally specify the data file to load. This will
                         skip the preprocessor step and used the supplied data
                         file instead
+  --config_dir CONFIG_DIR
+                        optionally specify the path of the directory
+                        containing the configuration files. defaults to
+                        /Users/rjewing/code/biocode/ppo-data-
+                        pipeline/process/../config
+  --ontology ONTOLOGY   optionally specify a filepath/url of the ontology to
+                        use for reasoning/triplifying
   --preprocessor PREPROCESSOR
                         optionally specify the dotted python path of the
                         preprocessor class. This will be loaded instead of
@@ -77,7 +107,21 @@ optional arguments:
                         results, and continue the process
   --log_file            log all output to a log.txt file in the output_dir.
                         default is to log output to the console
+  --reasoner_config REASONER_CONFIG
+                        optionally specify the reasoner configuration file
   -v, --verbose         verbose logging output
+  -c CHUNK_SIZE, --chunk_size CHUNK_SIZE
+                        chunk size to use when processing data. optimal
+                        chunk_size for datasets with less then 200000
+                        recordscan be determined with: num_records / num_cpus
+  --num_processes NUM_PROCESSES
+                        number of process to use for parallel processing of
+                        data. Defaults to cpu_count of the machine
+  -s SPLIT_DATA_COLUMN, --split_data SPLIT_DATA_COLUMN
+                        column to split the data on. This will split the data
+                        file into many files with each file containing no more
+                        records then the specified chunk_size, using the
+                        specified column values as the filenames
 
 As an alternative to the commandline, params can be placed in a file, one per
 line, and specified on the commandline like 'process.py @params.conf'.
@@ -86,8 +130,11 @@ line, and specified on the commandline like 'process.py @params.conf'.
 
 ## Config Files
 
-Each project should have a config directory under `projects/{projectName}/config`. This will contain the files necessary
-for data validation and triplifying. The following files are required:
+We provide a set of default configuration files found under `config` directory. These are the base configuration files
+we use for reasoning against the [Plant Phenology Ontology](https://github.com/PlantPhenoOntology/PPO/). These files 
+configure the data validation, triplifying, reasoning, and rdf2csv converting.
+ 
+The following files are required:
 
 ##### <a name="entity.csv"></a>
 
@@ -148,6 +195,12 @@ for data validation and triplifying. The following files are required:
     * `defined_by`
     
         The uri which defines the field
+        
+5. `excluded_types.csv` - Used by ontopilot
+
+6. `reasoner.conf` - ontopilot inferencing configuration file
+
+7. `headers.csv` - specifies the input data headers we except to see after preprocessing the data
     
 
 The following files are optional:
@@ -189,3 +242,6 @@ The following files are optional:
 
     * `field` - Specifies a valid value. This is the values expected in the input data file
     * `defined_by` - Optional value which will replace the field when writing triples
+    
+3. <a name="fetch_reasoned.sparql"></a>`fetch_reasoned.sparql` - Sparql query used to convert reasoned data to csv
+   
