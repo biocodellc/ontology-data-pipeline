@@ -23,11 +23,6 @@ __version__ = "0.1.0"
 PROJECT_BASE = os.path.join(os.path.dirname(__file__), '../projects')
 
 
-def reason(file, root, config):
-    out_file = os.path.join(config['output_reasoned_dir'], file.replace('.n3', '.ttl'))
-    run_reasoner(os.path.join(root, file), out_file, config['reasoner_config'], config['ontopilot'])
-
-
 class Process(object):
     def __init__(self, config):
         self.config = config
@@ -51,17 +46,9 @@ class Process(object):
         else:
             self.__triplify_data()
 
-        exit()
         for root, dirs, files in os.walk(self.config.output_unreasoned_dir):
-            c = 0
-            # prod_reason = partial(reason, config=self.config, root=root)
-            c_map = {
-                'output_reasoned_dir': self.config.output_reasoned_dir,
-                'reasoner_config': self.config.reasoner_config,
-                'ontopilot': self.config.ontopilot
-            }
             with multiprocessing.Pool(processes=4) as pool:
-                print(pool.starmap(reason, zip(files, repeat(root), repeat(c_map))))
+                pool.starmap(self._reason, zip(files, repeat(root)))
 
                 # for f in files:
                 #     c += 1
@@ -150,6 +137,11 @@ class Process(object):
         with open(triples_file, 'w') as f:
             for t in triples:
                 f.write("{} .\n".format(t))
+
+    def _reason(self, file, root):
+        logging.debug("\trunning reasoner on {}".format(file))
+        out_file = os.path.join(self.config.output_reasoned_dir, file.replace('.n3', '.ttl'))
+        run_reasoner(os.path.join(root, file), out_file, self.config.reasoner_config, self.config.ontopilot)
 
     def __preprocess_data(self):
         clean_dir(self.config.output_csv_dir)
