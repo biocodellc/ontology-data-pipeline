@@ -11,10 +11,9 @@ The processing pipeline implements the following steps:
 
     This step involves transforming the data into a common format for triplifying. This will usually involve writing a 
     custom `PreProcessor` for each project to be ingested. The `preprocessor` module contains an abstract class 
-    `AbstractPreProcessor` that is meant to be inherited by the project preprocessor. That class contains information about the 
-    expected input format for the triplifying step
+    `AbstractPreProcessor` that can be inherited by the project preprocessor.
     
-2. Triplifyer
+2. Triplifier
 
     This step provides provides basic data validation and generates the RDF triples, assuming validation passes, needed 
     for the reasoning phase. Each project will need to contain a `config` directory with the following files that will 
@@ -34,23 +33,22 @@ The processing pipeline implements the following steps:
     This step uses the [ontopilot](https://github.com/stuckyb/ontopilot) project to perform inferencing using the
     [Plant Phenology Ontology](https://github.com/PlantPhenoOntology/ppo)
     
-4. RDF2CSV
+4. Rdf2Csv
 
     This step takes the provided [sparql query](#fetch_reasoned.sparql) and generates csv files for each file outputted
     by in the Reasoning step. If no sparql query is found, then this step is skipped.
     
-## Data loader
+5. Data Loading
 
-This cli is used for loading reasoned data into elasticsearch and/or blazegraph.
+    This is a separate cli used for loading reasoned data into elasticsearch and/or blazegraph.
+    
+    `loader.loader` is the main entry point for the application. `loader.py` is a convince wrapper script for running the
+    app from the source tree.
 
-`loader.loader` is the main entry point for the application. `loader.py` is a convince wrapper script for running the
-app from the source tree.
-
-1. Uploading
-
-    TODO flesh this out
-    1. BlazeGraph
-    2. ElasticSearch
+    * Uploading
+    
+        1. BlazeGraph
+        2. ElasticSearch
     
 ## Dependencies
 
@@ -58,9 +56,9 @@ The python dependencies are found in `requirements.txt`. These can be installed 
 
 Additional dependencies:
 
-    * Java 8
-    * [ontopilot](https://github.com/stuckyb/ontopilot) (Will be propted to download during cli exectuion if not found)
-    * [query_fetcher](https://github.com/biocodellc/query_fetcher) (Will be propted to download during cli exectuion if not found)
+* Java 8
+* [ontopilot](https://github.com/stuckyb/ontopilot) (Will be propted to download during cli exectuion if not found)
+* [query_fetcher](https://github.com/biocodellc/query_fetcher) (Will be propted to download during cli exectuion if not found)
 
 ## Usage
 
@@ -125,6 +123,50 @@ optional arguments:
 
 As an alternative to the commandline, params can be placed in a file, one per
 line, and specified on the commandline like 'process.py @params.conf'.
+```
+
+Running the loader.py script:
+
+```
+16:38 $ python loader.py --help
+usage: loader.py [-h] [-rdf_i--rdf_input_dir RDF_I__RDF_INPUT_DIR]
+                 [--endpoint ENDPOINT] [-es_ies_input_dir ES_IES_INPUT_DIR]
+                 [--index INDEX] [--drop-existing] [--alias ALIAS]
+                 {both,blazegraph,elasticsearch}
+
+data loading cmd line application for PPO data pipeline.
+
+positional arguments:
+  {both,blazegraph,elasticsearch}
+
+optional arguments:
+  -h, --help            show this help message and exit
+
+blazegraph:
+  blazegraph loading options
+
+  -rdf_i--rdf_input_dir RDF_I__RDF_INPUT_DIR
+                        The path of the directory containing the rdf data to
+                        upload to blazegraph
+  --endpoint ENDPOINT   the blazegraph endpoint to upload to. The namespace
+                        will be the name of the uploadedfile minus the
+                        extension
+
+elastic_search:
+  elastic_search loading options
+
+  -es_ies_input_dir ES_IES_INPUT_DIR
+                        The path of the directory containing the csv data to
+                        upload to elasticsearch
+  --index INDEX         The name elasticsearch of the index to upload to
+  --drop-existing       this flag will drop all existing data with the same
+                        "source" value.
+  --alias ALIAS         optionally specify an elastic search alias. When
+                        creating an index, it will be associatedwith this
+                        alias
+
+As an alternative to the commandline, params can be placed in a file, one per
+line, and specified on the commandline like 'loader.py @params.conf'.
 ```
 
 
