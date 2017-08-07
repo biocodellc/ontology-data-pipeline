@@ -28,7 +28,6 @@ def reason(file, root, config):
     run_reasoner(os.path.join(root, file), out_file, config['reasoner_config'], config['ontopilot'])
 
 
-
 class Process(object):
     def __init__(self, config):
         self.config = config
@@ -64,19 +63,19 @@ class Process(object):
             with multiprocessing.Pool(processes=4) as pool:
                 print(pool.starmap(reason, zip(files, repeat(root), repeat(c_map))))
 
-            # for f in files:
-            #     c += 1
-            #     if self.config.verbose:
-            #         print("\trunning reasoner on {} of {} files".format(c, len(files)), file=self.config.log_file)
-            #
-            #     out_file = os.path.join(self.config.output_reasoned_dir, f.replace('.n3', '.ttl'))
-            #     run_reasoner(os.path.join(root, f), out_file, self.config.reasoner_config, self.config.ontopilot)
-            #
-            #     if self.config.reasoned_sparql:
-            #         if self.config.verbose:
-            #             print("\tconverting reasoned data to csv for file {}".format(f), file=self.config.log_file)
+                # for f in files:
+                #     c += 1
+                #     if self.config.verbose:
+                #         print("\trunning reasoner on {} of {} files".format(c, len(files)), file=self.config.log_file)
+                #
+                #     out_file = os.path.join(self.config.output_reasoned_dir, f.replace('.n3', '.ttl'))
+                #     run_reasoner(os.path.join(root, f), out_file, self.config.reasoner_config, self.config.ontopilot)
+                #
+                #     if self.config.reasoned_sparql:
+                #         if self.config.verbose:
+                #             print("\tconverting reasoned data to csv for file {}".format(f), file=self.config.log_file)
 
-            # convert_rdf2csv(out_file, self.config.output_reasoned_csv_dir, self.config.reasoned_sparql)
+                # convert_rdf2csv(out_file, self.config.output_reasoned_csv_dir, self.config.reasoned_sparql)
 
     def _split_and_triplify_data(self):
         """
@@ -92,27 +91,47 @@ class Process(object):
                    self.config.chunk_size)
 
         for root, dirs, files in os.walk(self.config.output_csv_split_dir):
-            for f in files:
-                data = pd.read_csv(os.path.join(root, f), header=0, skipinitialspace=True)
+            files = [os.path.join(root, f) for f in files]
 
-                logging.debug("\tvalidating records in {}".format(f))
+            with multiprocessing.Pool() as pool:
+                pool.map(self._triplify_file, files)
 
-                triples_file = os.path.join(self.config.output_unreasoned_dir, f.replace('.csv', '.n3'))
-                self.__triplify(data, triples_file)
+    def _triplify_file(self, file):
+        data = pd.read_csv(file, header=0, skipinitialspace=True)
+
+        logging.debug("\tvalidating records in {}".format(file))
+
+        triples_file = os.path.join(self.config.output_unreasoned_dir, file.replace('.csv', '.n3'))
+        self._triplify(data, triples_file)
 
     def __triplify_data(self):
-        data = pd.read_csv(self.config.data_file, header=0, skipinitialspace=True, chunksize=self.config.chunk_size)
+        num_processes = multiprocessing.cpu_count()
+        data = pd.read_csv(self.config.data_file, header=0, skipinitialspace=True,
+                           chunksize=self.config.chunk_size * num_processes)
 
         i = 1
-        for chunk in data:
-            logging.debug("\tvalidating {} records".format(len(chunk)))
+        for data_frame in data:
+            logging.debug("\tvalidating {} records".format(len(data_frame)))
 
-            triples_file = os.path.join(self.config.output_unreasoned_dir, "data_{}.ttl".format(i))
-            self.__triplify(chunk, triples_file)
-            i += 1
+            # parallelize the process
+            # https://stackoverflow.com/questions/40357434/pandas-df-iterrow-parallelization
+            chunk_size = self.config.chunk_size
 
-    def __triplify(self, data, triples_file):
+            # this solution was reworked from the above link.
+            # will work even if the length of the dataframe is not evenly divisible by num_processes
+            chunks = [data_frame.ix[data_frame.index[i:i + chunk_size]] for i in
+                      range(0, data_frame.shape[0], chunk_size)]
 
+            with multiprocessing.Pool(processes=num_processes) as pool:
+                pool.starmap(self._triplify_chunk, zip(chunks, [n for n in range(i, i + len(chunks) + 1)]))
+
+            i += len(chunks)
+
+    def _triplify_chunk(self, chunk, i):
+        triples_file = os.path.join(self.config.output_unreasoned_dir, "data_{}.ttl".format(i))
+        self._triplify(chunk, triples_file)
+
+    def _triplify(self, data, triples_file):
         valid = self.validator.validate(data)
 
         if not valid:
@@ -209,7 +228,8 @@ def main():
     parser.add_argument(
         "-c",
         "--chunk_size",
-        help="chunk size to use when processing data",
+        help="chunk size to use when processing data. optimal chunk_size for datasets with less then 200000 records"
+             "can be determined with: num_records / num_cpus",
         type=int,
         default=50000
     )

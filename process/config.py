@@ -93,6 +93,9 @@ class Config(object):
         """
         fallback if attribute isn't found
         """
+        # without this, the pickling of config will fail when multiprocessing
+        if item.startswith('__'):
+            return super.__getattr__(item)
         return None
 
     def get_entity(self, alias):

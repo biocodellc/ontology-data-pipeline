@@ -2,6 +2,8 @@
 import csv
 import re
 import logging
+
+import multiprocessing
 import pandas as pd
 
 
@@ -17,23 +19,23 @@ class Validator(object):
 
     def __init__(self, config):
         self.config = config
-        self.unique_values_tracker = self._init_tracker()  # to track unique values across multiple files
+        manager = multiprocessing.Manager()
+
+        self.unique_values_tracker = manager.dict()
+        self._init_tracker()  # to track unique values across multiple files
+        self.lock = manager.RLock()
 
         with open(config.invalid_data_file, 'w') as f:
             csv.writer(f).writerow(config.headers)
 
     def validate(self, data_frame):
-        return DataValidator(data_frame, self.config, self.unique_values_tracker).validate()
+        return DataValidator(data_frame, self.config, self.unique_values_tracker, self.lock).validate()
 
     def _init_tracker(self):
-        tracker = {}
-
         for rule in self.config.rules:
             if rule['rule'].lower() == 'uniquevalue':
                 for col in rule['columns']:
-                    tracker[col] = []
-
-        return tracker
+                    self.unique_values_tracker[col] = []
 
 
 class DataValidator(object):
@@ -42,11 +44,12 @@ class DataValidator(object):
     specified in the config.headers
     """
 
-    def __init__(self, df, config, unique_values_tracker):
+    def __init__(self, df, config, unique_values_tracker, lock):
         self.config = config
         self.data = df
         self.unique_values_tracker = unique_values_tracker
         self.invalid_data = pd.DataFrame()
+        self.lock = lock
 
     def validate(self):
         self._validate_columns()
@@ -120,11 +123,17 @@ class DataValidator(object):
             # check for duplicates in current data_frame
             dups = [g for _, g in self.data.groupby(col) if len(g) > 1]
 
-            # check for duplicates in existing values
-            global_dups = self.data[self.data[col].isin(self.unique_values_tracker[col])]
+            # check for duplicates in existing values. we need a lock here so only 1 processes can check for duplicates
+            # AND add their values at a time
+            with self.lock:
+                past_values = self.unique_values_tracker[col]
 
-            # add current data_frame col values to tracker
-            self.unique_values_tracker[col].extend(self.data[col].tolist())
+                global_dups = self.data[self.data[col].isin(past_values)]
+
+                # add current data_frame col values to tracker. to have changes propagated to multiple processes,
+                # we need to reassign the dict key as changes to the list values are not tracked
+                past_values.extend(self.data[col].tolist())
+                self.unique_values_tracker[col] = past_values
 
             if len(dups) > 0:
                 invalid_data = pd.concat(dups)
