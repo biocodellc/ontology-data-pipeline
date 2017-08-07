@@ -28,7 +28,7 @@ class Process(object):
         self.config = config
 
         if not self.config.data_file:
-            self.config.data_file = self.__preprocess_data()
+            self.config.data_file = self._preprocess_data()
 
         self.triplifier = Triplifier(config)
         self.validator = Validator(config)
@@ -44,10 +44,13 @@ class Process(object):
         if self.config.split_data_column:
             self._split_and_triplify_data()
         else:
-            self.__triplify_data()
+            self._triplify_data()
 
+        self._reason_all()
+
+    def _reason_all(self):
         for root, dirs, files in os.walk(self.config.output_unreasoned_dir):
-            with multiprocessing.Pool(processes=4) as pool:
+            with multiprocessing.Pool(processes=self.config.num_processes) as pool:
                 pool.starmap(self._reason, zip(files, repeat(root)))
 
                 # for f in files:
@@ -80,7 +83,7 @@ class Process(object):
         for root, dirs, files in os.walk(self.config.output_csv_split_dir):
             files = [os.path.join(root, f) for f in files]
 
-            with multiprocessing.Pool() as pool:
+            with multiprocessing.Pool(processes=self.config.num_processes) as pool:
                 pool.map(self._triplify_file, files)
 
     def _triplify_file(self, file):
@@ -88,11 +91,11 @@ class Process(object):
 
         logging.debug("\tvalidating records in {}".format(file))
 
-        triples_file = os.path.join(self.config.output_unreasoned_dir, file.replace('.csv', '.n3'))
+        triples_file = os.path.join(self.config.output_unreasoned_dir, file.rsplit('/', 1)[-1].replace('.csv', '.n3'))
         self._triplify(data, triples_file)
 
-    def __triplify_data(self):
-        num_processes = multiprocessing.cpu_count()
+    def _triplify_data(self):
+        num_processes = self.config.num_processes
         data = pd.read_csv(self.config.data_file, header=0, skipinitialspace=True,
                            chunksize=self.config.chunk_size * num_processes)
 
@@ -143,7 +146,7 @@ class Process(object):
         out_file = os.path.join(self.config.output_reasoned_dir, file.replace('.n3', '.ttl'))
         run_reasoner(os.path.join(root, file), out_file, self.config.reasoner_config, self.config.ontopilot)
 
-    def __preprocess_data(self):
+    def _preprocess_data(self):
         clean_dir(self.config.output_csv_dir)
         if self.config.preprocessor:
             PreProcessor = loadClass(self.config.preprocessor)
@@ -224,6 +227,12 @@ def main():
              "can be determined with: num_records / num_cpus",
         type=int,
         default=50000
+    )
+    parser.add_argument(
+        "--num_processes",
+        help="number of process to use for parallel processing of data. Defaults to cpu_count of the machine",
+        type=int,
+        default=multiprocessing.cpu_count()
     )
     parser.add_argument(
         "-s",
