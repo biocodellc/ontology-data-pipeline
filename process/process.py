@@ -11,7 +11,7 @@ import pandas as pd
 
 from process.rdf2csv import convert_rdf2csv
 from process.splitter import split_file
-from process.utils import loadPreprocessorFromProject, loadClass, clean_dir, fetch_ontopilot
+from process.utils import loadPreprocessorFromProject, loadClass, clean_dir, fetch_ontopilot, fetch_query_fetcher
 from .config import Config, DEFAULT_CONFIG_DIR
 from .reasoner import run_reasoner
 from .triplifier import Triplifier
@@ -35,6 +35,7 @@ class Process(object):
 
     def run(self):
         fetch_ontopilot(self.config.ontopilot, self.config.ontopilot_repo_url)
+        fetch_query_fetcher(self.config.queryfetcher, self.config.queryfetcher_repo_url)
 
         clean_dir(self.config.output_unreasoned_dir)
         clean_dir(self.config.output_reasoned_dir)
@@ -48,24 +49,17 @@ class Process(object):
 
         self._reason_all()
 
+        if self.config.reasoned_sparql:
+            self._reasoned2csv()
+
     def _reason_all(self):
         for root, dirs, files in os.walk(self.config.output_unreasoned_dir):
             with multiprocessing.Pool(processes=self.config.num_processes) as pool:
                 pool.starmap(self._reason, zip(files, repeat(root)))
 
-                # for f in files:
-                #     c += 1
-                #     if self.config.verbose:
-                #         print("\trunning reasoner on {} of {} files".format(c, len(files)), file=self.config.log_file)
-                #
-                #     out_file = os.path.join(self.config.output_reasoned_dir, f.replace('.n3', '.ttl'))
-                #     run_reasoner(os.path.join(root, f), out_file, self.config.reasoner_config, self.config.ontopilot)
-                #
-                #     if self.config.reasoned_sparql:
-                #         if self.config.verbose:
-                #             print("\tconverting reasoned data to csv for file {}".format(f), file=self.config.log_file)
-
-                # convert_rdf2csv(out_file, self.config.output_reasoned_csv_dir, self.config.reasoned_sparql)
+    def _reasoned2csv(self):
+        convert_rdf2csv(self.config.output_reasoned_dir, self.config.output_reasoned_csv_dir,
+                        self.config.reasoned_sparql, self.config.queryfetcher)
 
     def _split_and_triplify_data(self):
         """

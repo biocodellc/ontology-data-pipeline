@@ -10,6 +10,9 @@ from .labelmap import LabelMap
 ONTOPILOT_VERSION = '2017-08-04'
 ONTOPILOT_REPO_URL = 'http://repo.biocodellc.com/repository/3rd-party/org/biocode/ontopilot/{}/'.format(
     ONTOPILOT_VERSION)
+QUERY_FETCHER_VERSION = '0.0.1'
+QUERY_FETCHER_REPO_URL = 'http://repo.biocodellc.com/repository/maven-public/org/biocode/query_fetcher/{}/'.format(
+    QUERY_FETCHER_VERSION)
 
 VALID_RULES = ['RequiredValue', 'ControlledVocabulary', 'UniqueValue', 'Integer', 'Float']
 DEFAULT_ONTOLOGY = "https://github.com/PlantPhenoOntology/PPO/raw/master/ontology/ppo-reasoned.owl"
@@ -48,6 +51,8 @@ class Config(object):
 
         self.ontopilot = os.path.join(os.path.dirname(__file__), '../lib/ontopilot-{}.jar'.format(ONTOPILOT_VERSION))
         self.ontopilot_repo_url = ONTOPILOT_REPO_URL
+        self.queryfetcher = os.path.join(os.path.dirname(__file__), '../lib/query_fetcher-{}.jar'.format(QUERY_FETCHER_VERSION))
+        self.queryfetcher_repo_url = QUERY_FETCHER_REPO_URL
 
         if self.log_file:
             logging.basicConfig(filename=os.path.join(self.output_dir, 'log.txt'), filemode='w')
@@ -74,20 +79,20 @@ class Config(object):
 
         self.__label_map = LabelMap(self.ontology)
 
-        self.__parse_headers()
+        self._parse_headers()
 
         self.lists = {}
         self.rules = []
-        self.__parse_rules()
-        self.__add_default_rules()
+        self._parse_rules()
+        self._add_default_rules()
 
         self.entities = []
-        self.__parse_entities()
-        self.__parse_mapping()
+        self._parse_entities()
+        self._parse_mapping()
         self.relations = []
-        self.__parse_relations()
+        self._parse_relations()
 
-        self.__parse_sparql()
+        self._parse_sparql()
 
     def __getattr__(self, item):
         """
@@ -116,7 +121,7 @@ class Config(object):
             if rule['rule'] == 'ControlledVocabulary' and column in rule['columns']:
                 return self.lists[rule['list']]
 
-    def __parse_rules(self):
+    def _parse_rules(self):
         """
         Parse rules.csv file for the project. Used to define data validation rules.
         Expected columns are: rule,columns,level,list
@@ -140,7 +145,7 @@ class Config(object):
                     raise AttributeError(
                         "Invalid rule in \"{}\". ControlledVocabulary rule must specify a list".format(file))
 
-                self.__parse_list(rule['list'])
+                self._parse_list(rule['list'])
 
             if not rule['columns']:
                 raise AttributeError("Invalid rule in \"{}\". All rules must specify columns.".format(file))
@@ -150,7 +155,7 @@ class Config(object):
             if not rule['level']:
                 rule['level'] = 'warning'
 
-    def __parse_list(self, file_name):
+    def _parse_list(self, file_name):
         """
         Parse list_name.csv file. The file name is specified in the list column of the rules.csv file and contains the
         controlled vocabulary, 1 field per line.
@@ -168,10 +173,10 @@ class Config(object):
 
                 for r in reader:
                     if r['defined_by']:
-                        r['defined_by'] = self.__get_uri_from_label(r['defined_by'])
+                        r['defined_by'] = self._get_uri_from_label(r['defined_by'])
                         self.lists[file_name].append(r)
 
-    def __add_default_rules(self):
+    def _add_default_rules(self):
         list_name = 'phenophase_descriptions.csv'
         self.rules.append({
             'rule': 'ControlledVocabulary',
@@ -180,9 +185,9 @@ class Config(object):
             'list': list_name
         })
 
-        self.__parse_list(list_name)
+        self._parse_list(list_name)
 
-    def __parse_entities(self):
+    def _parse_entities(self):
         """
         Parse entity.csv file for the project. Used to define the entities for triplifying
         Expected columns are: alias,concept_uri,unique_key,identifier_root
@@ -202,10 +207,10 @@ class Config(object):
                     "Invalid entity in {}. alias, concept_uri, and unique_key are required for each entity"
                     "listed.".format(file))
 
-            entity['concept_uri'] = self.__get_uri_from_label(entity['concept_uri'])
+            entity['concept_uri'] = self._get_uri_from_label(entity['concept_uri'])
             entity['columns'] = []
 
-    def __parse_mapping(self):
+    def _parse_mapping(self):
         """
         Parse mapping.csv file for the project, and add the columns to the specified entities. Used to define the
         mapping of the data csv to entities for triplifying.
@@ -225,9 +230,9 @@ class Config(object):
                 if not entity:
                     raise RuntimeError('Invalid entity_alias "{}" defined in {}'.format(mapping['entity_alias'], file))
 
-                entity['columns'].append((mapping['column'], self.__get_uri_from_label(mapping['uri'])))
+                entity['columns'].append((mapping['column'], self._get_uri_from_label(mapping['uri'])))
 
-    def __parse_relations(self):
+    def _parse_relations(self):
         """
         Parse relations.csv file for the project. Used to define the relations between entities for triplifying
         Expected columns are: subject_entity_alias,predicate,object_entity_alias
@@ -247,9 +252,9 @@ class Config(object):
                     "Invalid relation in {}. subject_entity_alias, predicate, and object_entity_alias are required for "
                     "each relation listed.".format(file))
 
-            r['predicate'] = self.__get_uri_from_label(r['predicate'])
+            r['predicate'] = self._get_uri_from_label(r['predicate'])
 
-    def __get_uri_from_label(self, def_text):
+    def _get_uri_from_label(self, def_text):
         """
         Fetches a URI given a label by searching
         all term labels in braces ('{' and '}').  For
@@ -284,7 +289,7 @@ class Config(object):
 
         return newdef
 
-    def __parse_headers(self):
+    def _parse_headers(self):
         file = os.path.join(self.config_dir, 'headers.csv')
 
         if os.path.exists(file):
@@ -292,7 +297,7 @@ class Config(object):
                 reader = csv.reader(f, skipinitialspace=True)
                 self.headers = next(reader)
 
-    def __parse_sparql(self):
+    def _parse_sparql(self):
         file = os.path.join(self.config_dir, 'fetch_reasoned.sparql')
 
         if not os.path.exists(file):
@@ -301,4 +306,4 @@ class Config(object):
             return
 
         with open(file) as f:
-            self.reasoned_sparql = f.read();
+            self.reasoned_sparql = f.read()
