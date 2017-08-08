@@ -35,7 +35,7 @@ class PreProcessor(AbstractPreProcessor):
         with ZipFile(file) as zip_file:
             for filename in zip_file.namelist():
 
-                if filename.endswith('phe_statusintensity.csv'):
+                if '.phe_statusintensity.' in filename:
                     if csv_file:
                         raise RuntimeError('multiple csv files found in zip_file {}'.format(zip_file.filename))
                     csv_file = zip_file.open(filename)
