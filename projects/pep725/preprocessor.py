@@ -43,16 +43,21 @@ class PreProcessor(AbstractPreProcessor):
             'phenophase_descriptions': pd.read_csv(PHENOPHASE_DESCRIPTIONS_FILE, header=0, skipinitialspace=True)
         }
 
+        num_processes = multiprocessing.cpu_count()
+        chunk_size = 100000
         data = pd.read_csv(self.input_dir + FILES['data'], sep=';', header=0,
-                           usecols=['s_id', 'genus_id', 'species_id', 'phase_id', 'year', 'day'], chunksize=100000,
-                           skipinitialspace=True)
+                           usecols=['s_id', 'genus_id', 'species_id', 'phase_id', 'year', 'day'],
+                           chunksize=chunk_size * num_processes, skipinitialspace=True)
 
         for chunk in data:
-            print("\tprocessing next {} records".format(len(chunk)))
+            chunks = [chunk.ix[chunk.index[i:i + chunk_size]] for i in
+                      range(0, chunk.shape[0], chunk_size)]
 
-            self._transform_data(chunk).to_csv(self.output_file, columns=self.headers, mode='a', header=False,
-                                               index=False)
-            return
+            with multiprocessing.Pool(processes=num_processes) as pool:
+                pool.map(self._transform_chunk, chunks)
+
+    def _transform_chunk(self, chunk):
+        self._transform_data(chunk).to_csv(self.output_file, columns=self.headers, mode='a', header=False, index=False)
 
     def _transform_data(self, data):
         joined_data = data \
