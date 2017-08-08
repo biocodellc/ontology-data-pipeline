@@ -39,7 +39,7 @@ def generate_phen_descriptions(input_dir):
         for chunk in data:
             found_values.update(chunk.phenophaseName.unique().tolist())
 
-    with open(os.path.join(os.path.dirname(__file__), 'phenphase_names.csv'), 'w') as out_file:
+    with open(os.path.join(os.path.dirname(__file__), 'phenphase_descriptions.csv'), 'w') as out_file:
         writer = csv.writer(out_file)
         writer.writerow(['phenophaseName'])
 
@@ -101,7 +101,7 @@ if __name__ == '__main__':
                        help='generate a intensity_values.csv file with all phenophaseIntensity values found in the data')
     group.add_argument('--phenophase', dest='action', action='store_const',
                        const=PHENO_DESC,
-                       help='generate a phenophase_names.csv file with all PhenophaseName values found in the data')
+                       help='generate a phenophase_descriptions.csv file with all PhenophaseNames values found in the data')
 
     args = parser.parse_args()
     input_dir = args.input_dir.strip()

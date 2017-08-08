@@ -2,6 +2,7 @@
 *.iml
 data/
 lib/ontopilot*.jar
+lib/query_fetcher*.jar
 
 #Byte-compiled / optimized / DLL files
 __pycache__/
