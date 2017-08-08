@@ -1,0 +1,13 @@
+field,defined_by
+Colored leaves,{senescing leaf presence}
+Open flowers,{open flower presence}
+Emerging needles,{breaking bud presence}
+Open pollen cones,{open pollen cone presence}
+Breaking needle buds,{breaking bud presence}
+Breaking leaf buds,{breaking bud presence}
+Initial growth,{new above-ground shoot-borne shoot system presence}
+Leaves,{unfolded leaf presence}
+Young needles,{young leaf presence}
+Falling leaves,{abscised leaf presence}
+Young leaves,{young leaf presence}
+Increasing leaf size,{expanding leaf presence}

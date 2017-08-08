@@ -39,7 +39,7 @@ def generate_phen_descriptions(input_dir):
         for chunk in data:
             found_values.update(chunk.phenophaseName.unique().tolist())
 
-    with open(os.path.join(os.path.dirname(__file__), 'phenphase_descriptions.csv'), 'w') as out_file:
+    with open(os.path.join(os.path.dirname(__file__), 'phenophase_descriptions.csv'), 'w') as out_file:
         writer = csv.writer(out_file)
         writer.writerow(['phenophaseName'])
 
