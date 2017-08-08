@@ -37,7 +37,7 @@ def fetch_metadata(url):
     if r.status_code != 200:
         raise Exception("Invalid response returned from {}: {}".format(url, r.content))
 
-    return json.loads(r.content)
+    return json.loads(r.content.decode('utf-8'))
 
 
 def clean_dir(dir):
