@@ -5,7 +5,8 @@
 
 Also contains a few help functions that can be run directly from this script
 """
-
+import logging
+import multiprocessing
 import pandas as pd
 
 from xml.etree import ElementTree
@@ -24,14 +25,15 @@ COLUMNS_MAP = {
 
 class PreProcessor(AbstractPreProcessor):
     def _process_data(self):
-        for file in walk_files(self.input_dir):
-            print("\tprocessing {}".format(file))
-            self._process_zip(file)
+        num_processes = multiprocessing.cpu_count()
+        with multiprocessing.Pool(processes=num_processes) as pool:
+            pool.map(self._process_zip, [f for f in walk_files(self.input_dir)])
 
     def _process_zip(self, file):
         xml_file = None
         csv_file = None
 
+        logging.debug("\tprocessing {}".format(file))
         with ZipFile(file) as zip_file:
             for filename in zip_file.namelist():
 
@@ -56,7 +58,7 @@ class PreProcessor(AbstractPreProcessor):
                            parse_dates=['date'])
 
         for chunk in data:
-            self._transform_data(chunk, lat, lng).to_csv(self._out_file, columns=self.headers, mode='a', header=False,
+            self._transform_data(chunk, lat, lng).to_csv(self.output_file, columns=self.headers, mode='a', header=False,
                                                          index=False)
 
         csv_file.close()

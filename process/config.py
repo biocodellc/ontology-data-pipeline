@@ -30,7 +30,7 @@ class Config(object):
 
     def __init__(self, base_dir, *initial_data, **kwargs):
         """
-        :param base_dir: path to the project directory containing the project files
+        :param base_dir: path to the directory containing the project specific files
         :param initial_data: dict arguments used to extend the Config class
         :param kwargs: kwargs used to extend the Config class
         """
@@ -123,7 +123,7 @@ class Config(object):
 
     def _parse_rules(self):
         """
-        Parse rules.csv file for the project. Used to define data validation rules.
+        Parse rules.csv file. Used to define data validation rules.
         Expected columns are: rule,columns,level,list
         """
         file = os.path.join(self.config_dir, 'rules.csv')
@@ -189,13 +189,13 @@ class Config(object):
 
     def _parse_entities(self):
         """
-        Parse entity.csv file for the project. Used to define the entities for triplifying
+        Parse entity.csv file. Used to define the entities for triplifying
         Expected columns are: alias,concept_uri,unique_key,identifier_root
         """
         file = os.path.join(self.config_dir, 'entity.csv')
 
         if not os.path.exists(file):
-            raise RuntimeError("entity.csv file missing from project configuration directory")
+            raise RuntimeError("entity.csv file missing from configuration directory")
 
         with open(file) as f:
             reader = csv.DictReader(f, skipinitialspace=True)
@@ -212,14 +212,14 @@ class Config(object):
 
     def _parse_mapping(self):
         """
-        Parse mapping.csv file for the project, and add the columns to the specified entities. Used to define the
+        Parse mapping.csv file, and add the columns to the specified entities. Used to define the
         mapping of the data csv to entities for triplifying.
         Expected columns are: column,entity_alias
         """
         file = os.path.join(self.config_dir, 'mapping.csv')
 
         if not os.path.exists(file):
-            raise RuntimeError("mapping.csv file missing from project configuration directory")
+            raise RuntimeError("mapping.csv file missing from configuration directory")
 
         with open(file) as f:
             reader = csv.DictReader(f, skipinitialspace=True)
@@ -234,13 +234,13 @@ class Config(object):
 
     def _parse_relations(self):
         """
-        Parse relations.csv file for the project. Used to define the relations between entities for triplifying
+        Parse relations.csv file. Used to define the relations between entities for triplifying
         Expected columns are: subject_entity_alias,predicate,object_entity_alias
         """
         file = os.path.join(self.config_dir, 'relations.csv')
 
         if not os.path.exists(file):
-            raise RuntimeError("relations.csv file missing from project configuration directory")
+            raise RuntimeError("relations.csv file missing from configuration directory")
 
         with open(file) as f:
             reader = csv.DictReader(f, skipinitialspace=True)

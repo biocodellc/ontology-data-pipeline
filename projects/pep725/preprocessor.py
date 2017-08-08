@@ -45,7 +45,7 @@ class PreProcessor(AbstractPreProcessor):
         for chunk in data:
             print("\tprocessing next {} records".format(len(chunk)))
 
-            self._transform_data(chunk).to_csv(self._out_file, columns=self.headers, mode='a', header=False,
+            self._transform_data(chunk).to_csv(self.output_file, columns=self.headers, mode='a', header=False,
                                                index=False)
             return
 

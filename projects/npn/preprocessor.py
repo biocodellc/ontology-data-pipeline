@@ -42,9 +42,8 @@ class PreProcessor(AbstractPreProcessor):
 
                         for df in tp:
                             print("\tprocessing next {} records".format(len(df)))
-                            self._transform_data(df).to_csv(self._out_file, columns=self.headers, mode='a',
-                                                            header=False,
-                                                            index=False)
+                            self._transform_data(df).to_csv(self.output_file, columns=self.headers, mode='a',
+                                                            header=False, index=False)
 
     def _transform_data(self, df):
         # Add an index name

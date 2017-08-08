@@ -38,7 +38,7 @@ class PreProcessor(AbstractPreProcessor):
 
         for chunk in data:
             logging.debug("\tpreprocessing {} records".format(len(chunk)))
-            self.__transform_data(chunk).to_csv(self._out_file, columns=self.headers, mode='a', header=False,
+            self.__transform_data(chunk).to_csv(self.output_file, columns=self.headers, mode='a', header=False,
                                                 index=False)
 
     def __transform_data(self, base_data):
