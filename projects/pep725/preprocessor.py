@@ -45,11 +45,11 @@ class PreProcessor(AbstractPreProcessor):
         for chunk in data:
             print("\tprocessing next {} records".format(len(chunk)))
 
-            self.__transform_data(chunk).to_csv(self._out_file, columns=self.headers, mode='a', header=False,
-                                                index=False)
+            self._transform_data(chunk).to_csv(self._out_file, columns=self.headers, mode='a', header=False,
+                                               index=False)
             return
 
-    def __transform_data(self, data):
+    def _transform_data(self, data):
         joined_data = data \
             .merge(self.frames['species'], left_on='species_id', right_on='species_id', how='left') \
             .merge(self.frames['genus'], left_on='genus_id', right_on='genus_id', how='left') \
@@ -58,7 +58,7 @@ class PreProcessor(AbstractPreProcessor):
 
         joined_data.fillna("", inplace=True)  # replace all null values
 
-        joined_data = self.__filter_data(joined_data)
+        joined_data = self._filter_data(joined_data)
 
         joined_data['record_id'] = joined_data.apply(lambda x: uuid.uuid4(), axis=1)
         joined_data['specificEpithet'] = joined_data.apply(
@@ -69,7 +69,7 @@ class PreProcessor(AbstractPreProcessor):
         return joined_data.rename(columns=COLUMNS_MAP)
 
     @staticmethod
-    def __filter_data(data):
+    def _filter_data(data):
         # manually remove some data from set that we don't want to work with
         # need to come up with a better method for this in the future!
         exclude = ["Beginning of seed imbibition, P, V: Beginning of bud swelling",

@@ -4,6 +4,7 @@
 """proprocessor.AbstractPreProcessor implementation for preprocessing asu data"""
 
 import uuid, os
+import logging
 import pandas as pd
 from preprocessor import AbstractPreProcessor
 
@@ -36,7 +37,7 @@ class PreProcessor(AbstractPreProcessor):
                            usecols=['coreid', 'measurementValue'])
 
         for chunk in data:
-            print("\tpreprocessing {} records".format(len(chunk)))
+            logging.debug("\tpreprocessing {} records".format(len(chunk)))
             self.__transform_data(chunk).to_csv(self._out_file, columns=self.headers, mode='a', header=False,
                                                 index=False)
 

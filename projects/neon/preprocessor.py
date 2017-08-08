@@ -26,9 +26,9 @@ class PreProcessor(AbstractPreProcessor):
     def _process_data(self):
         for file in walk_files(self.input_dir):
             print("\tprocessing {}".format(file))
-            self.__process_zip(file)
+            self._process_zip(file)
 
-    def __process_zip(self, file):
+    def _process_zip(self, file):
         xml_file = None
         csv_file = None
 
@@ -48,7 +48,7 @@ class PreProcessor(AbstractPreProcessor):
         if not csv_file or not xml_file:
             raise RuntimeError('missing xml or csv file in zip_file {}'.format(zip_file.filename))
 
-        lat, lng = self.__parse_coordinates(xml_file)
+        lat, lng = self._parse_coordinates(xml_file)
 
         data = pd.read_csv(csv_file, header=0, chunksize=100000, skipinitialspace=True,
                            usecols=['uid', 'date', 'dayOfYear', 'individualID', 'scientificName', 'phenophaseName',
@@ -56,14 +56,14 @@ class PreProcessor(AbstractPreProcessor):
                            parse_dates=['date'])
 
         for chunk in data:
-            self.__transform_data(chunk, lat, lng).to_csv(self._out_file, columns=self.headers, mode='a', header=False,
-                                                          index=False)
+            self._transform_data(chunk, lat, lng).to_csv(self._out_file, columns=self.headers, mode='a', header=False,
+                                                         index=False)
 
         csv_file.close()
         xml_file.close()
 
     @staticmethod
-    def __transform_data(data, lat, lng):
+    def _transform_data(data, lat, lng):
         data['source'] = 'NEON'
         data['latitude'] = lat
         data['longitude'] = lng
@@ -97,7 +97,7 @@ class PreProcessor(AbstractPreProcessor):
         return df.rename(columns=COLUMNS_MAP)
 
     @staticmethod
-    def __parse_coordinates(xml_file):
+    def _parse_coordinates(xml_file):
         tree = ElementTree.parse(xml_file)
         w_bound = tree.find('./dataset/coverage/geographicCoverage/boundingCoordinates/westBoundingCoordinate')
         e_bound = tree.find('./dataset/coverage/geographicCoverage/boundingCoordinates/eastBoundingCoordinate')

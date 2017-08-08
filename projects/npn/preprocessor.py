@@ -7,8 +7,6 @@ import os, csv
 import pandas as pd
 from preprocessor import AbstractPreProcessor
 
-headers = ['record_id', 'scientific_name', 'genus', 'specific_epithet', 'year', 'day_of_year', 'latitude',
-           'longitude', 'source', 'phenophase_name', 'lower_count', 'upper_count', 'lower_percent', 'upper_percent']
 
 COLUMNS_MAP = {
     'Observation_ID': 'record_id',
@@ -44,11 +42,11 @@ class PreProcessor(AbstractPreProcessor):
 
                         for df in tp:
                             print("\tprocessing next {} records".format(len(df)))
-                            self.__transform_data(df).to_csv(self._out_file, columns=self.headers, mode='a',
-                                                             header=False,
-                                                             index=False)
+                            self._transform_data(df).to_csv(self._out_file, columns=self.headers, mode='a',
+                                                            header=False,
+                                                            index=False)
 
-    def __transform_data(self, df):
+    def _transform_data(self, df):
         # Add an index name
         df.index.name = 'record_id'
 
@@ -56,7 +54,7 @@ class PreProcessor(AbstractPreProcessor):
 
         # translate values
         cols = ['value', 'lower_count', 'upper_count', 'lower_percent', 'upper_percent']
-        df = self.__translate(os.path.join(os.path.dirname(__file__), 'intensity_values.csv'), cols, 'value', df,
+        df = self._translate(os.path.join(os.path.dirname(__file__), 'intensity_values.csv'), cols, 'value', df,
                               'Intensity_Value')
 
         # set upper/lower counts for cases of no intensity value
@@ -77,7 +75,7 @@ class PreProcessor(AbstractPreProcessor):
         return df.rename(columns=COLUMNS_MAP)
 
     @staticmethod
-    def __translate(filename, cols, index_name, data_frame, lookup_column):
+    def _translate(filename, cols, index_name, data_frame, lookup_column):
         """
          Function to read in a CSV file containing one or more values that we want
          to use to translate values  for.  using the dataframe's "lookup_column"
