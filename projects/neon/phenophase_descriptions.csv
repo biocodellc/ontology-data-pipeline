@@ -1,13 +1,16 @@
 field,defined_by
-Colored leaves,{senescing true leaf}
-Open flowers,{open flower presence}
-Emerging needles,{non-dormant leaf bud presence}
-Open pollen cones,{open pollen cone presence}
-Breaking needle buds,{non-dormant leaf bud presence}
-Breaking leaf buds,{non-dormant leaf bud presence}
-Initial growth,{new above-ground shoot-borne shoot system presence}
-Leaves,{unfolded true leaf}
-Young needles,{immature unfolded true leaf}
-Falling leaves,{abscised leaf presence}
-Young leaves,{immature unfolded true leaf}
-Increasing leaf size,{expanding unfolded true leaf}
+Falling leaves,
+Colored needles,
+Breaking needle buds,
+Falling needles,
+Emerging needles,
+Leaves,
+Increasing leaf size,
+Young needles,
+Colored leaves,
+Initial growth,
+Open pollen cones,
+Open flowers,
+Needles,
+Breaking leaf buds,
+Young leaves,
