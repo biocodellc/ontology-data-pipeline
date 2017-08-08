@@ -12,7 +12,7 @@ from xml.etree import ElementTree
 from zipfile import ZipFile
 from preprocessor import AbstractPreProcessor
 
-from .helpers import walk_files, INTENSITY_VALUE_FRAME
+from projects.neon.helpers import walk_files, INTENSITY_VALUE_FRAME
 
 COLUMNS_MAP = {
     'uid': 'record_id',
