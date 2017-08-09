@@ -9,9 +9,9 @@ from itertools import repeat
 
 import pandas as pd
 
-from process.rdf2csv import convert_rdf2csv
-from process.splitter import split_file
-from process.utils import loadPreprocessorFromProject, loadClass, clean_dir, fetch_ontopilot, fetch_query_fetcher
+from .rdf2csv import convert_rdf2csv
+from .splitter import split_file
+from .utils import  loadClass, clean_dir, fetch_ontopilot, fetch_query_fetcher
 from .config import Config, DEFAULT_CONFIG_DIR
 from .reasoner import run_reasoner
 from .triplifier import Triplifier
@@ -145,7 +145,7 @@ class Process(object):
         if self.config.preprocessor:
             PreProcessor = loadClass(self.config.preprocessor)
         else:
-            PreProcessor = loadPreprocessorFromProject(self.config.base_dir)
+            PreProcessor = loadClass("{}.{}.{}.{}".format("projects", self.config.project, "preprocessor", "PreProcessor"))
 
         preprocessor = PreProcessor(self.config.input_dir, self.config.output_csv_dir)
         preprocessor.run()

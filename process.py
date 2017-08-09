@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-"""Convenience wrapper for running process.process.py directly from source tree."""
+"""Wrapper for running process.process.py module directly from cmd line."""
 
 
 from process.process import main
