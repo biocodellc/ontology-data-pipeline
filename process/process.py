@@ -150,7 +150,7 @@ class Process(object):
         preprocessor = PreProcessor(self.config.input_dir, self.config.output_csv_dir)
         preprocessor.run()
 
-        return preprocessor.output_file_path
+        return preprocessor.output_file
 
 
 def main():
