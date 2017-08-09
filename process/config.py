@@ -83,8 +83,8 @@ class Config(object):
 
         self.lists = {}
         self.rules = []
-        self._parse_rules()
         self._add_default_rules()
+        self._parse_rules()
 
         self.entities = []
         self._parse_entities()

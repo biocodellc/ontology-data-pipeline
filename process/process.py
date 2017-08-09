@@ -119,13 +119,13 @@ class Process(object):
         valid = self.validator.validate(data)
 
         if not valid:
-            invalid_data_path = os.path.realpath(self.config.invalid_data_file.name)
+            invalid_data_path = os.path.realpath(self.config.invalid_data_file)
             if self.config.log_file:
-                log_path = os.path.realpath(self.config.log_file.name)
+                log_path = os.path.realpath(self.config.log_file)
                 print("Validation Failed! The logs are located {} and {}".format(invalid_data_path, log_path))
             else:
                 print("Validation Failed! The logs are located {}".format(invalid_data_path))
-            exit()
+            return
 
         logging.debug("\ttriplifying {} records".format(len(data)))
 

@@ -94,7 +94,7 @@ class DataValidator(object):
             if self.config.drop_invalid:
                 # remove all rows that are in the invalid_data DataFrame
                 self.data.drop(self.invalid_data.index, inplace=True)
-                valid = True
+                valid = len(self.data) > 0
 
         return valid
 
