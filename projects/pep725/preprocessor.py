@@ -72,7 +72,7 @@ class PreProcessor(AbstractPreProcessor):
         joined_data = self._filter_data(joined_data)
 
         joined_data['record_id'] = joined_data.apply(lambda x: uuid.uuid4(), axis=1)
-        joined_data['specificEpithet'] = joined_data.apply(
+        joined_data['specific_epithet'] = joined_data.apply(
             lambda row: re.sub('^%s' % row['genus'], "", row['species']).strip(), axis=1)
         joined_data['source'] = 'PEP725'
 
