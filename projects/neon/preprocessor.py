@@ -51,13 +51,13 @@ class PreProcessor(AbstractPreProcessor):
         if not statusintensity_file or not per_individual_file:
             raise RuntimeError('could not find needed files in zip_file {}'.format(zip_file.filename))
 
-        individuals = pd.read_csv(per_individual_file, header=0, skipinitialspace=True, parse_dates=['addDate'],
-                                  usecols=['decimalLatitude', 'decimalLongitude', 'addDate', 'individualID',
+        individuals = pd.read_csv(per_individual_file, header=0, skipinitialspace=True,
+                                  usecols=['decimalLatitude', 'decimalLongitude', 'namedLocation', 'individualID',
                                            'scientificName'])
 
         data = pd.read_csv(statusintensity_file, header=0, skipinitialspace=True,
                            usecols=['uid', 'date', 'dayOfYear', 'individualID', 'phenophaseName', 'phenophaseStatus',
-                                    'phenophaseIntensity'], parse_dates=['date'])
+                                    'phenophaseIntensity', 'namedLocation'], parse_dates=['date'])
 
         self._transform_data(data, individuals).to_csv(self.output_file, columns=self.headers, mode='a', header=False,
                                                        index=False)
@@ -67,10 +67,12 @@ class PreProcessor(AbstractPreProcessor):
 
     @staticmethod
     def _transform_data(data, individuals_df):
-        data = data.merge(individuals_df, left_on=['individualID', 'date'], right_on=['individualID', 'addDate'],
+        data = data.merge(individuals_df, left_on=['individualID', 'namedLocation'], right_on=['individualID', 'namedLocation'],
                           how='left')
-        data['source'] = 'NEON'
+        # during the merge, pandas duplicates some data, so we drop it here
+        data = data.drop_duplicates()
 
+        data['source'] = 'NEON'
         data['genus'] = data.apply(lambda row: row.scientificName.split()[0] if pd.notnull(row.scientificName) else "",
                                    axis=1)
         data['specific_epithet'] = data.apply(
