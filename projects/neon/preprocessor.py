@@ -59,19 +59,18 @@ class PreProcessor(AbstractPreProcessor):
                            usecols=['uid', 'date', 'dayOfYear', 'individualID', 'phenophaseName', 'phenophaseStatus',
                                     'phenophaseIntensity', 'namedLocation'], parse_dates=['date'])
 
-        self._transform_data(data, individuals).to_csv(self.output_file, columns=self.headers, mode='a', header=False,
-                                                       index=False)
+        data = data.merge(individuals, left_on=['individualID', 'namedLocation'],
+                          right_on=['individualID', 'namedLocation'], how='left')
+        # during the merge, pandas duplicates some data, so we drop it here
+        data = data.drop_duplicates()
+
+        self._transform_data(data).to_csv(self.output_file, columns=self.headers, mode='a', header=False, index=False)
 
         statusintensity_file.close()
         per_individual_file.close()
 
     @staticmethod
-    def _transform_data(data, individuals_df):
-        data = data.merge(individuals_df, left_on=['individualID', 'namedLocation'], right_on=['individualID', 'namedLocation'],
-                          how='left')
-        # during the merge, pandas duplicates some data, so we drop it here
-        data = data.drop_duplicates()
-
+    def _transform_data(data):
         data['source'] = 'NEON'
         data['genus'] = data.apply(lambda row: row.scientificName.split()[0] if pd.notnull(row.scientificName) else "",
                                    axis=1)
