@@ -192,7 +192,7 @@ class Config(object):
         Parse entity.csv file. Used to define the entities for triplifying
         Expected columns are: alias,concept_uri,unique_key,identifier_root
         """
-        file = os.path.join(self.config_dir, 'entity.csv')
+        file = os.path.join(self.base_dir, 'entity.csv')
 
         if not os.path.exists(file):
             raise RuntimeError("entity.csv file missing from configuration directory")
