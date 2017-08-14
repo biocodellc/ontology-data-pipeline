@@ -92,7 +92,7 @@ class Config(object):
         self.relations = []
         self._parse_relations()
 
-        self._parse_sparql()
+        self._find_sparql()
 
     def __getattr__(self, item):
         """
@@ -297,13 +297,10 @@ class Config(object):
                 reader = csv.reader(f, skipinitialspace=True)
                 self.headers = next(reader)
 
-    def _parse_sparql(self):
-        file = os.path.join(self.config_dir, 'fetch_reasoned.sparql')
+    def _find_sparql(self):
+        self.reasoned_sparql = os.path.join(self.config_dir, 'fetch_reasoned.sparql')
 
-        if not os.path.exists(file):
+        if not os.path.exists(self.reasoned_sparql):
             logging.warning(
                 "did not find fetch_reasoned.sparql in config directory. will not convert reasoned data to csv")
             return
-
-        with open(file) as f:
-            self.reasoned_sparql = f.read()
