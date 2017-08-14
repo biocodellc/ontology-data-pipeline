@@ -3,6 +3,7 @@
 import argparse
 import logging
 import os
+import math
 
 import multiprocessing
 from itertools import repeat
@@ -53,8 +54,12 @@ class Process(object):
             self._reasoned2csv()
 
     def _reason_all(self):
+        num_processes = math.floor(self.config.num_processes / 2)
+        if num_processes < 1:
+            num_processes = 1
+
         for root, dirs, files in os.walk(self.config.output_unreasoned_dir):
-            with multiprocessing.Pool(processes=self.config.num_processes) as pool:
+            with multiprocessing.Pool(processes=num_processes) as pool:
                 pool.starmap(self._reason, zip(files, repeat(root)))
 
     def _reasoned2csv(self):
