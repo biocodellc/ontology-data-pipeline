@@ -1,6 +1,7 @@
 .idea
 *.iml
 data/
+scripts/
 lib/ontopilot*.jar
 lib/query_fetcher*.jar
 
