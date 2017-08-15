@@ -1,6 +1,6 @@
 field,defined_by,Notes,lower_percent_present,upper_percent_present,lower_percent_absent,upper_percent_absent
-Flower heads (grasses/sedges),{fresh flower head presence},,1,,,0
-Flowers or flower buds,{non-dormant reproductive bud or fresh flower presence},Can this be a union of {non-dormant reproductive bud presence} and {fresh flower presence},1,,,0
+Flower heads (grasses/sedges),{non-senesced flower head presence},,1,,,0
+Flowers or flower buds,{non-senesced floral structure presence},Can this be a union of {non-dormant reproductive bud presence} and {fresh flower presence},1,,,0
 Open flowers (lilac),{open flower presence},,1,,,0
 Full flowering (lilac),{open flower presence},does not work for absence because some flowers open before this phenophase occurs,95,100,0,
 Open flowers (grasses/sedges),{open flower presence},,1,,,0
