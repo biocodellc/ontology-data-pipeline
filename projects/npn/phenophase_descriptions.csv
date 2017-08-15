@@ -33,12 +33,12 @@ Needles (deciduous),{unfolded true leaf presence},,1,,,0
 Leaves (forbs),{unfolded true leaf presence},,1,,,0
 Leaves (grasses),{unfolded true leaf presence},,1,,,0
 Leaves (sedges),{unfolded true leaf presence},,1,,,0
-Initial growth (forbs),{initial shoot growth presence},,1,,,0
-Initial growth (grasses/sedges),{initial shoot growth presence},,1,,,0
+Initial growth (forbs),{new shoot system presence},,1,,,0
+Initial growth (grasses/sedges),{new shoot system presence},,1,,,0
 Colored leaves,{senescing true leaf presence},,1,,,0
 Colored needles,{senescing true leaf presence},,1,,,0
 Emerging needles (pines),{unfolding true leaf presence},,1,,,0
-Initial growth (rushes),{initial shoot growth presence},,1,,,0
+Initial growth (rushes),{new shoot system presence},,1,,,0
 Leaves (rushes),{unfolded true leaf presence},,1,,,0
 First bloom (historic eastern lilac),{opened flower presence},,1,,,0
 Full bloom (historic lilac/western honeysuckle),{opened flower presence},,1,,,0
