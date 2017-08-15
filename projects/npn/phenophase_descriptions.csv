@@ -24,10 +24,10 @@ Breaking needle buds (conifers),{breaking leaf bud presence},,1,,,0
 Breaking needle buds (deciduous),{breaking leaf bud presence},,1,,,0
 All leaf buds broken (lilac/honeysuckle),{unfolded true leaf presence},Does not work for absence because somes leaves are already unfolded before this phenophase occurs,95,100,0,
 Increasing leaf size,{expanding unfolded true leaf presence},Does not work for absence directly.  if asserted absent then make a lower percent of zero; if present then lower percent is 51% since it denotes a majority.  We have a conceptual mismatch on this field as recorded counts refer to % of overall leaf size.,51,100,0,
-Young leaves (tree/shrub),{immature unfolded tree leaf presence},,1,,,0
-Young needles (conifers),{immature unfolded tree leaf presence},,1,,,0
-Young needles (pines),{immature unfolded tree leaf presence},,1,,,0
-Young leaves (forbs),{immature unfolded tree leaf presence},,1,,,0
+Young leaves (tree/shrub),{immature unfolded true leaf presence},,1,,,0
+Young needles (conifers),{immature unfolded true leaf presence},,1,,,0
+Young needles (pines),{immature unfolded true leaf presence},,1,,,0
+Young leaves (forbs),{immature unfolded true leaf presence},,1,,,0
 Leaves,{unfolded true leaf presence},,1,,,0
 Needles (deciduous),{unfolded true leaf presence},,1,,,0
 Leaves (forbs),{unfolded true leaf presence},,1,,,0
