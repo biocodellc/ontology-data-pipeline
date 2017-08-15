@@ -12,7 +12,7 @@ COLUMNS_MAP = {
     'Observation_ID': 'record_id',
     'Latitude': 'latitude',
     'Longitude': 'longitude',
-    'Day_Of_Year': 'day_of_year',
+    'Day_of_Year': 'day_of_year',
     'Genus': 'genus',
     'Species': 'specific_epithet',
     'Phenophase_Description': 'phenophase_name',
