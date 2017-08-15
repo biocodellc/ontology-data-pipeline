@@ -11,20 +11,20 @@ autumnal leaf fall: first fallen leaves (sporadically),{abscised leaf presence},
 End of autumnal leaf fall (95% fallen),{abscised leaf presence},1,,,,
 First leaves seperated (mouse ear),{expanding true leaf presence},1,,,,Ellen: This is BBCH 10 and I am not sure if this should be {unfolding true leaf presence} or {non-senescing unfolded true leaf}. I need to discuss with Kjell. Kjell: This should be mapped as {expanding leaf presence}
 Leaf unfolding (>=50%),{non-senescing unfolded true leaf presence},1,,,,"Kjell: This should be mapped as {non-senescing unfolded true leaf}. There is no official BBCH code for this, but as far as I know PEP observations are always made at the whole-tree level meaning that at this stage of plant development {non-senescing unfolded true leaf} are present"
-Beginning of flowering ,{open flower presence},1,,,,
-End of flowering,,,,,,Kjell: This BBCH code (69) is used to report 'end' of flowering and thus there may be NO {open flower presence}
+Beginning of flowering ,{opened flower presence},1,,,,
+End of flowering,,,,,,Kjell: This BBCH code (69) is used to report 'end' of flowering and thus there may be NO {opened flower presence}
 First flower buds visible,{reproductive bud presence},1,,,,"Ramona: I suggest that we get rid of ""unopened flowers"" and just keep flower buds. As I mentioned in an earlier email thread ""PO:reproductive bud is very loosely defined as ""A bud (aka ""an undeveloped shoot system"") that develops into a reproductive shoot system"", so that in fact covers both unopened flower and inflorescence buds (as in a tree bud) and unopen flowers (as seen in herbaceous plant). Using the PO definition, I think it is sufficient for us to include only reproductive bud as a synonym of unopened flower, inflorescence bud, and flower bud."""
 "First individual flowers visible (still closed), G: Half of inflorescence emerged (middle of heading)",{reproductive bud presence},1,,,,"Ramona: I suggest that we get rid of ""unopened flowers"" and just keep flower buds. As I mentioned in an earlier email thread ""PO:reproductive bud is very loosely defined as ""A bud (aka ""an undeveloped shoot system"") that develops into a reproductive shoot system"", so that in fact covers both unopened flower and inflorescence buds (as in a tree bud) and unopen flowers (as seen in herbaceous plant). Using the PO definition, I think it is sufficient for us to include only reproductive bud as a synonym of unopened flower, inflorescence bud, and flower bud."""
 "Flower buds present, still enclosed by leaves (oilseed rape)",{unopened flower presence},1,,,,"Ramona: I suggest that we get rid of ""unopened flowers"" and just keep flower buds. As I mentioned in an earlier email thread ""PO:reproductive bud is very loosely defined as•À_ ""A bud (aka ""an undeveloped shoot system"") that develops into a reproductive shoot system"", so that in fact covers both unopened flower and inflorescence buds (as in a tree bud) and unopen flowers (as seen in herbaceous plant). Using the PO definition, I think it is sufficient for us to include only reproductive bud as a synonym of unopened flower, inflorescence bud, and flower bud."""
-Flowering 10% (male),{open flower presence},1,,,,
-Full flowering,{open flower presence},1,,,,"Kjell: only used for BBCH 65, that is, 50% of flowers open"
+Flowering 10% (male),{opened flower presence},1,,,,
+Full flowering,{opened flower presence},1,,,,"Kjell: only used for BBCH 65, that is, 50% of flowers open"
 "Harvestable vegetative plant parts or vegetatively propagated organs have reached 30% of final size, G: Flag leaf sheath just visibly swollen (mid-boot)",,,,,,Kjell: This BBCH code (49) is about vegetative parts and thus should not be used for mapping flowering
 "Harvestable vegetative plant parts or vegetatively propagated organs have reached 50% of final size, G: Flag leaf sheath swollen (late-boot)",,,,,,Kjell: This BBCH code (49) is about vegetative parts and thus should not be used for mapping flowering
 "Harvestable vegetative plant parts or vegetatively propagated organs have reached 70% of final size, G: Flag leaf sheath opening",,,,,,Kjell: This BBCH code (49) is about vegetative parts and thus should not be used for mapping flowering
 "Harvestable vegetative plant parts or vegetatively propagated organs have reached final size, G: First awns visible, Skinset complete",,,,,,Kjell: This BBCH code (49) is about vegetative parts and thus should not be used for mapping flowering
 "Inflorescence or flower buds visible, G: Beginning of heading",{unopen floral structure presence},1,,,,"Ramona: Beginning of heading is only for grasses, so we can't map all cases to fresh flower head presence. Actually, I don't know why we want to make this fresh flower presence, as BBCH describes it as ""tip of inflorescence emerged from sheath, first spikelet just visible "" which would map better to ""reproductive bud presences"" . We need more info from•À_Kjell•À_on how this one is scored.•À_;Kjell: This must have been a mistake from me! I think ths should be mapped as {reproductive bud presence} "
 End of flowering: fruit set visible,{flower presence},,,0,,"John: Need to set lower_percent = 0; Kjell: This BBCH code (69) is mainly used for flowering and thus should not be used for mapping fruiting. I would not use it for mapping presence of flowering either, since it is used to report 'end' of flowering. For a phenologist, it is useful to estimate flowering period (BBCH69-BBCH60)."
-Flowering finishing: majority of petals fallen or dry,{open flower presence},1,,,,Kjell: This is a two-thing observation. Both {open flower presence} and {senescence flower presence} are correct. I would still prefer to map it as {open flower presence} as BBCH69 is more commonly used for end of flowering.
+Flowering finishing: majority of petals fallen or dry,{opened flower presence},1,,,,Kjell: This is a two-thing observation. Both {opened flower presence} and {senescence flower presence} are correct. I would still prefer to map it as {opened flower presence} as BBCH69 is more commonly used for end of flowering.
 "G: First true leaf emerged from coleoptile, D, M: Cotyledons completely unfolded, P: First leaves separated",{unfolding true leaf presence},1,,,,
 G: Flag leaf sheath extending,{mature true leaf presence},1,,,,
 Leaf unfolding (50%),{non-senescing unfolded true leaf presence},1,,,,"Kjell: This should be mapped as {non-senescing unfolded true leaf}. There is no official BBCH code for this, but as far as I know PEP observations are always made at the whole-tree level meaning that at this stage of plant development {non-senescing unfolded true leaf} are present"
@@ -67,13 +67,13 @@ first cut for silage winning (=> 50% of the area),{mature true leaf presence},1,
 "Stem (rosette) 80% of final length (diameter), G: 8 nodes detectable",{mature true leaf presence},1,,,,
 Beginning of sprouting,{initial shoot growth presence},1,,,,
 "Onset of height growth (e.g. Pinus, Picea)",,,,,,
-20% of flowers open,{open flower presence},1,,,,
-"30% of flowers open, maize: male beginning of pollen shedding, female: tips of stigmata visible",{open flower presence},1,,,,
-40% of flowers open,{open flower presence},1,,,,
-Beginnin of flowering: first flowers open (sporadically),{open flower presence},1,,,,
-Beginning of flowering: 10% of flowers open,{open flower presence},1,,,,
+20% of flowers open,{opened flower presence},1,,,,
+"30% of flowers open, maize: male beginning of pollen shedding, female: tips of stigmata visible",{opened flower presence},1,,,,
+40% of flowers open,{opened flower presence},1,,,,
+Beginnin of flowering: first flowers open (sporadically),{opened flower presence},1,,,,
+Beginning of flowering: 10% of flowers open,{opened flower presence},1,,,,
 "First flower petals visible (in petalled forms), G: Inflorescence fully emerged (end of heading)",{unopened flower presence},1,,,,
-"Full flowering: 50% of flowers open, first petals may be fallen",{open flower presence},1,,,,
+"Full flowering: 50% of flowers open, first petals may be fallen",{opened flower presence},1,,,,
 "10% of fruits have reached final size or fruit has reached 10% of final size, G: Caryopsis watery ripe",{ripening fruit presence},1,,,,
 20% of fruits have reached final size or fruit has reached 20% of final size,{ripening fruit presence},1,,,,
 "30% of fruits have reached final size or fruit has reached 30% of final size, G: Early milk",{ripening fruit presence},1,,,,

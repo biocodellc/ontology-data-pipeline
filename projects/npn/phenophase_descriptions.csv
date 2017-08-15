@@ -1,15 +1,15 @@
 field,defined_by,Notes,lower_percent_present,upper_percent_present,lower_percent_absent,upper_percent_absent
 Flower heads (grasses/sedges),{non-senesced flower head presence},,1,,,0
 Flowers or flower buds,{non-senesced floral structure presence},Can this be a union of {non-dormant reproductive bud presence} and {fresh flower presence},1,,,0
-Open flowers (lilac),{open flower presence},,1,,,0
-Full flowering (lilac),{open flower presence},does not work for absence because some flowers open before this phenophase occurs,95,100,0,
-Open flowers (grasses/sedges),{open flower presence},,1,,,0
-Open flowers,{open flower presence},,1,,,0
+Open flowers (lilac),{opened flower presence},,1,,,0
+Full flowering (lilac),{opened flower presence},does not work for absence because some flowers open before this phenophase occurs,95,100,0,
+Open flowers (grasses/sedges),{opened flower presence},,1,,,0
+Open flowers,{opened flower presence},,1,,,0
 Open pollen cones (conifers),{open pollen cone presence},,1,,,0
 Pollen cones (conifers),{pollen cone presence},,1,,,0
 Pollen release (flowers),{pollen-releasing flower presence},,1,,,0
 Pollen release (conifers),{pollen-releasing pollen cone presence},,1,,,0
-End of flowering (lilac/honeysuckle),{senesced flower presence},"will be mapped neither present nor absent ,but with percentage from 0 to 5 for the open flower presence stage",95,100,0,
+End of flowering (lilac/honeysuckle),{senesced flower presence},"will be mapped neither present nor absent ,but with percentage from 0 to 5 for the opened flower presence stage",95,100,0,
 Recent cone or seed drop,{abscised cone or seed presence},,1,,,0
 Recent fruit or seed drop,{abscised fruit or seed presence},,1,,,0
 Fruits,{ripening fruit presence},,1,,,0
@@ -40,13 +40,13 @@ Colored needles,{senescing true leaf presence},,1,,,0
 Emerging needles (pines),{unfolding true leaf presence},,1,,,0
 Initial growth (rushes),{initial shoot growth presence},,1,,,0
 Leaves (rushes),{unfolded true leaf presence},,1,,,0
-First bloom (historic eastern lilac),{open flower presence},,1,,,0
-Full bloom (historic lilac/western honeysuckle),{open flower presence},,1,,,0
-First bloom (historic western lilac),{open flower presence},,1,,,0
-First bloom (historic honeysuckle),{open flower presence},,1,,,0
-Full bloom (historic eastern honeysuckle),{open flower presence},,1,,,0
-End bloom (historic lilac/eastern honeysuckle),{senesced flower presence},"will be mapped neither present nor absent ,but with percentage from 0 to 5 for the open flower presence stage",95,100,0,
-End bloom (historic western honeysuckle),{senesced flower presence},"will be mapped neither present nor absent ,but with percentage from 0 to 5 for the open flower presence stage",95,100,0,
+First bloom (historic eastern lilac),{opened flower presence},,1,,,0
+Full bloom (historic lilac/western honeysuckle),{opened flower presence},,1,,,0
+First bloom (historic western lilac),{opened flower presence},,1,,,0
+First bloom (historic honeysuckle),{opened flower presence},,1,,,0
+Full bloom (historic eastern honeysuckle),{opened flower presence},,1,,,0
+End bloom (historic lilac/eastern honeysuckle),{senesced flower presence},"will be mapped neither present nor absent ,but with percentage from 0 to 5 for the opened flower presence stage",95,100,0,
+End bloom (historic western honeysuckle),{senesced flower presence},"will be mapped neither present nor absent ,but with percentage from 0 to 5 for the opened flower presence stage",95,100,0,
 First red berry (historic western honeysuckle),{ripe fruit presence},,1,,,0
 Full red berries (historic western honeysuckle),{ripe fruit presence},,1,,,0
 First shriveled berry (historic western honeysuckle),{ripe fruit presence},,1,,,0
