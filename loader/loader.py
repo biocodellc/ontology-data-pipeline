@@ -41,7 +41,6 @@ def main():
 
     bg_group = parser.add_argument_group('blazegraph', 'blazegraph loading options')
     bg_group.add_argument(
-        "-rdf_i"
         "--rdf_input_dir",
         help="The path of the directory containing the rdf data to upload to blazegraph"
     )
@@ -51,8 +50,7 @@ def main():
 
     es_group = parser.add_argument_group('elastic_search', 'elastic_search loading options')
     es_group.add_argument(
-        "-es_i"
-        "es_input_dir",
+        "--es_input_dir",
         help="The path of the directory containing the csv data to upload to elasticsearch"
     )
     es_group.add_argument(
