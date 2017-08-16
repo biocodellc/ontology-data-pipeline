@@ -22,7 +22,8 @@ def run(args):
         blazegraph_loader.load(args.rdf_input_dir)
 
     if args.action in [ELASTIC_SEARCH, BOTH]:
-        ESLoader(args.es_input_dir, args.index, args.drop_existing, args.alias)
+        loader = ESLoader(args.es_input_dir, args.index, args.drop_existing, args.alias, args.host)
+        loader.load()
 
 
 def get_sparql(file):
@@ -62,6 +63,7 @@ def main():
     es_group.add_argument('--alias',
                           help='optionally specify an elastic search alias. When creating an index, it will be associated'
                                'with this alias')
+    es_group.add_argument('--host', help='elasticsearch instance', default='localhost:9200')
     args = parser.parse_args()
 
     if args.action in [BLAZEGRAPH, BOTH]:

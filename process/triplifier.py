@@ -22,28 +22,6 @@ class Triplifier(object):
         """
         triples = []
 
-        # parallelize the process
-        # https://stackoverflow.com/questions/40357434/pandas-df-iterrow-parallelization
-        # num_processes = multiprocessing.cpu_count()
-        # chunk_size = int(data_frame.shape[0] / num_processes)
-
-        # this solution was reworked from the above link.
-        # will work even if the length of the dataframe is not evenly divisible by num_processes
-        # chunks = [data_frame.ix[data_frame.index[i:i + chunk_size]] for i in range(0, data_frame.shape[0], chunk_size)]
-
-        # pool = multiprocessing.Pool(processes=num_processes)
-        # pool = ThreadPool(9)
-
-        # apply our function to each chunk in the list
-        # results = pool.map(self._generate_triples_for_chunk, chunks)
-        # results = []
-        # for c in chunks:
-        #     results.append(self._generate_triples_for_chunk(c))
-
-        # join the array of results
-        # for t in results:
-        #     triples.extend(t)
-
         for index, row in data_frame.iterrows():
             triples.extend(self._generate_triples_for_row(row))
 
