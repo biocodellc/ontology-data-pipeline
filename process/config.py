@@ -131,11 +131,12 @@ class Config(object):
         if not os.path.exists(file):
             return
 
+        rules = []
         with open(file) as f:
             reader = csv.DictReader(f)
-            self.rules = [d for d in reader]
+            rules = [d for d in reader]
 
-        for rule in self.rules:
+        for rule in rules:
             if rule['rule'] not in VALID_RULES:
                 raise AttributeError("Invalid rule in \"{}\". {} is not a valid rule [{}]".format(file, rule['rule'],
                                                                                                   ",".join(
@@ -154,6 +155,8 @@ class Config(object):
 
             if not rule['level']:
                 rule['level'] = 'warning'
+
+        self.rules.extend(rules)
 
     def _parse_list(self, file_name):
         """
