@@ -192,7 +192,7 @@ line, and specified on the commandline like 'loader.py @params.conf'.
 ```
 An example of running the loading script (ensure proper IP access to esr.biocodellc.com):
 ```
-python loader.py --es_input_dir data/neon/output/output_reasoned_csv --index NEON --drop-existing --alias NEON elasticsearch
+python loader.py --es_input_dir data/npn/output/output_reasoned_csv/ --index npn --drop-existing --alias ppo --host esr.biocodellc.com:80 elasticsearch
 ```
 
 ## Config Files
