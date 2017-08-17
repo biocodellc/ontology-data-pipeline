@@ -141,6 +141,11 @@ optional arguments:
 As an alternative to the commandline, params can be placed in a file, one per
 line, and specified on the commandline like 'process.py @params.conf'.
 ```
+An example of loading the processing script which will run the pre-processor and
+all dependencies:
+```
+nohup python process.py --input_dir data/npn/input/ --drop_invalid npn data/npn/output/ &
+```
 
 Running the loader.py script:
 
@@ -185,7 +190,10 @@ elastic_search:
 As an alternative to the commandline, params can be placed in a file, one per
 line, and specified on the commandline like 'loader.py @params.conf'.
 ```
-
+An example of running the loading script (ensure proper IP access to esr.biocodellc.com):
+```
+python loader.py --es_input_dir data/neon/output/output_reasoned_csv --index NEON --drop-existing --alias NEON elasticsearch
+```
 
 ## Config Files
 
