@@ -10,7 +10,7 @@ prefix ppo: <http://www.plantphenology.org/id/>
 # Use the concat/group_concat function to push all plantStructurePresence types into an array within a field.
 # this enables ElasticSearch to index this easily while shrinking output file sizes
 SELECT  
-?eventID ?dayOfYear ?year ?latitude ?longitude ?genus ?specificEpithet ?scientificName ?lower_count ?upper_count ?lower_percent ?upper_percent ?source ?adjustedNcepReanalysisMonthlyMeanTemp (group_concat(distinct ?traitType;separator='|') as ?plantStructurePresenceTypes)
+?phenologyObservingProcess ?dayOfYear ?year ?latitude ?longitude ?genus ?specificEpithet ?scientificName ?lower_count ?upper_count ?lower_percent ?upper_percent ?source ?adjustedNcepReanalysisMonthlyMeanTemp (group_concat(distinct ?traitType;separator='|') as ?plantStructurePresenceTypes)
 
 WHERE {    
         ?wholePlant dwc:genus ?genus . 
@@ -36,7 +36,6 @@ WHERE {
         ?phenologyObservingProcess dwc:year ?year .
         ?phenologyObservingProcess dwc:decimalLatitude ?latitude .
         ?phenologyObservingProcess dwc:decimalLongitude ?longitude .
-	    ?phenologyObservingProcess dwc:EventID ?eventID .
 	OPTIONAL {?phenologyObservingProcess dc:creator ?source} .
 	OPTIONAL {?phenologyObservingProcess dwc:measurementValue ?adjustedNcepReanalysisMonthlyMeanTemp} .
 
@@ -46,4 +45,4 @@ WHERE {
         OPTIONAL {?measurementDatum obo:PPO_0000003 ?lower_percent} .
         OPTIONAL {?measurementDatum obo:PPO_0000004 ?upper_percent} .
 }
-GROUP BY ?eventID ?dayOfYear ?year ?latitude ?longitude ?genus ?specificEpithet ?scientificName ?lower_count ?upper_count ?lower_percent ?upper_percent ?source ?adjustedNcepReanalysisMonthlyMeanTemp
+GROUP BY ?phenologyObservingProcess ?dayOfYear ?year ?latitude ?longitude ?genus ?specificEpithet ?scientificName ?lower_count ?upper_count ?lower_percent ?upper_percent ?source ?adjustedNcepReanalysisMonthlyMeanTemp
