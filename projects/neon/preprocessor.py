@@ -53,7 +53,10 @@ class PreProcessor(AbstractPreProcessor):
 
         individuals = pd.read_csv(per_individual_file, header=0, skipinitialspace=True,
                                   usecols=['decimalLatitude', 'decimalLongitude', 'namedLocation', 'individualID',
-                                           'scientificName'])
+                                           'scientificName', 'addDate'])
+
+        # take the latest entry of an individualID as the source of truth
+        individuals = individuals.sort_values('addDate', ascending=False).drop_duplicates('individualID')
 
         data = pd.read_csv(statusintensity_file, header=0, skipinitialspace=True,
                            usecols=['uid', 'date', 'dayOfYear', 'individualID', 'phenophaseName', 'phenophaseStatus',
@@ -61,8 +64,6 @@ class PreProcessor(AbstractPreProcessor):
 
         data = data.merge(individuals, left_on=['individualID', 'namedLocation'],
                           right_on=['individualID', 'namedLocation'], how='left')
-        # during the merge, pandas duplicates some data, so we drop it here
-        data = data.drop_duplicates()
 
         self._transform_data(data).to_csv(self.output_file, columns=self.headers, mode='a', header=False, index=False)
 
