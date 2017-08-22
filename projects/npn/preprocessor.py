@@ -8,6 +8,7 @@ import pandas as pd
 from preprocessor import AbstractPreProcessor
 
 
+PHENOPHASE_DESCRIPTIONS_FILE = os.path.join(os.path.dirname(__file__), 'phenophase_descriptions.csv')
 COLUMNS_MAP = {
     'Observation_ID': 'record_id',
     'Latitude': 'latitude',
@@ -21,6 +22,7 @@ COLUMNS_MAP = {
 
 class PreProcessor(AbstractPreProcessor):
     def _process_data(self):
+        self.descriptions = pd.read_csv(PHENOPHASE_DESCRIPTIONS_FILE, header=0, skipinitialspace=True)
         # Loop each directory off of input directory
         for dirname in os.listdir(self.input_dir):
 
@@ -57,8 +59,7 @@ class PreProcessor(AbstractPreProcessor):
                               'Intensity_Value')
 
         # set upper/lower counts for cases of no intensity value
-        df.loc[(df.Intensity_Value == '-9999') & (df.Phenophase_Status == '0'), 'upper_count'] = 0
-        df.loc[(df.Intensity_Value == '-9999') & (df.Phenophase_Status == '1'), 'lower_count'] = 1
+        df.apply(lambda row: self._set_defaults(row), axis=1)
 
         df['source'] = 'NPN'
 
@@ -72,6 +73,23 @@ class PreProcessor(AbstractPreProcessor):
         df.drop_duplicates('Observation_ID', inplace=True)
 
         return df.rename(columns=COLUMNS_MAP)
+
+    def _set_defaults(self, row):
+        if row.Intensity_Value != '-9999':
+            return row
+
+        try:
+            if row.Phenophase_Status == '0':
+                row['lower_percent'] = self.descriptions[self.descriptions['field'] == row['Phenophase_Description']]['lower_percent_absent'].values[0]
+                row['upper_percent'] = self.descriptions[self.descriptions['field'] == row['Phenophase_Description']]['upper_percent_absent'].values[0]
+            else:
+                row['lower_percent'] = self.descriptions[self.descriptions['field'] == row['Phenophase_Description']]['lower_percent_present'].values[0]
+                row['upper_percent'] = self.descriptions[self.descriptions['field'] == row['Phenophase_Description']]['upper_percent_present'].values[0]
+        except IndexError:
+            # thrown if missing phenophase_description in phenophase_descriptions.csv file
+            pass
+
+        return row
 
     @staticmethod
     def _translate(filename, cols, index_name, data_frame, lookup_column):
