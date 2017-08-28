@@ -5,6 +5,7 @@ longitude,http://rs.tdwg.org/dwc/terms/decimalLongitude,phenologicalObservingPro
 year,http://rs.tdwg.org/dwc/terms/year,phenologicalObservingProcess,
 day_of_year,http://rs.tdwg.org/dwc/terms/startDayOfYear,phenologicalObservingProcess,
 source,http://purl.org/dc/elements/1.1/creator,phenologicalObservingProcess,
+sub_source,urn:subSource,phenologicalObservingProcess,
 genus,http://rs.tdwg.org/dwc/terms/genus,wholePlant,
 specific_epithet,http://rs.tdwg.org/dwc/terms/specificEpithet,wholePlant,
 scientific_name,http://rs.tdwg.org/dwc/terms/scientificName,wholePlant,

@@ -8,20 +8,23 @@ import pandas as pd
 from preprocessor import AbstractPreProcessor
 
 PHENOPHASE_DESCRIPTIONS_FILE = os.path.join(os.path.dirname(__file__), 'phenophase_descriptions.csv')
+DATASET_METADATA_FILE = os.path.join(os.path.dirname(__file__), 'ancillary_dataset_data.csv')
 COLUMNS_MAP = {
     'observation_id': 'record_id',
     'species': 'specific_epithet',
     'phenophase_description': 'phenophase_name',
+    'Dataset_Name': 'sub_source'
 }
 
 
 class PreProcessor(AbstractPreProcessor):
     def _process_data(self):
         self.descriptions = pd.read_csv(PHENOPHASE_DESCRIPTIONS_FILE, header=0, skipinitialspace=True)
+        self.dataset_metadata = pd.read_csv(DATASET_METADATA_FILE, header=0, skipinitialspace=True,
+                                            usecols=['Dataset_ID', 'Dataset_Name'])
 
         chunk_size = 100000
-        df = pd.read_csv(os.path.join(self.input_dir, "npn_observations_data.csv'"), sep=',', header=0, iterator=True,
-                         chunksize=chunk_size, dtype=object)
+        df = pd.read_csv(os.path.join(self.input_dir, "npn_observations_data.csv"), header=0, chunksize=chunk_size)
 
         for chunk in df:
             print("\tprocessing next {} records".format(len(chunk)))
@@ -43,6 +46,7 @@ class PreProcessor(AbstractPreProcessor):
         df.apply(lambda row: self._set_defaults(row), axis=1)
 
         df['source'] = 'NPN'
+        df = df.merge(self.dataset_metadata, left_on='dataset_id', right_on='Dataset_ID', how='left')
 
         # Normalize Date to just Year. we don't need to store actual date because we use only Year + DayOfYear
         df['year'] = pd.DatetimeIndex(df['observation_date']).year
@@ -56,11 +60,11 @@ class PreProcessor(AbstractPreProcessor):
         return df.rename(columns=COLUMNS_MAP)
 
     def _set_defaults(self, row):
-        if row.Intensity_Value != '-9999':
+        if row.intensity_value != '-9999':
             return row
 
         try:
-            if row.Phenophase_Status == '0':
+            if row.phenophase_status == '0':
                 row['lower_percent'] = self.descriptions[self.descriptions['field'] == row['phenophase_description']][
                     'lower_percent_absent'].values[0]
                 row['upper_percent'] = self.descriptions[self.descriptions['field'] == row['phenophase_description']][
