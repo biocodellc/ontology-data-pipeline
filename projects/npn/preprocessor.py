@@ -7,56 +7,37 @@ import os, csv
 import pandas as pd
 from preprocessor import AbstractPreProcessor
 
-
 PHENOPHASE_DESCRIPTIONS_FILE = os.path.join(os.path.dirname(__file__), 'phenophase_descriptions.csv')
 COLUMNS_MAP = {
-    'Observation_ID': 'record_id',
-    'Latitude': 'latitude',
-    'Longitude': 'longitude',
-    'Day_of_Year': 'day_of_year',
-    'Genus': 'genus',
-    'Species': 'specific_epithet',
-    'Phenophase_Description': 'phenophase_name',
+    'observation_id': 'record_id',
+    'species': 'specific_epithet',
+    'phenophase_description': 'phenophase_name',
 }
 
 
 class PreProcessor(AbstractPreProcessor):
     def _process_data(self):
         self.descriptions = pd.read_csv(PHENOPHASE_DESCRIPTIONS_FILE, header=0, skipinitialspace=True)
-        # Loop each directory off of input directory
-        for dirname in os.listdir(self.input_dir):
 
-            # make sure we're just dealing with the proper directories
-            if dirname.startswith('datasheet_') and dirname.endswith("zip") is False:
+        chunk_size = 100000
+        df = pd.read_csv(os.path.join(self.input_dir, "npn_observations_data.csv'"), sep=',', header=0, iterator=True,
+                         chunksize=chunk_size, dtype=object)
 
-                dirname = os.path.join(self.input_dir, dirname)
-
-                # loop all filenames in directory
-                onlyfiles = [f for f in os.listdir(dirname) if os.path.isfile(os.path.join(dirname, f))]
-
-                for filename in onlyfiles:
-
-                    # phenology data frame
-                    if filename == 'status_intensity_observation_data.csv':
-                        chunk_size = 100000
-                        tp = pd.read_csv(os.path.join(dirname, filename), sep=',', header=0, iterator=True,
-                                         chunksize=chunk_size, dtype=object)
-
-                        for df in tp:
-                            print("\tprocessing next {} records".format(len(df)))
-                            self._transform_data(df).to_csv(self.output_file, columns=self.headers, mode='a',
-                                                            header=False, index=False)
+        for chunk in df:
+            print("\tprocessing next {} records".format(len(chunk)))
+            self._transform_data(chunk).to_csv(self.output_file, columns=self.headers, mode='a',
+                                               header=False, index=False)
 
     def _transform_data(self, df):
         # Add an index name
-        df.index.name = 'record_id'
+        # df.index.name = 'record_id'
 
         # Translate values from intensity_values.csv file
 
         # translate values
         cols = ['value', 'lower_count', 'upper_count', 'lower_percent', 'upper_percent']
         df = self._translate(os.path.join(os.path.dirname(__file__), 'intensity_values.csv'), cols, 'value', df,
-                              'Intensity_Value')
+                             'intensity_value')
 
         # set upper/lower counts for cases of no intensity value
         df.apply(lambda row: self._set_defaults(row), axis=1)
@@ -64,13 +45,13 @@ class PreProcessor(AbstractPreProcessor):
         df['source'] = 'NPN'
 
         # Normalize Date to just Year. we don't need to store actual date because we use only Year + DayOfYear
-        df['year'] = pd.DatetimeIndex(df['Observation_Date']).year
+        df['year'] = pd.DatetimeIndex(df['observation_date']).year
 
         # Create ScientificName
-        df['scientific_name'] = df['Genus'] + ' ' + df['Species']
+        df['scientific_name'] = df['genus'] + ' ' + df['species']
 
         # drop duplicate ObservationIDs
-        df.drop_duplicates('Observation_ID', inplace=True)
+        df.drop_duplicates('observation_id', inplace=True)
 
         return df.rename(columns=COLUMNS_MAP)
 
@@ -80,11 +61,15 @@ class PreProcessor(AbstractPreProcessor):
 
         try:
             if row.Phenophase_Status == '0':
-                row['lower_percent'] = self.descriptions[self.descriptions['field'] == row['Phenophase_Description']]['lower_percent_absent'].values[0]
-                row['upper_percent'] = self.descriptions[self.descriptions['field'] == row['Phenophase_Description']]['upper_percent_absent'].values[0]
+                row['lower_percent'] = self.descriptions[self.descriptions['field'] == row['phenophase_description']][
+                    'lower_percent_absent'].values[0]
+                row['upper_percent'] = self.descriptions[self.descriptions['field'] == row['phenophase_description']][
+                    'upper_percent_absent'].values[0]
             else:
-                row['lower_percent'] = self.descriptions[self.descriptions['field'] == row['Phenophase_Description']]['lower_percent_present'].values[0]
-                row['upper_percent'] = self.descriptions[self.descriptions['field'] == row['Phenophase_Description']]['upper_percent_present'].values[0]
+                row['lower_percent'] = self.descriptions[self.descriptions['field'] == row['phenophase_description']][
+                    'lower_percent_present'].values[0]
+                row['upper_percent'] = self.descriptions[self.descriptions['field'] == row['phenophase_description']][
+                    'upper_percent_present'].values[0]
         except IndexError:
             # thrown if missing phenophase_description in phenophase_descriptions.csv file
             pass
