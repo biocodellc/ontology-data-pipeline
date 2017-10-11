@@ -79,10 +79,26 @@ Additional dependencies:
 
 ## Usage
 
+Before running the processing script, you will likely need to fetch data.  Some of the
+projects likely will have an API that you can obtain data from and these are written 
+into a data_fetcher.py script. 
+
+```
+$ python ./projects/npn/data_fetcher.py 
+usage: data_fetcher.py [-h] output_dir
+```
+
+Running the data fetch for NPN, for example, we would want to write the output of the
+data_fetcher script into the input directory used for the processing script, like:
+
+```
+$ python ./projects/npn/data_fetcher.py data/npn/input/
+```
+
 Running from the process.py script:
 
 ```
-16:17 $ python process.py --help
+$ python process.py --help
 usage: process.py [-h] (--input_dir INPUT_DIR | --data_file DATA_FILE)
                   [--config_dir CONFIG_DIR] [--ontology ONTOLOGY]
                   [--preprocessor PREPROCESSOR] [--drop_invalid] [--log_file]

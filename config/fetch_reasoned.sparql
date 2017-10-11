@@ -6,11 +6,12 @@ prefix owl: <http://www.w3.org/2002/07/owl#>
 prefix dc: <http://purl.org/dc/elements/1.1/> 
 prefix xsd: <http://www.w3.org/2001/XMLSchema#>
 prefix ppo: <http://www.plantphenology.org/id/>
+prefix urn: <urn:>
 
 # Use the concat/group_concat function to push all plantStructurePresence types into an array within a field.
 # this enables ElasticSearch to index this easily while shrinking output file sizes
 SELECT  
-?phenologyObservingProcess as ?eventID ?dayOfYear ?year ?latitude ?longitude ?genus ?specificEpithet ?scientificName ?lower_count ?upper_count ?lower_percent ?upper_percent ?source ?subSource ?adjustedNcepReanalysisMonthlyMeanTemp (group_concat(distinct ?traitType;separator='|') as ?plantStructurePresenceTypes)
+(?phenologyObservingProcess as ?eventId) ?dayOfYear ?year ?latitude ?longitude ?genus ?specificEpithet ?scientificName ?lower_count ?upper_count ?lower_percent ?upper_percent ?source ?subSource ?adjustedNcepReanalysisMonthlyMeanTemp (group_concat(distinct ?traitType;separator='|') as ?plantStructurePresenceTypes)
 
 WHERE {    
         ?wholePlant dwc:genus ?genus . 
