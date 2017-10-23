@@ -1,102 +1,102 @@
-field,defined_by,Notes,lower_percent_present,upper_percent_present,lower_percent_absent,upper_percent_absent
-Flower heads (grasses/sedges),{non-senesced flower head presence},,1,,,0
-Flowers or flower buds,{non-senesced floral structure presence},Can this be a union of {non-dormant reproductive bud presence} and {fresh flower presence},1,,,0
-Open flowers (lilac),{open flower presence},,1,,,0
-Full flowering (lilac),{open flower presence},does not work for absence because some flowers open before this phenophase occurs,95,100,0,
-Open flowers (grasses/sedges),{open flower presence},,1,,,0
-Open flowers,{open flower presence},,1,,,0
-Open pollen cones (conifers),{open pollen cone presence},,1,,,0
-Pollen cones (conifers),{pollen cone presence},,1,,,0
-Pollen release (flowers),{pollen-releasing flower presence},,1,,,0
-Pollen release (conifers),{pollen-releasing pollen cone presence},,1,,,0
-End of flowering (lilac/honeysuckle),{senesced flower presence},"will be mapped neither present nor absent ,but with percentage from 0 to 5 for the opened flower presence stage",95,100,0,
-Recent cone or seed drop,{abscised cone or seed presence},,1,,,0
-Recent fruit or seed drop,{abscised fruit or seed presence},,1,,,0
-Fruits,{ripening fruit presence},,1,,,0
-Ripe fruits,{ripe fruit presence},,1,,,0
-Ripe seed cones,{ripe seed cone presence},,1,,,0
-Unripe seed cones,{unripe seed cone presence},,1,,,0
-Falling leaves,{abscised leaf presence},,1,,,0
-Falling needles,{abscised leaf presence},,1,,,0
-Breaking leaf buds,{breaking leaf bud presence},,1,,,0
-Breaking leaf buds (lilac/honeysuckle),{breaking leaf bud presence},,1,,,0
-Breaking needle buds (conifers),{breaking leaf bud presence},,1,,,0
-Breaking needle buds (deciduous),{breaking leaf bud presence},,1,,,0
-All leaf buds broken (lilac/honeysuckle),{unfolded true leaf presence},Does not work for absence because somes leaves are already unfolded before this phenophase occurs,95,100,0,
-Increasing leaf size,{expanding unfolded true leaf presence},Does not work for absence directly.  if asserted absent then make a lower percent of zero; if present then lower percent is 51% since it denotes a majority.  We have a conceptual mismatch on this field as recorded counts refer to % of overall leaf size.,51,100,0,
-Young leaves (tree/shrub),{immature unfolded true leaf presence},,1,,,0
-Young needles (conifers),{immature unfolded true leaf presence},,1,,,0
-Young needles (pines),{immature unfolded true leaf presence},,1,,,0
-Young leaves (forbs),{immature unfolded true leaf presence},,1,,,0
-Leaves,{unfolded true leaf presence},,1,,,0
-Needles (deciduous),{unfolded true leaf presence},,1,,,0
-Leaves (forbs),{unfolded true leaf presence},,1,,,0
-Leaves (grasses),{unfolded true leaf presence},,1,,,0
-Leaves (sedges),{unfolded true leaf presence},,1,,,0
-Initial growth (forbs),{new shoot system presence},,1,,,0
-Initial growth (grasses/sedges),{new shoot system presence},,1,,,0
-Colored leaves,{senescing true leaf presence},,1,,,0
-Colored needles,{senescing true leaf presence},,1,,,0
-Emerging needles (pines),{unfolding true leaf presence},,1,,,0
-Initial growth (rushes),{new shoot system presence},,1,,,0
-Leaves (rushes),{unfolded true leaf presence},,1,,,0
-First bloom (historic eastern lilac),{open flower presence},,1,,,0
-Full bloom (historic lilac/western honeysuckle),{open flower presence},,1,,,0
-First bloom (historic western lilac),{open flower presence},,1,,,0
-First bloom (historic honeysuckle),{open flower presence},,1,,,0
-Full bloom (historic eastern honeysuckle),{open flower presence},,1,,,0
-End bloom (historic lilac/eastern honeysuckle),{senesced flower presence},"will be mapped neither present nor absent ,but with percentage from 0 to 5 for the opened flower presence stage",95,100,0,
-End bloom (historic western honeysuckle),{senesced flower presence},"will be mapped neither present nor absent ,but with percentage from 0 to 5 for the opened flower presence stage",95,100,0,
-First red berry (historic western honeysuckle),{ripe fruit presence},,1,,,0
-Full red berries (historic western honeysuckle),{ripe fruit presence},,1,,,0
-First shriveled berry (historic western honeysuckle),{ripe fruit presence},,1,,,0
-Full shriveled berries (historic western honeysuckle),{ripe fruit presence},,1,,,0
-First leaf (historic lilac/honeysuckle),{breaking leaf bud presence},,1,,,0
-Full leaf (historic lilac/honeysuckle),{unfolded true leaf presence},,1,,,0
-Flower buds (1 location),,Agreed to not map this definition,,,,
-Full flowering (50%),,Agreed to not map this definition,,,,
-Open flowers (1 location),,Agreed to not map this definition,,,,
-Open flowers (honeysuckle),,Agreed to not map this definition,,,,
-Full flowering (honeysuckle),,Agreed to not map this definition,,,,
-Full pollen release (angiosperms),,Agreed to not map this definition,,,,
-Full pollen release (conifers),,Agreed to not map this definition,,,,
-Ripe fruits (1 location),,Agreed to not map this definition,,,,
-Ripe seeds (grasses),,Agreed to not map this definition,,,,
->=50% of leaves fallen (deciduous),,Agreed to not map this definition,,,,
->=50% of needles fallen (larch),,Agreed to not map this definition,,,,
-Emerging leaves (1 location),,Agreed to not map this definition,,,,
->=75% of full leaf size (deciduous),,Agreed to not map this definition,,,,
-"Young unfolded leaves (evergreen, 1 location)",,Agreed to not map this definition,,,,
->=50% of leaves colored (deciduous),,Agreed to not map this definition,,,,
-All leaves colored (deciduous),,Agreed to not map this definition,,,,
->=50% of needles colored (larch),,Agreed to not map this definition,,,,
-All needles colored (larch),,Agreed to not map this definition,,,,
-All leaves fallen (deciduous),,Agreed to not map this definition,,,,
-All leaves withered (herbaceous and grasses),,Agreed not to map this definition; all leaves dead (but maybe not abscised) so could this be scored as absence of leaves?,,,,
-All needles fallen (larch),,Agreed to not map this definition,,,,
-First flower bud (1 location),,Agreed to not map this definition,,,,
-First flower (3 locations),,Agreed to not map this definition,,,,
-First flower (1 location),,Agreed to not map this definition,,,,
-First male cone (conifer),,Agreed to not map this definition,,,,
-First pollen released (conifer),,Agreed to not map this definition,,,,
-Last flower,,Agreed to not map this definition,,,,
-First fruit (1 location),,Agreed to not map this definition,,,,
-First fruit ripe (3 locations),,Agreed to not map this definition,,,,
-First fruit ripe (1 location),,Agreed to not map this definition,,,,
-50% of leaves fallen,,Agreed to not map this definition,,,,
-First needles fallen (conifer),,Agreed to not map this definition,,,,
-"First leaf fallen (evergreen, 3 locations)",,Agreed to not map this definition,,,,
-First leaf (3 locations),,Agreed to not map this definition,,,,
-"First leaf (evergreen, 3 locations)",,Agreed to not map this definition,,,,
-75% leaf elongation (trees),,Agreed to not map this definition,,,,
-75% leaf elongation (evergreen),,Agreed to not map this definition,,,,
-Emergence above ground,,Agreed to not map this definition,,,,
-50% of leaves colored,,Agreed to not map this definition,,,,
-Budburst (conifer),,Agreed to not map this definition,,,,
-First needles (conifer),,Agreed to not map this definition,,,,
-New side branches,,Agreed to not map this definition,,,,
-Receptacles,,Agreed to not map this definition,,,,
-Flat receptacles,,Agreed to not map this definition,,,,
-Smooth inflated receptacles,,Agreed to not map this definition,,,,
-Dotted inflated receptacles,,Agreed to not map this definition,,,,
-Torn receptacles,,Agreed to not map this definition,,,,
+field,defined_by,Notes,lower_percent_present,upper_percent_present,lower_percent_absent,upper_percent_absent,force_default_value
+Flower heads (grasses/sedges),{non-senesced flower head presence},,1,,,0,
+Flowers or flower buds,{non-senesced floral structure presence},Can this be a union of {non-dormant reproductive bud presence} and {fresh flower presence},1,,,0,
+Open flowers (lilac),{open flower head presence},,50,,0,0,
+Full flowering (lilac),{open flower head presence},does not work for absence because some flowers open before this phenophase occurs,95,100,0,,
+Open flowers (grasses/sedges),{open flower presence},,1,,,0,
+Open flowers,{open flower presence},,1,,,0,
+Open pollen cones (conifers),{open pollen cone presence},,1,,,0,
+Pollen cones (conifers),{fresh pollen cone presence},,1,,,0,
+Pollen release (flowers),{pollen-releasing flower presence},,1,,,0,
+Pollen release (conifers),{pollen-releasing pollen cone presence},,1,,,0,
+End of flowering (lilac/honeysuckle),{senesced flower presence},"will be mapped neither present nor absent ,but with percentage from 0 to 5 for the opened flower presence stage",95,100,0,,
+Recent cone or seed drop,{abscised cone or seed presence},,1,,,0,
+Recent fruit or seed drop,{abscised fruit or seed presence},,1,,,0,
+Fruits,{ripening fruit presence},,1,,,0,
+Ripe fruits,{ripe fruit presence},,1,,,0,
+Ripe seed cones,{ripe seed cone presence},,1,,,0,
+Unripe seed cones,{unripe seed cone presence},,1,,,0,
+Falling leaves,{abscised leaf presence},,1,,,0,
+Falling needles,{abscised leaf presence},,1,,,0,
+Breaking leaf buds,{breaking leaf bud presence},,1,,,0,
+Breaking leaf buds (lilac/honeysuckle),{breaking leaf bud presence},,1,,,0,
+Breaking needle buds (conifers),{breaking leaf bud presence},,1,,,0,
+Breaking needle buds (deciduous),{breaking leaf bud presence},,1,,,0,
+All leaf buds broken (lilac/honeysuckle),{unfolded true leaf presence},Does not work for absence because somes leaves are already unfolded before this phenophase occurs,95,100,0,,
+Increasing leaf size,{expanding unfolded true leaf presence},Does not work for absence directly.  if asserted absent then make a lower percent of zero; if present then lower percent is 51% since it denotes a majority.  We have a conceptual mismatch on this field as recorded counts refer to % of overall leaf size.,51,100,0,,yes
+Young leaves (tree/shrub),{immature unfolded true leaf presence},,1,,,0,
+Young needles (conifers),{immature unfolded true leaf presence},,1,,,0,
+Young needles (pines),{immature unfolded true leaf presence},,1,,,0,
+Young leaves (forbs),{immature unfolded true leaf presence},,1,,,0,
+Leaves,{unfolded true leaf presence},,1,,,0,
+Needles (deciduous),{unfolded true leaf presence},,1,,,0,
+Leaves (forbs),{unfolded true leaf presence},,1,,,0,
+Leaves (grasses),{unfolded true leaf presence},,1,,,0,yes
+Leaves (sedges),{unfolded true leaf presence},,1,,,0,yes
+Initial growth (forbs),{new shoot system presence},,1,,,0,
+Initial growth (grasses/sedges),{new shoot system presence},,1,,,0,
+Colored leaves,{senescing true leaf presence},,1,,,0,yes
+Colored needles,{senescing true leaf presence},,1,,,0,yes
+Emerging needles (pines),{unfolding true leaf presence},,1,,,0,
+Initial growth (rushes),{new shoot system presence},,1,,,0,
+Leaves (rushes),{unfolded true leaf presence},,1,,,0,yes
+First bloom (historic eastern lilac),{open flower head presence},,50,,,0,
+Full bloom (historic lilac/western honeysuckle),{open flower head presence},,95,100,,0,
+First bloom (historic western lilac),{open flower presence},,1,,,0,
+First bloom (historic honeysuckle),{open flower presence},,5,,,0,
+Full bloom (historic eastern honeysuckle),{open flower presence},,95,100,,0,
+End bloom (historic lilac/eastern honeysuckle),{senesced flower presence},"will be mapped neither present nor absent ,but with percentage from 0 to 5 for the opened flower presence stage",95,100,0,,
+End bloom (historic western honeysuckle),{senesced flower presence},"will be mapped neither present nor absent ,but with percentage from 0 to 5 for the opened flower presence stage",95,100,0,,
+First red berry (historic western honeysuckle),{ripe fruit presence},,1,,,0,
+Full red berries (historic western honeysuckle),{ripe fruit presence},,95,100,,0,
+First shriveled berry (historic western honeysuckle),{ripe fruit presence},,1,,,0,
+Full shriveled berries (historic western honeysuckle),{ripe fruit presence},,95,100,,0,
+First leaf (historic lilac/honeysuckle),{breaking leaf bud presence},,1,,,0,
+Full leaf (historic lilac/honeysuckle),{unfolded true leaf presence},,95,100,,0,
+Flower buds (1 location),{unopened flower presence},This could potentially include dormant flower buds for some species.,,,,,
+Full flowering (50%),{open flower presence},,1,,,,yes
+Open flowers (1 location),{open flower presence},,50,,,,
+Open flowers (honeysuckle),{open flower presence},,1,,,,
+Full flowering (honeysuckle),{open flower presence},,5,,,,
+Full pollen release (angiosperms),{pollen-releasing flower presence},,95,100,,,yes
+Full pollen release (conifers),{pollen-releasing pollen cone presence},,50,,,,yes
+Ripe fruits (1 location),{ripe fruit presence},,50,,,,yes
+Ripe seeds (grasses),{ripe fruit presence},,1,,,,
+Emerging leaves (1 location),{breaking leaf bud presence},,1,,,,
+"Young unfolded leaves (evergreen, 1 location)",{immature unfolded tree leaf presence},,1,,,,
+>=50% of leaves fallen (deciduous),,Agreed to not map this definition,,,,,
+>=50% of needles fallen (larch),,Agreed to not map this definition,,,,,
+>=75% of full leaf size (deciduous),,Agreed to not map this definition,,,,,
+>=50% of leaves colored (deciduous),,Agreed to not map this definition,,,,,
+All leaves colored (deciduous),,Agreed to not map this definition,,,,,
+>=50% of needles colored (larch),,Agreed to not map this definition,,,,,
+All needles colored (larch),,Agreed to not map this definition,,,,,
+All leaves fallen (deciduous),,Agreed to not map this definition,,,,,
+All leaves withered (herbaceous and grasses),,Agreed not to map this definition; all leaves dead (but maybe not abscised) so could this be scored as absence of leaves?,,,,,
+All needles fallen (larch),,Agreed to not map this definition,,,,,
+First flower bud (1 location),,Agreed to not map this definition,,,,,
+First flower (3 locations),,Agreed to not map this definition,,,,,
+First flower (1 location),,Agreed to not map this definition,,,,,
+First male cone (conifer),,Agreed to not map this definition,,,,,
+First pollen released (conifer),,Agreed to not map this definition,,,,,
+Last flower,,Agreed to not map this definition,,,,,
+First fruit (1 location),,Agreed to not map this definition,,,,,
+First fruit ripe (3 locations),,Agreed to not map this definition,,,,,
+First fruit ripe (1 location),,Agreed to not map this definition,,,,,
+50% of leaves fallen,,Agreed to not map this definition,,,,,
+First needles fallen (conifer),,Agreed to not map this definition,,,,,
+"First leaf fallen (evergreen, 3 locations)",,Agreed to not map this definition,,,,,
+First leaf (3 locations),,Agreed to not map this definition,,,,,
+"First leaf (evergreen, 3 locations)",,Agreed to not map this definition,,,,,
+75% leaf elongation (trees),,Agreed to not map this definition,,,,,
+75% leaf elongation (evergreen),,Agreed to not map this definition,,,,,
+Emergence above ground,,Agreed to not map this definition,,,,,
+50% of leaves colored,,Agreed to not map this definition,,,,,
+Budburst (conifer),,Agreed to not map this definition,,,,,
+First needles (conifer),,Agreed to not map this definition,,,,,
+New side branches,,Agreed to not map this definition,,,,,
+Receptacles,,Agreed to not map this definition,,,,,
+Flat receptacles,,Agreed to not map this definition,,,,,
+Smooth inflated receptacles,,Agreed to not map this definition,,,,,
+Dotted inflated receptacles,,Agreed to not map this definition,,,,,
+Torn receptacles,,Agreed to not map this definition,,,,,
