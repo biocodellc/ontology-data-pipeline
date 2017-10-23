@@ -43,7 +43,7 @@ class PreProcessor(AbstractPreProcessor):
                              'intensity_value')
 
         # set upper/lower counts for cases of no intensity value
-        df.apply(lambda row: self._set_defaults(row), axis=1)
+        df = df.apply(lambda row: self._set_defaults(row), axis=1)
 
         df['source'] = 'NPN'
         df = df.merge(self.dataset_metadata, left_on='dataset_id', right_on='Dataset_ID', how='left')
@@ -64,7 +64,8 @@ class PreProcessor(AbstractPreProcessor):
             return row
 
         try:
-            if row.phenophase_status == '0':
+            print (row.phenophase_status)
+            if row.phenophase_status == 0:
                 row['lower_percent'] = self.descriptions[self.descriptions['field'] == row['phenophase_description']][
                     'lower_percent_absent'].values[0]
                 row['upper_percent'] = self.descriptions[self.descriptions['field'] == row['phenophase_description']][
