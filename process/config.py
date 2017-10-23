@@ -15,7 +15,7 @@ QUERY_FETCHER_REPO_URL = 'http://repo.biocodellc.com/repository/maven-public/org
     QUERY_FETCHER_VERSION)
 
 VALID_RULES = ['RequiredValue', 'ControlledVocabulary', 'UniqueValue', 'Integer', 'Float']
-DEFAULT_ONTOLOGY = "https://github.com/PlantPhenoOntology/PPO/raw/master/ontology/ppo-reasoned.owl"
+DEFAULT_ONTOLOGY = "https://raw.githubusercontent.com/PlantPhenoOntology/ppo/master/releases/2017-10-20/ppo.owl"
 DEFAULT_CONFIG_DIR = os.path.join(os.path.dirname(__file__), "../config")
 
 DEFAULT_HEADERS = ['record_id', 'scientific_name', 'genus', 'specific_epithet', 'year', 'day_of_year', 'latitude',
