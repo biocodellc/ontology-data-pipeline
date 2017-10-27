@@ -157,9 +157,10 @@ optional arguments:
 As an alternative to the commandline, params can be placed in a file, one per
 line, and specified on the commandline like 'process.py @params.conf'.
 ```
-An example of loading the processing script which will run the pre-processor and
+Examples of loading the processing script which will run the pre-processor and
 all dependencies:
 ```
+python process.py --input_dir data/test_npn/input/ test_npn data/test_npn/output/
 nohup python process.py --input_dir data/npn/input/ --drop_invalid npn data/npn/output/ &
 ```
 

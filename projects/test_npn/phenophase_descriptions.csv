@@ -23,7 +23,7 @@ Breaking leaf buds (lilac/honeysuckle),{breaking leaf bud presence},,1,,,0,
 Breaking needle buds (conifers),{breaking leaf bud presence},,1,,,0,
 Breaking needle buds (deciduous),{breaking leaf bud presence},,1,,,0,
 All leaf buds broken (lilac/honeysuckle),{unfolded true leaf presence},Does not work for absence because somes leaves are already unfolded before this phenophase occurs,95,100,0,,
-Increasing leaf size,{expanding unfolded true leaf presence},Does not work for absence directly.  if asserted absent then make a lower percent of zero; if present then lower percent is 51% since it denotes a majority.  We have a conceptual mismatch on this field as recorded counts refer to % of overall leaf size.,51,100,0,,yes
+Increasing leaf size,{expanding unfolded true leaf presence},Does not work for absence directly.  if asserted absent then make a lower percent of zero; if present then lower percent is 51% since it denotes a majority.  We have a conceptual mismatch on this field as recorded counts refer to % of overall leaf size.,51,100,0,,TRUE
 Young leaves (tree/shrub),{immature unfolded true leaf presence},,1,,,0,
 Young needles (conifers),{immature unfolded true leaf presence},,1,,,0,
 Young needles (pines),{immature unfolded true leaf presence},,1,,,0,
@@ -31,15 +31,15 @@ Young leaves (forbs),{immature unfolded true leaf presence},,1,,,0,
 Leaves,{unfolded true leaf presence},,1,,,0,
 Needles (deciduous),{unfolded true leaf presence},,1,,,0,
 Leaves (forbs),{unfolded true leaf presence},,1,,,0,
-Leaves (grasses),{unfolded true leaf presence},,1,,,0,yes
-Leaves (sedges),{unfolded true leaf presence},,1,,,0,yes
+Leaves (grasses),{unfolded true leaf presence},,1,,,0,TRUE
+Leaves (sedges),{unfolded true leaf presence},,1,,,0,TRUE
 Initial growth (forbs),{new shoot system presence},,1,,,0,
 Initial growth (grasses/sedges),{new shoot system presence},,1,,,0,
-Colored leaves,{senescing true leaf presence},,1,,,0,yes
-Colored needles,{senescing true leaf presence},,1,,,0,yes
+Colored leaves,{senescing true leaf presence},,1,,,0,TRUE
+Colored needles,{senescing true leaf presence},,1,,,0,TRUE
 Emerging needles (pines),{unfolding true leaf presence},,1,,,0,
 Initial growth (rushes),{new shoot system presence},,1,,,0,
-Leaves (rushes),{unfolded true leaf presence},,1,,,0,yes
+Leaves (rushes),{unfolded true leaf presence},,1,,,0,TRUE
 First bloom (historic eastern lilac),{open flower head presence},,50,,,0,
 Full bloom (historic lilac/western honeysuckle),{open flower head presence},,95,100,,0,
 First bloom (historic western lilac),{open flower presence},,1,,,0,
@@ -54,13 +54,13 @@ Full shriveled berries (historic western honeysuckle),{ripe fruit presence},,95,
 First leaf (historic lilac/honeysuckle),{breaking leaf bud presence},,1,,,0,
 Full leaf (historic lilac/honeysuckle),{unfolded true leaf presence},,95,100,,0,
 Flower buds (1 location),{unopened flower presence},This could potentially include dormant flower buds for some species.,,,,,
-Full flowering (50%),{open flower presence},,1,,,,yes
+Full flowering (50%),{open flower presence},,1,,,,TRUE
 Open flowers (1 location),{open flower presence},,50,,,,
 Open flowers (honeysuckle),{open flower presence},,1,,,,
 Full flowering (honeysuckle),{open flower presence},,5,,,,
-Full pollen release (angiosperms),{pollen-releasing flower presence},,95,100,,,yes
-Full pollen release (conifers),{pollen-releasing pollen cone presence},,50,,,,yes
-Ripe fruits (1 location),{ripe fruit presence},,50,,,,yes
+Full pollen release (angiosperms),{pollen-releasing flower presence},,95,100,,,TRUE
+Full pollen release (conifers),{pollen-releasing pollen cone presence},,50,,,,TRUE
+Ripe fruits (1 location),{ripe fruit presence},,50,,,,TRUE
 Ripe seeds (grasses),{ripe fruit presence},,1,,,,
 Emerging leaves (1 location),{breaking leaf bud presence},,1,,,,
 "Young unfolded leaves (evergreen, 1 location)",{immature unfolded true leaf presence},,1,,,,

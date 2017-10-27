@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
 """proprocessor.AbstractPreProcessor implementation for preprocessing npn data"""
 
 import os, csv
@@ -15,7 +14,6 @@ COLUMNS_MAP = {
     'phenophase_description': 'phenophase_name',
     'Dataset_Name': 'sub_source'
 }
-
 
 class PreProcessor(AbstractPreProcessor):
     def _process_data(self):
@@ -35,16 +33,21 @@ class PreProcessor(AbstractPreProcessor):
         # Add an index name
         # df.index.name = 'record_id'
 
-        # Translate values from intensity_values.csv file
+        # Handle cases where we want to force a default intensity value 
+        # First, fill out the force_default_value column with False where there is no value
+        self.descriptions['force_default_value'] = self.descriptions['force_default_value'].fillna(False)
+        # Second, apply, row by row a filter that sets the intensity_value to -9999 when we want to force defaults
+        df = df.apply(lambda row: self._force_defaults(row), axis=1)
 
-        # translate values
+        # map counts from intensity_value table to upper and lower count/percents
         cols = ['value', 'lower_count', 'upper_count', 'lower_percent', 'upper_percent']
         df = self._translate(os.path.join(os.path.dirname(__file__), 'intensity_values.csv'), cols, 'value', df,
                              'intensity_value')
 
-        # set upper/lower counts for cases of no intensity value
+        # when intensity_value != -9999 set upper/lower counts 
         df = df.apply(lambda row: self._set_defaults(row), axis=1)
 
+        # set the source
         df['source'] = 'NPN'
         df = df.merge(self.dataset_metadata, left_on='dataset_id', right_on='Dataset_ID', how='left')
 
@@ -59,21 +62,27 @@ class PreProcessor(AbstractPreProcessor):
 
         return df.rename(columns=COLUMNS_MAP)
 
+    # Get true/false value for related force_default column in phenophase_descriptions and override the intensity_value
+    # with -9999.  Force defaults overrides intensity_value descriptions with default values for phenophases where
+    # user count data do not make sense for PPO purposes.
+    def _force_defaults(self, row):
+        if self.descriptions[(self.descriptions['field'] == row['phenophase_description'])]['force_default_value'].values[0]:
+            row['intensity_value'] = '-9999'
+
+        return row
+
+    # For any column with a -9999 in the intensity_value column, insert default values from the phenophase_descriptions sheet
     def _set_defaults(self, row):
         if row.intensity_value != '-9999':
             return row
 
         try:
             if row.phenophase_status == 0:
-                row['lower_percent'] = self.descriptions[self.descriptions['field'] == row['phenophase_description']][
-                    'lower_percent_absent'].values[0]
-                row['upper_percent'] = self.descriptions[self.descriptions['field'] == row['phenophase_description']][
-                    'upper_percent_absent'].values[0]
+                row['lower_percent'] = self.descriptions[self.descriptions['field'] == row['phenophase_description']]['lower_percent_absent'].values[0]
+                row['upper_percent'] = self.descriptions[self.descriptions['field'] == row['phenophase_description']]['upper_percent_absent'].values[0]
             else:
-                row['lower_percent'] = self.descriptions[self.descriptions['field'] == row['phenophase_description']][
-                    'lower_percent_present'].values[0]
-                row['upper_percent'] = self.descriptions[self.descriptions['field'] == row['phenophase_description']][
-                    'upper_percent_present'].values[0]
+                row['lower_percent'] = self.descriptions[self.descriptions['field'] == row['phenophase_description']]['lower_percent_present'].values[0]
+                row['upper_percent'] = self.descriptions[self.descriptions['field'] == row['phenophase_description']]['upper_percent_present'].values[0]
         except IndexError:
             # thrown if missing phenophase_description in phenophase_descriptions.csv file
             pass

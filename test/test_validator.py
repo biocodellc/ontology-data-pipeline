@@ -1,5 +1,5 @@
 import pytest
-from process.validator import Validator, InvalidData
+from process.validator import Validator, InvalidData, DataValidator
 import pandas as pd
 
 
@@ -11,7 +11,7 @@ def config(tmpdir):
 
     def make_config(data_file):
         return Config(base_dir, {
-            'output_dir': tmpdir,
+            'output_dir': str(tmpdir),
             'data_file': os.path.join(base_dir, data_file),
             'config_dir': os.path.join(base_dir, "config")
 
@@ -26,19 +26,21 @@ def _load_data(config):
 
 def test_should_raise_exception_if_missing_columns(config):
     config = config("data/missing_columns.csv")
-    validator = Validator(config, _load_data(config))
+    #validator = Validator(config, _load_data(config))
+    validator = Validator(config)
 
     with pytest.raises(InvalidData):
-        validator.validate()
-
+        validator.validate(_load_data(config))
 
 def test_should_return_false_for_invalid_data(config, capsys):
     config = config("data/invalid_input.csv")
 
-    data = _load_data(config)
-    validator = Validator(config, data)
+    with capsys.disabled():
+        data = _load_data(config)
+        validator = Validator(config)
+        valid = validator.validate(data)
 
-    assert validator.validate() == False
+    assert valid == False
 
     # verify output
     out, err = capsys.readouterr()
