@@ -36,7 +36,7 @@ def test_should_generate_valid_triples(config):
         '<http://n2t.net/ark:/21547/Anm21> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.obolibrary.org/obo/BCO_0000003>',
         '<http://n2t.net/ark:/21547/Anm21> <http://rs.tdwg.org/dwc/terms/EventID> "1"^^<http://www.w3.org/2001/XMLSchema#integer>',
         '<http://n2t.net/ark:/21547/Anm21> <http://rs.tdwg.org/dwc/terms/decimalLatitude> "-12.99"^^<http://www.w3.org/2001/XMLSchema#float>',
-        '<http://n2t.net/ark:/21547/Anm21> <http://rs.tdwg.org/dwc/terms/decimalLongitude> "13.0"^^<http://www.w3.org/2001/XMLSchema#integer>',
+        '<http://n2t.net/ark:/21547/Anm21> <http://rs.tdwg.org/dwc/terms/decimalLongitude> "13.0"^^<http://www.w3.org/2001/XMLSchema#float>',
         '<http://n2t.net/ark:/21547/Anm21> <http://rs.tdwg.org/dwc/terms/year> "1988"^^<http://www.w3.org/2001/XMLSchema#integer>',
         '<http://n2t.net/ark:/21547/Anm21> <http://rs.tdwg.org/dwc/terms/startDayOfYear> "120"^^<http://www.w3.org/2001/XMLSchema#integer>',
         '<http://n2t.net/ark:/21547/Anm21> <http://purl.org/dc/elements/1.1/creator> "me"^^<http://www.w3.org/2001/XMLSchema#string>',
