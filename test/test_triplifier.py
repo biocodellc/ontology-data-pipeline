@@ -63,11 +63,20 @@ def test_should_generate_valid_triples(config):
         '<http://rs.tdwg.org/dwc/terms/startDayOfYear> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://rs.tdwg.org/dwc/terms/startDayOfYear>',
         '<http://purl.org/dc/elements/1.1/creator> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property>',
         '<http://purl.org/dc/elements/1.1/creator> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty>',
-        '<http://purl.org/dc/elements/1.1/creator> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://purl.org/dc/elements/1.1/creator>',
-        '<urn:importInstance> <http://www.w3.org/2002/07/owl#imports> </Users/rjewing/code/biocode/ppo-data-pipeline/test/config/ppo-reasoned-no-imports.owl>'
+        '<http://purl.org/dc/elements/1.1/creator> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <http://purl.org/dc/elements/1.1/creator>'
     ]
 
+    # loop the found triples in the expected triples with special logic to handle importantInstance triples, which are system
+    # specific.  We need to know we found just one important instance and don't compare that line here
+    foundImportInstance = False
     for t in triples:
-        assert t in expected_triples
+        if t.startswith('<urn:importInstance>'): 
+            assert foundImportInstance is False
+            foundImportInstance = True
+        else: 
+            assert t in expected_triples
 
-    assert len(triples) == len(expected_triples)
+    assert foundImportInstance is True
+
+    # we removed the import instance since it is typically system specific from the expected triples so we need to add one more line
+    assert len(triples) == len(expected_triples)+1
