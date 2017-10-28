@@ -13,7 +13,7 @@ import pandas as pd
 from .rdf2csv import convert_rdf2csv
 from .splitter import split_file
 from .utils import  loadClass, clean_dir, fetch_ontopilot, fetch_query_fetcher
-from .config import Config, DEFAULT_CONFIG_DIR
+from .config import Config, DEFAULT_CONFIG_DIR, DEFAULT_PROJECT_BASE
 from .reasoner import run_reasoner
 from .triplifier import Triplifier
 from .validator import Validator
@@ -21,7 +21,7 @@ from .validator import Validator
 """process.Process: provides entry point main()."""
 __version__ = "0.1.0"
 
-PROJECT_BASE = os.path.join(os.path.dirname(__file__), '../projects')
+DEFAULT_PROJECT_BASE = os.path.join(os.path.dirname(__file__), '../projects')
 
 
 class Process(object):
@@ -191,6 +191,10 @@ def main():
         help="optionally specify the path of the directory containing the configuration files. defaults to " + DEFAULT_CONFIG_DIR
     )
     parser.add_argument(
+        "--project_base",
+        help="optionally specify the the directory containing the project files. defaults to " + DEFAULT_PROJECT_BASE
+    )
+    parser.add_argument(
         "--ontology",
         help="optionally specify a filepath/url of the ontology to use for reasoning/triplifying"
     )
@@ -245,7 +249,7 @@ def main():
     if args.verbose:
         print("configuring...")
 
-    config = Config(os.path.join(PROJECT_BASE, args.project), **args.__dict__)
+    config = Config(os.path.join(DEFAULT_PROJECT_BASE, args.project), **args.__dict__)
 
     process = Process(config)
     process.run()

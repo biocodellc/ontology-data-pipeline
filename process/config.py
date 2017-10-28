@@ -17,6 +17,7 @@ QUERY_FETCHER_REPO_URL = 'http://repo.biocodellc.com/repository/maven-public/org
 VALID_RULES = ['RequiredValue', 'ControlledVocabulary', 'UniqueValue', 'Integer', 'Float']
 DEFAULT_ONTOLOGY = "https://raw.githubusercontent.com/PlantPhenoOntology/ppo/master/releases/2017-10-20/ppo.owl"
 DEFAULT_CONFIG_DIR = os.path.join(os.path.dirname(__file__), "../config")
+DEFAULT_PROJECT_BASE = os.path.join(os.path.dirname(__file__), '../projects')
 
 DEFAULT_HEADERS = ['record_id', 'scientific_name', 'genus', 'specific_epithet', 'year', 'day_of_year', 'latitude',
                    'longitude', 'source', 'phenophase_name', 'lower_count', 'upper_count', 'lower_percent',
@@ -42,6 +43,8 @@ class Config(object):
 
         if not self.config_dir:
             self.config_dir = DEFAULT_CONFIG_DIR
+        if not self.project_base:
+            self.project_base = DEFAULT_PROJECT_BASE
         if not self.ontology:
             self.ontology = DEFAULT_ONTOLOGY
         if not self.headers:
