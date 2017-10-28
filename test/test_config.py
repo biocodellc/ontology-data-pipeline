@@ -5,8 +5,9 @@ from process.config import Config
 
 def test_config(tmpdir):
     base_dir = os.path.dirname(__file__)
-    config = Config(base_dir, {
+    config = Config( {
         'output_dir': str(tmpdir),
+        'base_dir': os.path.join(base_dir, "."),
         'data_file': os.path.join(base_dir, "data/invalid_input.csv"),
         'config_dir': os.path.join(base_dir, "config")
     }, kw=False)

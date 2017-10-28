@@ -14,10 +14,12 @@ QUERY_FETCHER_VERSION = '0.0.1'
 QUERY_FETCHER_REPO_URL = 'http://repo.biocodellc.com/repository/maven-public/org/biocode/query_fetcher/{}/'.format(
     QUERY_FETCHER_VERSION)
 
+DEFAULT_PROJECT_BASE = "projects"
+DEFAULT_BASE_DIR = os.path.join(os.path.dirname(__file__), '../projects')
+
 VALID_RULES = ['RequiredValue', 'ControlledVocabulary', 'UniqueValue', 'Integer', 'Float']
 DEFAULT_ONTOLOGY = "https://raw.githubusercontent.com/PlantPhenoOntology/ppo/master/releases/2017-10-20/ppo.owl"
 DEFAULT_CONFIG_DIR = os.path.join(os.path.dirname(__file__), "../config")
-DEFAULT_PROJECT_BASE = os.path.join(os.path.dirname(__file__), '../projects')
 
 DEFAULT_HEADERS = ['record_id', 'scientific_name', 'genus', 'specific_epithet', 'year', 'day_of_year', 'latitude',
                    'longitude', 'source', 'phenophase_name', 'lower_count', 'upper_count', 'lower_percent',
@@ -29,9 +31,8 @@ class Config(object):
     class containing config values. All config data is accessible as attributes on this class
     """
 
-    def __init__(self, base_dir, *initial_data, **kwargs):
+    def __init__(self, *initial_data, **kwargs):
         """
-        :param base_dir: path to the directory containing the project specific files
         :param initial_data: dict arguments used to extend the Config class
         :param kwargs: kwargs used to extend the Config class
         """
@@ -45,6 +46,8 @@ class Config(object):
             self.config_dir = DEFAULT_CONFIG_DIR
         if not self.project_base:
             self.project_base = DEFAULT_PROJECT_BASE
+        if not self.base_dir:
+            self.base_dir = os.path.join(DEFAULT_BASE_DIR, self.project)
         if not self.ontology:
             self.ontology = DEFAULT_ONTOLOGY
         if not self.headers:
@@ -52,10 +55,12 @@ class Config(object):
         if not self.chunk_size:
             self.chunk_size = 50000
 
+        
         self.ontopilot = os.path.join(os.path.dirname(__file__), '../lib/ontopilot-{}.jar'.format(ONTOPILOT_VERSION))
         self.ontopilot_repo_url = ONTOPILOT_REPO_URL
         self.queryfetcher = os.path.join(os.path.dirname(__file__), '../lib/query_fetcher-{}.jar'.format(QUERY_FETCHER_VERSION))
         self.queryfetcher_repo_url = QUERY_FETCHER_REPO_URL
+
 
         if self.log_file:
             logging.basicConfig(filename=os.path.join(self.output_dir, 'log.txt'), filemode='w')
@@ -68,7 +73,6 @@ class Config(object):
             os.remove(data_file_path)
 
         self.invalid_data_file = os.path.join(self.output_dir, 'invalid_data.csv')
-        self.base_dir = base_dir
 
         # output directories
         self.output_csv_dir = os.path.join(self.output_dir, 'output_csv')
