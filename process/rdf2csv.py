@@ -16,3 +16,12 @@ def convert_rdf2csv(input_dir, output_dir, sparql_file, query_fetcher_path):
     # with process.stdout:
     #     for line in iter(process.stdout.readline, b''):
     #         logging.debug(line)
+    
+    # write obo: prefix to all obo URLs using inplace editing.
+    # This cuts the output file sizes by 50% but we will need 
+    # to remember to replace the prefix in any downstream apps
+    with fileinput.FileInput('foo.txt', inplace=True) as file:
+        for line in file:
+            print(line.replace('http://purl.obolibrary.org/obo/', 'obo:'), end='')
+
+    fileinput.close()
