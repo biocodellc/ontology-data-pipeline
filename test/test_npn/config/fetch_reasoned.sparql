@@ -48,3 +48,4 @@ WHERE {
         OPTIONAL {?measurementDatum obo:PPO_0000004 ?upper_percent} .
 }
 GROUP BY ?phenologyObservingProcess ?dayOfYear ?year ?latitude ?longitude ?genus ?specificEpithet ?scientificName ?lower_count ?upper_count ?lower_percent ?upper_percent ?source ?subSource ?adjustedNcepReanalysisMonthlyMeanTemp
+ORDER BY ASC(?phenologyObservingProcess)

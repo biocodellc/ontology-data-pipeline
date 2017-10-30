@@ -14,24 +14,23 @@ def test_entire_data_stream_from_input_to_output():
 
     cmd = ['python', './process.py', 'test_npn', 'test/test_npn/data/output/', '--input_dir', 'test/test_npn/data/input/','--config_dir','test/test_npn/config/','--ontology','https://raw.githubusercontent.com/PlantPhenoOntology/ppo/master/releases/2017-10-20/ppo.owl','--base_dir','test/test_npn/','--project_base','test.test_npn' ]
 
-    #proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-#
-#    #print("the commandline is {}".format(subprocess.list2cmdline(cmd)))
-#
-#    # output reresults from process
-#    stdout, stderr = proc.communicate()
-#    out = open(output_file,'wb')
-#    out.write(stdout)
-#    out.close() 
-#    err = open(output_file + '.err','wb')
-#    err.write(stderr)
-#    err.close() 
-#
-#    p_status = proc.wait()
-   
-#    # Simple test to make sure the program exited with a good status
-#    assert p_status==0
-#
+    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+    #print("the commandline is {}".format(subprocess.list2cmdline(cmd)))
+
+    # output reresults from process
+    stdout, stderr = proc.communicate()
+    out = open(output_file,'wb')
+    out.write(stdout)
+    out.close() 
+    err = open(output_file + '.err','wb')
+    err.write(stderr)
+    err.close() 
+
+    p_status = proc.wait()
+    # Simple test to make sure the program exited with a good status
+    assert p_status==0
+
     # should have a file with results
     results_file_name = os.path.join(base_dir,"data","output","output_csv","data.csv")
     assert True == os.path.exists(results_file_name)
