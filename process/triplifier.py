@@ -3,6 +3,8 @@ import re
 import pandas as pd
 import multiprocessing
 from multiprocessing.dummy import Pool as ThreadPool
+import logging
+from .utils import isNull
 
 
 class Triplifier(object):
@@ -62,15 +64,17 @@ class Triplifier(object):
                             literal_val = False
                             break
 
-                if val and not pd.isnull(val):
+                # format and print all of the instance data triples
+                if (not isNull(val)):
                     p = "<{}>".format(uri)
                     if literal_val:
                         type = self._get_type(val)
                         o = "\"{}\"^^<http://www.w3.org/2001/XMLSchema#{}>".format(val, type)
                     else:
-                        o = "<{}>".format(val)
+                        o = "<{}>".format(str(val))
                     row_triples.append("{} {} {}".format(s, p, o))
 
+        # format and print all triples describing relations
         for relation in self.config.relations:
             subject_entity = self.config.get_entity(relation['subject_entity_alias'])
             object_entity = self.config.get_entity(relation['object_entity_alias'])
