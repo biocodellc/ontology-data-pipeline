@@ -1,16 +1,12 @@
-DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): raw.githubusercontent.com
-DEBUG:urllib3.connectionpool:https://raw.githubusercontent.com:443 "GET /PlantPhenoOntology/ppo/master/releases/2017-10-20/ppo.owl HTTP/1.1" 200 88366
-DEBUG:root:adding climate data
-configuring...
-	processing next 7 records
-DEBUG:root:	validating 7 records
-DEBUG:root:	triplifying 7 records
-DEBUG:root:	running reasoner on data_1.ttl
-DEBUG:root:converting reasoned data to csv for directory data/output/output_reasoned
-DEBUG:root:running query_fetcher with: 
-DEBUG:root:java -jar /Users/jdeck/IdeaProjects/ppo-data-pipeline/process/../lib/query_fetcher-0.0.1.jar -i data/output/output_reasoned -inputFormat TURTLE -o data/output/output_reasoned_csv -numThreads 8 -sparql ../config/fetch_reasoned.sparql
-SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
-SLF4J: Defaulting to no-operation (NOP) logger implementation
-SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
-skipping unknown file type data_1.ttl.err
-    writing data/output/output_reasoned_csv/data_1.ttl.csv
+Traceback (most recent call last):
+  File "../../process.py", line 12, in <module>
+    main()
+  File "/Users/jdeck/IdeaProjects/ppo-data-pipeline/process/process.py", line 260, in main
+    config = Config(**args.__dict__)
+  File "/Users/jdeck/IdeaProjects/ppo-data-pipeline/process/config.py", line 93, in __init__
+    self._add_default_rules()
+  File "/Users/jdeck/IdeaProjects/ppo-data-pipeline/process/config.py", line 198, in _add_default_rules
+    self._parse_list(list_name)
+  File "/Users/jdeck/IdeaProjects/ppo-data-pipeline/process/config.py", line 178, in _parse_list
+    "Invalid rule. Can't find specified list \"{}\"".format(file_path))
+AttributeError: Invalid rule. Can't find specified list "test/test_npn/phenophase_descriptions.csv"
