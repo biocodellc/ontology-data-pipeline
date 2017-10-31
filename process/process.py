@@ -61,9 +61,21 @@ class Process(object):
             with multiprocessing.Pool(processes=num_processes) as pool:
                 pool.starmap(self._reason, zip(files, repeat(root)))
 
-    def _reasoned2csv(self):
-        convert_rdf2csv(self.config.output_reasoned_dir, self.config.output_reasoned_csv_dir,
+    def _csv2rdf(self, file):
+        logging.debug("\trunning csv2reasoner on {}".format(file))
+        out_file = os.path.join(self.config.output_reasoned_dir, file.replace('.n3', '.ttl'))
+        convert_rdf2csv(os.path.join(self.config.output_reasoned_dir,file),self.config.output_reasoned_csv_dir,
                         self.config.reasoned_sparql, self.config.queryfetcher)
+
+    def _reasoned2csv(self):
+        num_processes = math.floor(self.config.num_processes / 2)
+        files = []
+        for file in os.listdir(self.config.output_reasoned_dir):
+            if file.endswith(".ttl"):
+                files.append(file)
+
+        with multiprocessing.Pool(processes=num_processes) as pool:
+            pool.starmap(self._csv2rdf, zip(files))
 
     def _split_and_triplify_data(self):
         """
