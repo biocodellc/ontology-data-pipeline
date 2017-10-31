@@ -31,18 +31,18 @@ def test_entire_data_stream_from_input_to_output():
     # Simple test to make sure the program exited with a good status
     assert p_status==0
 
-    # should have a file with results
-    results_file_name = os.path.join(base_dir,"data","output","output_csv","data.csv")
+    # should have a file with results 
+    results_file_name = os.path.join(base_dir,"data","output","output_reasoned_csv","data_1.ttl.csv")
     assert True == os.path.exists(results_file_name)
 
     expected_results = [
-            'http://n2t.net/ark:/21547/Amg24,139,2009,43.08535,-70.69133,Acer,rubrum,Acer rubrum,,,0,,NPN,,16.917099,http://purl.obolibrary.org/obo/PPO_0002041|http://purl.obolibrary.org/obo/PPO_0002000',
-            'http://n2t.net/ark:/21547/Amg23,141,2011,43.08535,-70.69133,Acer,rubrum,Acer rubrum,,,75.0,94.0,NPN,,14.151621,http://purl.obolibrary.org/obo/PPO_0002314|http://purl.obolibrary.org/obo/PPO_0002013|http://purl.obolibrary.org/obo/PPO_0002312|http://purl.obolibrary.org/obo/PPO_0002302|http://purl.obolibrary.org/obo/PPO_0002016|http://purl.obolibrary.org/obo/PPO_0002011|http://purl.obolibrary.org/obo/PPO_0002014|http://purl.obolibrary.org/obo/PPO_0002322|http://purl.obolibrary.org/obo/PPO_0002024|http://purl.obolibrary.org/obo/PPO_0002313|http://purl.obolibrary.org/obo/PPO_0002301|http://purl.obolibrary.org/obo/PPO_0002003|http://purl.obolibrary.org/obo/PPO_0002004|http://purl.obolibrary.org/obo/PPO_0002009|http://purl.obolibrary.org/obo/PPO_0002311|http://purl.obolibrary.org/obo/PPO_0002309|http://purl.obolibrary.org/obo/PPO_0002000|http://purl.obolibrary.org/obo/PPO_0002015|http://purl.obolibrary.org/obo/PPO_0002307',
-            'http://n2t.net/ark:/21547/Amg21,139,2011,43.08535,-70.69133,Acer,rubrum,Acer rubrum,11.0,,,,NPN,,14.151621,http://purl.obolibrary.org/obo/PPO_0002314|http://purl.obolibrary.org/obo/PPO_0002312|http://purl.obolibrary.org/obo/PPO_0002302|http://purl.obolibrary.org/obo/PPO_0002013|http://purl.obolibrary.org/obo/PPO_0002016|http://purl.obolibrary.org/obo/PPO_0002014|http://purl.obolibrary.org/obo/PPO_0002322|http://purl.obolibrary.org/obo/PPO_0002313|http://purl.obolibrary.org/obo/PPO_0002011|http://purl.obolibrary.org/obo/PPO_0002301|http://purl.obolibrary.org/obo/PPO_0002003|http://purl.obolibrary.org/obo/PPO_0002024|http://purl.obolibrary.org/obo/PPO_0002004|http://purl.obolibrary.org/obo/PPO_0002009|http://purl.obolibrary.org/obo/PPO_0002311|http://purl.obolibrary.org/obo/PPO_0002309|http://purl.obolibrary.org/obo/PPO_0002000|http://purl.obolibrary.org/obo/PPO_0002015|http://purl.obolibrary.org/obo/PPO_0002307',
-            'http://n2t.net/ark:/21547/Amg26,145,2009,43.08535,-70.69133,Acer,rubrum,Acer rubrum,,,,0,NPN,,16.917099,http://purl.obolibrary.org/obo/PPO_0002035|http://purl.obolibrary.org/obo/PPO_0002000',
-            'http://n2t.net/ark:/21547/Amg25,145,2009,43.08535,-70.69133,Acer,rubrum,Acer rubrum,,,1.0,,NPN,,16.917099,http://purl.obolibrary.org/obo/PPO_0002312|http://purl.obolibrary.org/obo/PPO_0002015|http://purl.obolibrary.org/obo/PPO_0002315|http://purl.obolibrary.org/obo/PPO_0002017|http://purl.obolibrary.org/obo/PPO_0002000|http://purl.obolibrary.org/obo/PPO_0002313|http://purl.obolibrary.org/obo/PPO_0002014',
-            'http://n2t.net/ark:/21547/Amg27,145,2009,43.08535,-70.69133,Acer,rubrum,Acer rubrum,,,51.0,100.0,NPN,,16.917099,http://purl.obolibrary.org/obo/PPO_0002318|http://purl.obolibrary.org/obo/PPO_0002320|http://purl.obolibrary.org/obo/PPO_0002312|http://purl.obolibrary.org/obo/PPO_0002020|http://purl.obolibrary.org/obo/PPO_0002322|http://purl.obolibrary.org/obo/PPO_0002315|http://purl.obolibrary.org/obo/PPO_0002015|http://purl.obolibrary.org/obo/PPO_0002000|http://purl.obolibrary.org/obo/PPO_0002017|http://purl.obolibrary.org/obo/PPO_0002018|http://purl.obolibrary.org/obo/PPO_0002022|http://purl.obolibrary.org/obo/PPO_0002316|http://purl.obolibrary.org/obo/PPO_0002024|http://purl.obolibrary.org/obo/PPO_0002313|http://purl.obolibrary.org/obo/PPO_0002014',
-            'http://n2t.net/ark:/21547/Amg22,139,2011,43.08535,-70.69133,Acer,rubrum,Acer rubrum,,,1.0,,NPN,,14.151621,http://purl.obolibrary.org/obo/PPO_0002322|http://purl.obolibrary.org/obo/PPO_0002313|http://purl.obolibrary.org/obo/PPO_0002000|http://purl.obolibrary.org/obo/PPO_0002301|http://purl.obolibrary.org/obo/PPO_0002003|http://purl.obolibrary.org/obo/PPO_0002004|http://purl.obolibrary.org/obo/PPO_0002009|http://purl.obolibrary.org/obo/PPO_0002311|http://purl.obolibrary.org/obo/PPO_0002013|http://purl.obolibrary.org/obo/PPO_0002011|http://purl.obolibrary.org/obo/PPO_0002024|http://purl.obolibrary.org/obo/PPO_0002015|http://purl.obolibrary.org/obo/PPO_0002307|http://purl.obolibrary.org/obo/PPO_0002314|http://purl.obolibrary.org/obo/PPO_0002312|http://purl.obolibrary.org/obo/PPO_0002302|http://purl.obolibrary.org/obo/PPO_0002016|http://purl.obolibrary.org/obo/PPO_0002309|http://purl.obolibrary.org/obo/PPO_0002014'
+            'http://n2t.net/ark:/21547/Amg24,139,2009,43.08535,-70.69133,Acer,rubrum,Acer rubrum,,,0.0,,NPN,Nature\'s Notebook,16.917099,obo:PPO_0002041|obo:PPO_0002000',
+            'http://n2t.net/ark:/21547/Amg23,141,2011,43.08535,-70.69133,Acer,rubrum,Acer rubrum,,,75.0,94.0,NPN,Nature\'s Notebook,14.151621,obo:PPO_0002314|obo:PPO_0002013|obo:PPO_0002312|obo:PPO_0002302|obo:PPO_0002016|obo:PPO_0002011|obo:PPO_0002014|obo:PPO_0002322|obo:PPO_0002024|obo:PPO_0002313|obo:PPO_0002301|obo:PPO_0002003|obo:PPO_0002004|obo:PPO_0002009|obo:PPO_0002311|obo:PPO_0002309|obo:PPO_0002000|obo:PPO_0002015|obo:PPO_0002307',
+            'http://n2t.net/ark:/21547/Amg21,139,2011,43.08535,-70.69133,Acer,rubrum,Acer rubrum,11.0,,,,NPN,NPN Legacy Lilac Data,14.151621,obo:PPO_0002314|obo:PPO_0002312|obo:PPO_0002302|obo:PPO_0002013|obo:PPO_0002016|obo:PPO_0002014|obo:PPO_0002322|obo:PPO_0002313|obo:PPO_0002011|obo:PPO_0002301|obo:PPO_0002003|obo:PPO_0002024|obo:PPO_0002004|obo:PPO_0002009|obo:PPO_0002311|obo:PPO_0002309|obo:PPO_0002000|obo:PPO_0002015|obo:PPO_0002307',
+            'http://n2t.net/ark:/21547/Amg26,145,2009,43.08535,-70.69133,Acer,rubrum,Acer rubrum,,,,0.0,NPN,Nature\'s Notebook,16.917099,obo:PPO_0002041|obo:PPO_0002633|obo:PPO_0002036|obo:PPO_0002638|obo:PPO_0002627|obo:PPO_0002030|obo:PPO_0002632|obo:PPO_0002035|obo:PPO_0002639|obo:PPO_0002000|obo:PPO_0002042',
+            'http://n2t.net/ark:/21547/Amg25,145,2009,43.08535,-70.69133,Acer,rubrum,Acer rubrum,,,1.0,,NPN,Nature\'s Notebook,16.917099,obo:PPO_0002312|obo:PPO_0002015|obo:PPO_0002315|obo:PPO_0002017|obo:PPO_0002000|obo:PPO_0002313|obo:PPO_0002014',
+            'http://n2t.net/ark:/21547/Amg27,145,2009,43.08535,-70.69133,Acer,rubrum,Acer rubrum,,,51.0,100.0,NPN,Nature\'s Notebook,16.917099,obo:PPO_0002318|obo:PPO_0002320|obo:PPO_0002312|obo:PPO_0002020|obo:PPO_0002322|obo:PPO_0002315|obo:PPO_0002015|obo:PPO_0002000|obo:PPO_0002017|obo:PPO_0002018|obo:PPO_0002022|obo:PPO_0002316|obo:PPO_0002024|obo:PPO_0002313|obo:PPO_0002014',
+            'http://n2t.net/ark:/21547/Amg22,139,2011,43.08535,-70.69133,Acer,rubrum,Acer rubrum,,,1.0,,NPN,Nature\'s Notebook,14.151621,obo:PPO_0002322|obo:PPO_0002313|obo:PPO_0002000|obo:PPO_0002301|obo:PPO_0002003|obo:PPO_0002004|obo:PPO_0002009|obo:PPO_0002311|obo:PPO_0002013|obo:PPO_0002011|obo:PPO_0002024|obo:PPO_0002015|obo:PPO_0002307|obo:PPO_0002314|obo:PPO_0002312|obo:PPO_0002302|obo:PPO_0002016|obo:PPO_0002309|obo:PPO_0002014'
      ]
 
     # compare expected values above to results_file
@@ -57,13 +57,13 @@ def test_entire_data_stream_from_input_to_output():
         # loop actual output lines
         for line in lines:
             # search for the expected line in the output
+            #if (e.replace(r"\'","'") == line):
             if (e == line):
                 foundMatch = True
         if (foundMatch):
             assert True
         else:
             assert False, "expected line did not find a match: " + e
-
     # we should see the same number for results in output file as
     # the expected, with the exception of the header line
     assert len(expected_results) == len(lines)-1, "mismatched number of lines"

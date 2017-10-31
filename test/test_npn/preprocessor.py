@@ -12,14 +12,14 @@ COLUMNS_MAP = {
     'observation_id': 'record_id',
     'species': 'specific_epithet',
     'phenophase_description': 'phenophase_name',
-    'Dataset_Name': 'sub_source'
+    'Source': 'sub_source'
 }
 
 class PreProcessor(AbstractPreProcessor):
     def _process_data(self):
         self.descriptions = pd.read_csv(PHENOPHASE_DESCRIPTIONS_FILE, header=0, skipinitialspace=True)
         self.dataset_metadata = pd.read_csv(DATASET_METADATA_FILE, header=0, skipinitialspace=True,
-                                            usecols=['Dataset_ID', 'Dataset_Name'])
+                                            usecols=['Dataset_ID', 'Source'])
 
         chunk_size = 100000
         df = pd.read_csv(os.path.join(self.input_dir, "test_data.csv"), header=0, chunksize=chunk_size)
