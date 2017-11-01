@@ -98,8 +98,9 @@ class PreProcessor(AbstractPreProcessor):
         # if phenophaseStatus is 'yes' and no phenophaseIntensity, set lower_count = 1
         df.loc[df.phenophaseIntensity.isnull() & df.phenophaseStatus.str.match('no', case=False), 'upper_count'] = 0
 
-        df["lower_count"] = df["lower_count"].fillna(0.0).astype(int)
-        df["upper_count"] = df["upper_count"].fillna(0.0).astype(int)
+        # JBD removing these two lines as they lead to inconsistent ontology errors
+        #df["lower_count"] = df["lower_count"].fillna(0.0).astype(int)
+        #df["upper_count"] = df["upper_count"].fillna(0.0).astype(int)
 
         df.fillna('', inplace=True)  # replace all null values
 
