@@ -1,0 +1,16 @@
+field,defined_by,lower_percent_present,upper_percent_present,lower_percent_absent,upper_percent_absent,force_default_value,Notes
+Falling leaves,{abscised leaf presence},1,,,0,,
+Colored needles,{senescing true leaf presence},1,,,0,yes,"I am not sure when NEON data starts, perhaps after March 2012 anyway"
+Breaking needle buds,{breaking leaf bud presence},1,,,0,,
+Falling needles,{abscised leaf presence},1,,,0,,
+Emerging needles,{unfolding true leaf presence},1,,,0,,
+Leaves,{unfolded true leaf presence},1,,,0,,
+Increasing leaf size,{expanding unfolded true leaf presence},51,100,0,,yes,"as with NPN, when this phenophase is absent it does not necessarily mean there are no expanding unfolded true leaves on the plant; they will be present at twig ends all growing season"
+Young needles,{immature unfolded true leaf presence},1,,,0,,
+Colored leaves,{senescing true leaf presence},1,,,0,yes,"I am not sure when NEON data starts, perhaps after March 2012 anyway"
+Initial growth,{new shoot system presence},1,,,0,,
+Open pollen cones,{open pollen cone presence},1,,,0,,
+Open flowers,{open flower presence},1,,,0,,
+Needles,{unfolded true leaf presence},1,,,0,,
+Breaking leaf buds,{breaking leaf bud presence},1,,,0,,
+Young leaves,{immature unfolded true leaf presence},1,,,0,,
