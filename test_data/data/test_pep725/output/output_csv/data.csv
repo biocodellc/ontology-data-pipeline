@@ -1,0 +1,6 @@
+record_id,scientific_name,genus,specific_epithet,year,day_of_year,latitude,longitude,source,sub_source,phenophase_name,lower_count,upper_count,lower_percent,upper_percent,adjusted_ncep_reanalysis_monthly_mean_temp
+e0e13ff9-227d-4e1d-9dd5-63a6c5ef1549,Galanthus nivalis,Galanthus,nivalis,1868,39,51.5667,3.55,PEP725,,Beginnin of flowering: first flowers open (sporadically),1.0,,,,
+c9b6a4da-1b31-4ff0-961f-754b5fc20eda,Galanthus nivalis,Galanthus,nivalis,1868,41,52.2167,4.63333,PEP725,,Beginnin of flowering: first flowers open (sporadically),1.0,,,,
+f68878da-ac21-48da-a92a-a724f0ea1068,Corylus avellana,Corylus,avellana,1868,42,53.1667,6.86667,PEP725,,Beginnin of flowering: first flowers open (sporadically),1.0,,,,
+76e2ed56-3ffc-49fe-a594-895b186f04dd,Corylus avellana,Corylus,avellana,1868,43,52.2167,4.63333,PEP725,,Beginnin of flowering: first flowers open (sporadically),1.0,,,,
+0b07bb90-4114-426e-b57e-db486d72d962,Corylus avellana,Corylus,avellana,1868,44,51.5667,3.55,PEP725,,Beginnin of flowering: first flowers open (sporadically),1.0,,,,

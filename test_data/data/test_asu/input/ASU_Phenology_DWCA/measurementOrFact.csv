@@ -1,0 +1,10 @@
+coreid,measurementType,measurementTypeID,measurementValue,measurementValueID,measurementUnit,measurementDeterminedDate,measurementDeterminedBy,measurementRemarks
+649311,Phenology,http://purl.obolibrary.org/obo/PO_0007130,Reproductive,http://purl.org/nevp/vocabulary/reproductive-phenology#03,,2017-04-15T01:05:07Z,egbot,
+649311,"Phenology: reproductive",http://purl.obolibrary.org/obo/PO_0007130,Flowering,http://purl.org/nevp/vocabulary/reproductive-phenology#06,,2017-04-15T01:05:08Z,egbot,
+649312,Phenology,http://purl.obolibrary.org/obo/PO_0007130,Reproductive,http://purl.org/nevp/vocabulary/reproductive-phenology#03,,2017-04-15T01:13:26Z,egbot,
+649312,"Phenology: reproductive",http://purl.obolibrary.org/obo/PO_0007130,Fruiting,http://purl.org/nevp/vocabulary/reproductive-phenology#11,,2017-04-15T01:13:27Z,egbot,
+649313,Phenology,http://purl.obolibrary.org/obo/PO_0007130,Reproductive,http://purl.org/nevp/vocabulary/reproductive-phenology#03,,2017-04-15T01:13:26Z,egbot,
+649313,"Phenology: reproductive",http://purl.obolibrary.org/obo/PO_0007130,Fruiting,http://purl.org/nevp/vocabulary/reproductive-phenology#11,,2017-04-15T01:13:27Z,egbot,
+649314,Phenology,http://purl.obolibrary.org/obo/PO_0007130,Reproductive,http://purl.org/nevp/vocabulary/reproductive-phenology#03,,2017-04-15T01:05:07Z,egbot,
+649314,"Phenology: reproductive",http://purl.obolibrary.org/obo/PO_0007130,Flowering,http://purl.org/nevp/vocabulary/reproductive-phenology#06,,2017-04-15T01:05:08Z,egbot,
+649315,Phenology,http://purl.obolibrary.org/obo/PO_0007130,Reproductive,http://purl.org/nevp/vocabulary/reproductive-phenology#03,,2017-04-15T01:05:07Z,egbot,

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eml:eml xmlns:eml="eml://ecoinformatics.org/eml-2.1.1" xmlns:dc="http://purl.org/dc/terms/"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="eml://ecoinformatics.org/eml-2.1.1 http://rs.gbif.org/schema/eml-gbif-profile/1.0.1/eml.xsd"
+         packageId="fe225be9-f597-4e96-a0db-08b25b964163" system="http://symbiota.org" scope="system" xml:lang="eng">
+    <dataset>
+        <alternateIdentifier>http://swbiodiversity.org/seinet/collections/misc/collprofiles.php?collid=1
+        </alternateIdentifier>
+        <title xml:lang="eng">Arizona State University Vascular Plant Herbarium</title>
+        <creator id="4342b7ac-e565-4ed1-8ff8-ae4769d9ef15">
+            <organizationName>SEINet - Arizona Chapter</organizationName>
+            <electronicMailAddress>seinetadmin@asu.edu</electronicMailAddress>
+            <onlineUrl>http://swbiodiversity.org/seinet/index.php</onlineUrl>
+        </creator>
+        <metadataProvider>
+            <organizationName>SEINet - Arizona Chapter</organizationName>
+            <electronicMailAddress>seinetadmin@asu.edu</electronicMailAddress>
+            <onlineUrl>http://swbiodiversity.org/seinet/index.php</onlineUrl>
+        </metadataProvider>
+        <pubDate>2017-04-15</pubDate>
+        <language>eng</language>
+        <abstract>
+            <para>The Arizona State University Vascular Plant Herbarium is the second largest in the Arid Southwest with
+                over 285,000 specimens. Our collection of Cactaceae is one of the best in the world, being particularly
+                rich in cytological vouchers. &lt;br/&gt;&lt;br/&gt;ASU Type Specimens: &lt;a
+                href="http://swbiodiversity.org/seinet/checklists/checklist.php?cl=2638"&gt;http://swbiodiversity.org/seinet/checklists/checklist.php?cl=2638&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;
+            </para>
+        </abstract>
+        <contact>
+            <individualName>Elizabeth Makings</individualName>
+            <organizationName>Arizona State University Vascular Plant Herbarium</organizationName>
+            <phone>(480) 965-6162</phone>
+            <electronicMailAddress>Elizabeth.Makings@asu.edu</electronicMailAddress>
+            <onlineUrl>http://lifesciences.asu.edu/herbarium/</onlineUrl>
+        </contact>
+        <associatedParty>
+            <individualName>Edward</individualName>
+            <role>CONTENT_PROVIDER</role>
+        </associatedParty>
+        <associatedParty>
+            <organizationName>Arizona State University Vascular Plant Herbarium</organizationName>
+            <individualName>Elizabeth Makings</individualName>
+            <positionName>Collection Manager</positionName>
+            <role>CONTENT_PROVIDER</role>
+            <electronicMailAddress>Elizabeth.Makings@asu.edu</electronicMailAddress>
+            <phone>(480) 965-6162</phone>
+            <address>
+                <deliveryPoint>P. O. Box 874501</deliveryPoint>
+                <city>Tempe</city>
+                <administrativeArea>Arizona</administrativeArea>
+                <postalCode>85287-4501</postalCode>
+                <country>USA</country>
+            </address>
+        </associatedParty>
+        <intellectualRights>
+            <para>To the extent possible under law, the publisher has waived all rights to these data and has dedicated
+                them to the
+                <ulink url="http://creativecommons.org/licenses/by-nc/3.0/legalcode">
+                    <citetitle>CC BY-NC (Attribution-Non-Commercial)</citetitle>
+                </ulink>
+                Users can copy, redistribute the material in any medium or format, remix, transform, and build upon the
+                material. The licensor cannot revoke these freedoms as long as you follow the license terms.
+            </para>
+        </intellectualRights>
+    </dataset>
+    <additionalMetadata>
+        <metadata>
+            <symbiota>
+                <dateStamp>2017-04-15T00:08:50-07:00</dateStamp>
+                <citation identifier="519db7b8-95bf-4a79-9666-21f361b1a583">SEINet - Arizona Chapter -
+                    519db7b8-95bf-4a79-9666-21f361b1a583
+                </citation>
+                <physical>
+                    <characterEncoding>UTF-8</characterEncoding>
+                    <dataFormat>
+                        <externallyDefinedFormat>
+                            <formatName>Darwin Core Archive</formatName>
+                        </externallyDefinedFormat>
+                    </dataFormat>
+                </physical>
+                <collection identifier="a2e32c87-d320-4a01-bafd-a9182ae2e191" id="1">
+                    <alternateIdentifier>http://swbiodiversity.org/seinet/collections/misc/collprofiles.php?collid=1
+                    </alternateIdentifier>
+                    <parentCollectionIdentifier>ASU</parentCollectionIdentifier>
+                    <collectionIdentifier>Plants</collectionIdentifier>
+                    <collectionName>Arizona State University Vascular Plant Herbarium</collectionName>
+                    <resourceLogoUrl>http://swbiodiversity.org/seinet/images/collicons/asu.jpg</resourceLogoUrl>
+                    <onlineUrl>http://lifesciences.asu.edu/herbarium/</onlineUrl>
+                    <intellectualRights>http://creativecommons.org/licenses/by-nc/3.0/</intellectualRights>
+                    <abstract>
+                        <para>The Arizona State University Vascular Plant Herbarium is the second largest in the Arid
+                            Southwest with over 285,000 specimens. Our collection of Cactaceae is one of the best in the
+                            world, being particularly rich in cytological vouchers. &lt;br/&gt;&lt;br/&gt;ASU Type
+                            Specimens: &lt;a href="http://swbiodiversity.org/seinet/checklists/checklist.php?cl=2638"&gt;http://swbiodiversity.org/seinet/checklists/checklist.php?cl=2638&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;
+                        </para>
+                    </abstract>
+                </collection>
+            </symbiota>
+        </metadata>
+    </additionalMetadata>
+</eml:eml>

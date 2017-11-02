@@ -1,0 +1,104 @@
+1020101;actidelibrun;102;10201;1020101;Actinidia deliciosa Bruno;bruno;Kiwi Bruno;;;0000-00-00 00:00:00
+1020102;actidelihayw;102;10201;1020102;Actinidia deliciosa Hayward;hayward;Kiwi Hayward;;;0000-00-00 00:00:00
+1510101;fagusylvdude;151;15101;1510101;Fagus sylvatica (Düdelsheim);european beech Düdelsheim;Rotbuche Düdelsheim;;;0000-00-00 00:00:00
+1510102;fagusylvhard;151;15101;1510102;Fagus sylvatica (Hardegsen);european beech Hadegsen;Rotbuche Hadegsen;;dürfte es nur bei IPG geben - zusammenfassen?;0000-00-00 00:00:00
+1510103;fagusylvtrip;151;15101;1510103;Fagus sylvatica (Trippstadt);european beech Trippstadt;Rotbuche Trippstadt;;;0000-00-00 00:00:00
+1530101;ficucaripetr;153;15301;1530101;Ficus carica Petrovaca;petrovaca;Feige Petrovaca;;;0000-00-00 00:00:00
+1530102;ficucarireza;153;15301;1530102;Ficus carica Rezavica;rezavica;Feige Rezavica;;;0000-00-00 00:00:00
+1530103;ficucarisuse;153;15301;1530103;Ficus carica Suselica;suselica;Feige Suselica;;;0000-00-00 00:00:00
+1530104;ficucarizamo;153;15301;1530104;Ficus carica Zamorcica;zamorcica;Feige Zamoricica;;;0000-00-00 00:00:00
+1720101;juglreginovo;172;17201;1720101;Juglans regia Novosadski;walnut Novosadski;Walnuss  Novosadski;;;0000-00-00 00:00:00
+1860102;maludomebosk;186;18601;1860102;Malus domestica Boskoop;apple;Apfel Roter Boskoop;;;0000-00-00 00:00:00
+1860101;maludomebobo;186;18601;1860101;Malus domestica Bobovec;apple;Apfel Bohnapfel;;;0000-00-00 00:00:00
+1860103;maludomechar;186;18601;1860103;Malus domestica Charlamowsky;apple;Apfel Charlamowsky;;;0000-00-00 00:00:00
+1860104;maludomecoxo;186;18601;1860104;Malus domestica Cox Orange;apple;Apfel  Cox Orange Renette;;;0000-00-00 00:00:00
+1860105;maludomecybe;186;18601;1860105;Malus domestica Cybele;apple;Apfel Cybele;;;0000-00-00 00:00:00
+1860106;maludomedelc;186;18601;1860106;Malus domestica Delcorf;apple;Apfel Debarestival;;syn. Delbarestival;0000-00-00 00:00:00
+1860107;maludomeelst;186;18601;1860107;Malus domestica Elstar;apple;Apfel Elstar;;;0000-00-00 00:00:00
+1860108;maludomeglos;186;18601;1860108;Malus domestica Gloster;apple;Apfel Gloster;;;0000-00-00 00:00:00
+1860109;maludomegode;186;18601;1860109;Malus domestica Golden Delicious;apple;Apfel Golden Delicious;;;0000-00-00 00:00:00
+1860110;maludomegopa;186;18601;1860110;Malus domestica Goldparmäne;apple;Apfel  Goldparmaene;;syn. Wintergoldparmäne;0000-00-00 00:00:00
+1860111;maludomegran;186;18601;1860111;Malus domestica Granny Smith;apple;Apfel Granny Smith;;;0000-00-00 00:00:00
+1860112;maludomegrav;186;18601;1860112;Malus domestica Gravensteiner;apple;Apfel Gravensteiner;;;0000-00-00 00:00:00
+1860113;maludomeharm;186;18601;1860113;Malus domestica Harmonie;apple;Apfel Harmonie;;;0000-00-00 00:00:00
+1860114;maludomeidar;186;18601;1860114;Malus domestica Idared;apple;Apfel Idared;;;0000-00-00 00:00:00
+1860115;maludomejame;186;18601;1860115;Malus domestica James Grieve;apple;Apfel James Grieve;;;0000-00-00 00:00:00
+1860116;maludomejogo;186;18601;1860116;Malus domestica Jonagold;apple;Apfel Jonagold;;;0000-00-00 00:00:00
+1860117;maludomejona;186;18601;1860117;Malus domestica Jonathan;apple;Apfel Jonathan;;;0000-00-00 00:00:00
+1860118;maludomekron;186;18601;1860118;Malus domestica Kronprinz Rudolf;apple;Apfel Kronprinz;;;0000-00-00 00:00:00
+1860119;maludomerega;186;18601;1860119;Malus domestica Regali;apple;Apfel Regali;;;0000-00-00 00:00:00
+1860120;maludomeroya;186;18601;1860120;Malus domestica Royal Gala;apple;Apfel  Royal Gala;;;0000-00-00 00:00:00
+1860121;maludomerubi;186;18601;1860121;Malus domestica Rubinette;apple;Apfel Rubinette;;;0000-00-00 00:00:00
+1860122;maludometaff;186;18601;1860122;Malus domestica Taffet;apple;Apfel Taffet;;;0000-00-00 00:00:00
+1860123;maludomewekl;186;18601;1860123;Malus domestica Weißer Klarapfel;White Transparent apple;Apfel Weißer Klarapfel;;also known as Belicnik;0000-00-00 00:00:00
+1950101;oleaeuroobli;195;19501;1950101;Olea europaea Oblica;oblica;Olive Oblica;;;0000-00-00 00:00:00
+1950102;oleaeurozuti;195;19501;1950102;Olea europaea Zutica;zutica;Olive Zutica;;;0000-00-00 00:00:00
+2090201;prunarmekrup;209;20902;2090201;Prunus armeniaca Krupna rana;Apricot Krupna rana;Aprikose Krupna rana;;;0000-00-00 00:00:00
+2090301;prunaviubove;209;20903;2090301;Prunus avium Bovenden;cherry Bovenden;Süßkirsche  Boveden;;;2016-10-20 09:01:06
+2090302;prunaviudeli;209;20903;2090302;Prunus avium Delice de Malicorne;cherry;Süßkirsche Delice;;;0000-00-00 00:00:00
+2090303;prunaviugerm;209;20903;2090303;Prunus avium Germersdorfer;cherry gemersdorfer;Süßkirsche Germersdorfer;;;2016-10-20 09:01:06
+2090304;prunaviugrsk;209;20903;2090304;Prunus avium Große Schwarze Knorpelkirsche;;Süßkirsche Schwarze Knorpelkirsche;;;0000-00-00 00:00:00
+2090305;prunaviuhede;209;20903;2090305;Prunus avium Hedelfinger Riesenkirsche;cherry hedelfinger;Süßkirsche Hedelfinger;;;2016-10-20 09:01:06
+2090306;prunaviulutt;209;20903;2090306;Prunus avium Lutter;cherry Lutter;Süßkirsche  Lutter;;;2016-10-20 09:01:06
+2090307;prunaviumajs;209;20903;2090307;Prunus avium Majska rana;cherry Majska rana;Süßkirsche Majska rana;;Early May;0000-00-00 00:00:00
+2090308;prunaviuregi;209;20903;2090308;Prunus avium Regina;cherry;Süßkirsche Regina;;;0000-00-00 00:00:00
+2090309;prunaviusthg;209;20903;2090309;Prunus avium Starking Hardy Giant;cherry;Süßkirsche Hardy Giant;;;0000-00-00 00:00:00
+2090310;prunaviustel;209;20903;2090310;Prunus avium Stella;cherry stella;Süßkirsche Stella;;;2016-10-20 09:01:06
+2090311;prunaviusunb;209;20903;2090311;Prunus avium Sunburst;cherry;Süßkirsche Sunburst;;;0000-00-00 00:00:00
+2090502;prunceraacid;209;20905;2090502;Prunus cerasus acida;lotova;Sauerkirsche Lotova;;syn. Schattenmorelle, lotova;0000-00-00 00:00:00
+2090501;prunceramara;209;20905;2090501;Prunus cerasus Marasca;maraska;Sauerkirsche Maraska;;;0000-00-00 00:00:00
+2090601;prundomebesz;209;20906;2090601;Prunus domestica Besztercei;Besztercei;Pflaume Besztercei;;;0000-00-00 00:00:00
+2090602;prundomebosa;209;20906;2090602;Prunus domestica Bosanska;bosnian;Pflaume Bosanska;;;0000-00-00 00:00:00
+2090603;prundomedzen;209;20906;2090603;Prunus domestica Dzenarika;dzanarika;Pflaume  Dzanarika;;;0000-00-00 00:00:00
+2090604;prundomepoze;209;20906;2090604;Prunus domestica Pozegaca;pozegaca;Pflaume Pozegaca;;;0000-00-00 00:00:00
+2090605;prundomestan;209;20906;2090605;Prunus domestica Stanlay;stanlay;Pflaume Stanlay;;;0000-00-00 00:00:00
+2090606;prundomeital;209;20906;2090606;Prunus domestica italica;greengage;Pflaume Reineclaude;;;2016-10-20 08:58:46
+2090607;prundomesyri;209;20906;2090607;Prunus domestica syriaca;mirabelle plum;Mirabelle;;;0000-00-00 00:00:00
+2090805;prunpersspri;209;20908;2090805;Prunus persica Springtime;springtime;Springtime-Pfirsich;;;0000-00-00 00:00:00
+2090801;prunpersalbe;209;20908;2090801;Prunus persica Alberta;alberta;Alberta-Pfirsich;;;0000-00-00 00:00:00
+2090802;prunpersdire;209;20908;2090802;Prunus persica Dixi Red;dixired;Dixired-Pfirsich;;;0000-00-00 00:00:00
+2090803;prunpershaha;209;20908;2090803;Prunus persica Hale Haven;hale;Hale-Pfirsich;;;0000-00-00 00:00:00
+2090804;prunpersreha;209;20908;2090804;Prunus persica Red Haven;red haven;Red Haven-Pfirsich;;;0000-00-00 00:00:00
+2100101;punigranbars;210;21001;2100101;Punica granatum Barski;Pomegranate Barski;Granatapfel Barski;;;0000-00-00 00:00:00
+2110101;pyrucommbuju;211;21101;2110101;Pyrus communis Bunte Julibirne;checkered july pear;Birne Bunte Julibirne;;;0000-00-00 00:00:00
+2110102;pyrucommgrma;211;21101;2110102;Pyrus communis Grüne Magdalene;green magdalena;Birne Grüne Magdalene;;;0000-00-00 00:00:00
+2110103;pyrucommjabo;211;21101;2110103;Pyrus communis Jakobovka;pear Jakobovka;Birne Jakobovka;;gleich wie Jakobsbirne?;0000-00-00 00:00:00
+2110104;pyrucommjabi;211;21101;2110104;Pyrus communis Jakobsbirne;jakob;Birne Jakob;;;0000-00-00 00:00:00
+2110105;pyrucommjuzl;211;21101;2110105;Pyrus communis Junsko Zlato;goldjune;Birne Goldjuni;;;0000-00-00 00:00:00
+2110106;pyrucommkara;211;21101;2110106;Pyrus communis Karamanka;karamanka;Birne  Karamanka;;;0000-00-00 00:00:00
+2110107;pyrucommpast;211;21101;2110107;Pyrus communis Pastorenbirne;Poire de Cure;Birne Pastoren;;;0000-00-00 00:00:00
+2110108;pyrucommtepk;211;21101;2110108;Pyrus communis Tepka;pear Tepka;Birne Tepka;;;0000-00-00 00:00:00
+2110109;pyrucommvilj;211;21101;2110109;Pyrus communis Viljamovka;pear Viljamovka;Birne  Viljamovka;;;0000-00-00 00:00:00
+2110110;pyrucommwill;211;21101;2110110;Pyrus communis Williams Christ;williams;Birne  Williams;;Bartlett, Bon-Chrétien Williams;0000-00-00 00:00:00
+2280102;solatubejaer;228;22801;2280102;Solanum tuberosum Jaerla;Solanum tuberosum Jaerla;Solanum tuberosum Jaerla;;;2016-12-01 13:54:15
+2310501;spirprun;231;23105;2310501;Spiraea prunifolia Plena;Spiraea prunifolia Plena;pflaumenblättriger Spierstrauch;;;0000-00-00 00:00:00
+2410101;tritaestspel;241;24101;2410101;Triticum aestivum spelta;spelt;Dinkel;;syn. Triticum spelta L.;0000-00-00 00:00:00
+2480109;vitivini;248;24801;2480109;Vitis vinifera MUSCAT BLEU;grape wine;Weinrebe;;;0000-00-00 00:00:00
+2480101;vitivinicafr;248;24801;2480101;Vitis vinifera CABERNET FRANC;grape wine;Weinrebe;;;0000-00-00 00:00:00
+2480102;vitivinicasa;248;24801;2480102;Vitis vinifera CABERNET SAUVIGNON;grape wine;Weinrebe;;;0000-00-00 00:00:00
+2480103;vitivinichbl;248;24801;2480103;Vitis vinifera CHARDONNAY BLANC;Chardonnay - Feinburgunder - Morillon;Wein Chardonnay;;syn. Feinburgunder,Morillon;2016-10-20 09:03:29
+2480104;vitivinichas;248;24801;2480104;Vitis vinifera CHASSELAS BLANC;grape wine;Weinrebe;;;0000-00-00 00:00:00
+2480105;vitivinigetr;248;24801;2480105;Vitis vinifera GEWUERZTRAMINER;grape wine;Weinrebe;;;0000-00-00 00:00:00
+2480106;vitivinimais;248;24801;2480106;Vitis vinifera MALVASIA ISTRIANA;grape wine;Weinrebe;;;0000-00-00 00:00:00
+2480107;vitivinimeno;248;24801;2480107;Vitis vinifera MERLOT NOIR;Merlot;Merlot;;;0000-00-00 00:00:00
+2480108;vitivinimutw;248;24801;2480108;Vitis vinifera MUELLER THURGAU WEISS;grape wine;Weinrebe;;;0000-00-00 00:00:00
+2480110;vitivininebb;248;24801;2480110;Vitis vinifera NEBBIOLO;grape wine;Weinrebe;;;0000-00-00 00:00:00
+2480111;vitivinipibl;248;24801;2480111;Vitis vinifera PINOT BLANC;grape wine;Weinrebe;;;0000-00-00 00:00:00
+2480112;vitivinipino;248;24801;2480112;Vitis vinifera PINOT NOIR;grape wine;Weinrebe;;;0000-00-00 00:00:00
+2480113;vitiviniplma;248;24801;2480113;Vitis vinifera PLAVAC MALI;grape wine;Weinrebe;;;0000-00-00 00:00:00
+2480114;vitiviniprim;248;24801;2480114;Vitis vinifera PRIMITIVO;grape wine;Weinrebe;;;0000-00-00 00:00:00
+2480115;vitiviniries;248;24801;2480115;Vitis vinifera Riesling;grape wine;Weinrebe;;;0000-00-00 00:00:00
+2480116;vitivinisabl;248;24801;2480116;Vitis vinifera SAUVIGNON BLANC;grape wine;Weinrebe;;;0000-00-00 00:00:00
+2480117;vitivinisemi;248;24801;2480117;Vitis vinifera SEMILLON;grape wine;Weinrebe;;;0000-00-00 00:00:00
+2480118;vitivinisigr;248;24801;2480118;Vitis vinifera SILVANER GRUEN;grape wine;Weinrebe;;;0000-00-00 00:00:00
+2480119;vitivinisylv;248;24801;2480119;Vitis vinifera sylvestris ;wild grape vine;Wilder Wein;;;0000-00-00 00:00:00
+2480120;vitivinisyra;248;24801;2480120;Vitis vinifera SYRAH;grape wine;Weinrebe;;;0000-00-00 00:00:00
+2480121;vitivinitrbj;248;24801;2480121;Vitis vinifera MOSTOSA;grape wine;Weinrebe;Vitis vinifera TRBJAN;;2016-12-02 08:56:01
+2480122;vitiviniwels;248;24801;2480122;Vitis vinifera WELSCHRIESLING;grape wine;Weinrebe;;;0000-00-00 00:00:00
+1310201;citrlimoluna;131;13102;1310201;Citrus limon Lunario;Lunario lemon;Lunario Zitrone;;;0000-00-00 00:00:00
+1190201;brasoler;119;11902;1190201;Brassica oleracea var. gongylodes;german turnip;Kohlrabi Rübenkohl;;;0000-00-00 00:00:00
+1660101;hordvulgvulg;166;16601;1660101;Hordeum vulgare var. vulgare;Six-rowed barley;Sechszeilige Gerste;;;0000-00-00 00:00:00
+1660102;hordvulgdist;166;16601;1660102;Hordeum vulgare var. distichon;Two-rowed barley;Zweizeilige Gerste;;;0000-00-00 00:00:00
+2620101;vicisatisati;262;26201;2620101;Vicia sativa var. sativa;garden vetch;Gewöhnliche Futter-Wicke ;;;0000-00-00 00:00:00
+2280101;solatubedesi;228;22801;2280101;Solanum tuberosum Desire;Solanum tuberosum Desire;Solanum tuberosum Desire;;;2016-12-01 13:55:57
+2640201;testabcdssss;264;26402;2640201;ssss;ssss;ssssäöü;;äöü;2017-03-24 08:33:31
