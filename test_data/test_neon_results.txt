@@ -1,2 +1,3 @@
+eventId,dayOfYear,year,latitude,longitude,genus,specificEpithet,scientificName,lower_count,upper_count,lower_percent,upper_percent,source,subSource,adjustedNcepReanalysisMonthlyMeanTemp,plantStructurePresenceTypes
 http://n2t.net/ark:/21547/Amn221a7e02c-3feb-4718-92e6-e53e0def0d91,152,2017,63.873096,-149.21648,Ledum,palustre,Ledum palustre L.,,0.0,,,NEON,,1.6,obo:PPO_0002620|obo:PPO_0002000|obo:PPO_0002022|obo:PPO_0002023|obo:PPO_0002617|obo:PPO_0002619|obo:PPO_0002020
 http://n2t.net/ark:/21547/Amn2cf5646a1-3156-4cfb-ad0e-f75050f7b849,152,2017,63.873096,-149.21648,Betula,glandulosa/nana,Betula glandulosa/nana,,,75.0,94.0,NEON,,1.6,obo:PPO_0002315|obo:PPO_0002312|obo:PPO_0002313|obo:PPO_0002000|obo:PPO_0002017|obo:PPO_0002015|obo:PPO_0002014
