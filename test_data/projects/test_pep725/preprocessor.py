@@ -32,20 +32,20 @@ FILES = {
 class PreProcessor(AbstractPreProcessor):
     def _process_data(self):
         self.frames = {
-            'genus': pd.read_csv(self.input_dir + FILES['genus'], sep=';', header=0, usecols=['genus_id', 'genus'],
+            'genus': pd.read_csv(os.path.join(self.input_dir,FILES['genus']), sep=';', header=0, usecols=['genus_id', 'genus'],
                                  skipinitialspace=True),
-            'species': pd.read_csv(self.input_dir + FILES['species'], sep=';', header=0, skipinitialspace=True,
+            'species': pd.read_csv(os.path.join(self.input_dir,FILES['species']), sep=';', header=0, skipinitialspace=True,
                                    usecols=['species_id', 'species']),
-            'stations': pd.read_csv(self.input_dir + FILES['stations'], sep=';', header=0, skipinitialspace=True,
+            'stations': pd.read_csv(os.path.join(self.input_dir,FILES['stations']), sep=';', header=0, skipinitialspace=True,
                                     usecols=['s_id', 'lat', 'lon']),  # , 'alt', 'name']),
-            'phase': pd.read_csv(self.input_dir + FILES['phase'], sep=';', header=0,
+            'phase': pd.read_csv(os.path.join(self.input_dir,FILES['phase']), sep=';', header=0,
                                  usecols=['phase_id', 'description'], skipinitialspace=True),
             'phenophase_descriptions': pd.read_csv(PHENOPHASE_DESCRIPTIONS_FILE, header=0, skipinitialspace=True)
         }
 
         num_processes = multiprocessing.cpu_count()
         chunk_size = 100000
-        data = pd.read_csv(self.input_dir + FILES['data'], sep=';', header=0,
+        data = pd.read_csv(os.path.join(self.input_dir,FILES['data']), sep=';', header=0,
                            usecols=['s_id', 'genus_id', 'species_id', 'phase_id', 'year', 'day'],
                            chunksize=chunk_size * num_processes, skipinitialspace=True)
 
