@@ -1,0 +1,9 @@
+7,1984,29.740278,-114.73333,Viguiera,triangularis,Viguiera triangularis,1,,,,ASU,,10.5,obo:PPO_0002323|obo:PPO_0002025|obo:PPO_0002000
+59,2003,33.763584,-113.3286,Justicia,californica,Justicia californica,1,,,,ASU,,-3.5,obo:PPO_0002323|obo:PPO_0002025|obo:PPO_0002000
+154,1975,30.73333,-115.5333,Microseris,lindleyi,Microseris lindleyi,1,,,,ASU,,27.9,obo:PPO_0002323|obo:PPO_0002025|obo:PPO_0002000
+7,1984,29.740278,-114.73333,Viguiera,triangularis,Viguiera triangularis,1,,,,ASU,,10.5,obo:PPO_0002323|obo:PPO_0002000|obo:PPO_0002044|obo:PPO_0002342|obo:PPO_0002025|obo:PPO_0002343|obo:PPO_0002045
+332,2001,32.3375,-111.431114,Bursera,microphylla,Bursera microphylla,1,,,,ASU,,6.5,obo:PPO_0002330|obo:PPO_0002033|obo:PPO_0002333|obo:PPO_0002000|obo:PPO_0002025|obo:PPO_0002331|obo:PPO_0002323|obo:PPO_0002026|obo:PPO_0002032|obo:PPO_0002035|obo:PPO_0002324
+154,1975,30.73333,-115.5333,Microseris,lindleyi,Microseris lindleyi,1,,,,ASU,,27.9,obo:PPO_0002324|obo:PPO_0002323|obo:PPO_0002035|obo:PPO_0002026|obo:PPO_0002331|obo:PPO_0002032|obo:PPO_0002333|obo:PPO_0002033|obo:PPO_0002025|obo:PPO_0002330|obo:PPO_0002000
+59,2003,33.763584,-113.3286,Justicia,californica,Justicia californica,1,,,,ASU,,-3.5,obo:PPO_0002025|obo:PPO_0002000|obo:PPO_0002343|obo:PPO_0002044|obo:PPO_0002045|obo:PPO_0002323|obo:PPO_0002342
+332,2001,32.3375,-111.431114,Bursera,microphylla,Bursera microphylla,1,,,,ASU,,6.5,obo:PPO_0002323|obo:PPO_0002025|obo:PPO_0002000
+227,2001,34.716667,-112.157776,Baileya,multiradiata,Baileya multiradiata,1,,,,ASU,,18.1,obo:PPO_0002323|obo:PPO_0002025|obo:PPO_0002000
