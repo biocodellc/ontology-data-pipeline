@@ -29,11 +29,11 @@ FILES = {
 
 class PreProcessor(AbstractPreProcessor):
     def _process_data(self):
-        self.occurrences = pd.read_csv(self.input_dir + FILES['occurrences'], header=0, skipinitialspace=True,
+        self.occurrences = pd.read_csv(os.path.join(self.input_dir,FILES['occurrences']), header=0, skipinitialspace=True,
                                        usecols=['occurrenceID', 'scientificName', 'genus', 'specificEpithet', 'year',
                                                 'startDayOfYear', 'decimalLatitude', 'decimalLongitude', 'id'])
 
-        data = pd.read_csv(self.input_dir + FILES['measurements'], header=0, skipinitialspace=True, chunksize=100000,
+        data = pd.read_csv(os.path.join(self.input_dir,FILES['measurements']), header=0, skipinitialspace=True, chunksize=100000,
                            usecols=['coreid', 'measurementValue'])
 
         for chunk in data:
