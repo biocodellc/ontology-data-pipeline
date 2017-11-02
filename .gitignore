@@ -1,3 +1,6 @@
+output.txt
+output.txt.err
+
 .idea
 *.iml
 data/

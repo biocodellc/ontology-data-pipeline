@@ -13,7 +13,7 @@ import pandas as pd
 from .rdf2csv import convert_rdf2csv
 from .splitter import split_file
 from .utils import  loadClass, clean_dir, fetch_ontopilot, fetch_query_fetcher
-from .config import Config, DEFAULT_CONFIG_DIR
+from .config import Config, DEFAULT_CONFIG_DIR, DEFAULT_BASE_DIR, DEFAULT_PROJECT_BASE
 from .reasoner import run_reasoner
 from .triplifier import Triplifier
 from .validator import Validator
@@ -21,7 +21,6 @@ from .validator import Validator
 """process.Process: provides entry point main()."""
 __version__ = "0.1.0"
 
-PROJECT_BASE = os.path.join(os.path.dirname(__file__), '../projects')
 
 
 class Process(object):
@@ -62,9 +61,21 @@ class Process(object):
             with multiprocessing.Pool(processes=num_processes) as pool:
                 pool.starmap(self._reason, zip(files, repeat(root)))
 
-    def _reasoned2csv(self):
-        convert_rdf2csv(self.config.output_reasoned_dir, self.config.output_reasoned_csv_dir,
+    def _csv2rdf(self, file):
+        logging.debug("\trunning csv2reasoner on {}".format(file))
+        out_file = os.path.join(self.config.output_reasoned_dir, file.replace('.n3', '.ttl'))
+        convert_rdf2csv(os.path.join(self.config.output_reasoned_dir,file),self.config.output_reasoned_csv_dir,
                         self.config.reasoned_sparql, self.config.queryfetcher)
+
+    def _reasoned2csv(self):
+        num_processes = math.floor(self.config.num_processes / 2)
+        files = []
+        for file in os.listdir(self.config.output_reasoned_dir):
+            if file.endswith(".ttl"):
+                files.append(file)
+
+        with multiprocessing.Pool(processes=num_processes) as pool:
+            pool.starmap(self._csv2rdf, zip(files))
 
     def _split_and_triplify_data(self):
         """
@@ -146,11 +157,15 @@ class Process(object):
         run_reasoner(os.path.join(root, file), out_file, self.config.reasoner_config, self.config.ontopilot)
 
     def _preprocess_data(self):
+
         clean_dir(self.config.output_csv_dir)
         if self.config.preprocessor:
             PreProcessor = loadClass(self.config.preprocessor)
         else:
-            PreProcessor = loadClass("{}.{}.{}.{}".format("projects", self.config.project, "preprocessor", "PreProcessor"))
+            if DEFAULT_PROJECT_BASE is not self.config.project_base:
+                PreProcessor = loadClass("{}.{}.{}".format(self.config.project_base, "preprocessor", "PreProcessor"))
+            else:
+                PreProcessor = loadClass("{}.{}.{}.{}".format("projects", self.config.project, "preprocessor", "PreProcessor"))
 
         preprocessor = PreProcessor(self.config.input_dir, self.config.output_csv_dir)
         preprocessor.run()
@@ -189,6 +204,14 @@ def main():
     parser.add_argument(
         "--config_dir",
         help="optionally specify the path of the directory containing the configuration files. defaults to " + DEFAULT_CONFIG_DIR
+    )
+    parser.add_argument(
+        "--project_base",
+        help="optionally specify where the python modules reside for the preprocessor live.  This is specified in python dotted notation. specifying project_base you will likely want to specify a custom base_dir as well. defaults to " + DEFAULT_PROJECT_BASE
+    )
+    parser.add_argument(
+        "--base_dir",
+        help="optionally specify the the base directory containing the project files. specifying base_dir you will likely want to specify a custom project-base as well. defaults to " + DEFAULT_BASE_DIR
     )
     parser.add_argument(
         "--ontology",
@@ -245,7 +268,8 @@ def main():
     if args.verbose:
         print("configuring...")
 
-    config = Config(os.path.join(PROJECT_BASE, args.project), **args.__dict__)
+    #config = Config(os.path.join(DEFAULT_BASE_DIR, args.project), **args.__dict__)
+    config = Config(**args.__dict__)
 
     process = Process(config)
     process.run()

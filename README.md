@@ -79,10 +79,26 @@ Additional dependencies:
 
 ## Usage
 
+Before running the processing script, you will likely need to fetch data.  Some of the
+projects likely will have an API that you can obtain data from and these are written 
+into a data_fetcher.py script. 
+
+```
+$ python ./projects/npn/data_fetcher.py 
+usage: data_fetcher.py [-h] output_dir
+```
+
+Running the data fetch for NPN, for example, we would want to write the output of the
+data_fetcher script into the input directory used for the processing script, like:
+
+```
+$ python ./projects/npn/data_fetcher.py data/npn/input/
+```
+
 Running from the process.py script:
 
 ```
-16:17 $ python process.py --help
+$ python process.py --help
 usage: process.py [-h] (--input_dir INPUT_DIR | --data_file DATA_FILE)
                   [--config_dir CONFIG_DIR] [--ontology ONTOLOGY]
                   [--preprocessor PREPROCESSOR] [--drop_invalid] [--log_file]
@@ -141,9 +157,10 @@ optional arguments:
 As an alternative to the commandline, params can be placed in a file, one per
 line, and specified on the commandline like 'process.py @params.conf'.
 ```
-An example of loading the processing script which will run the pre-processor and
+Examples of loading the processing script which will run the pre-processor and
 all dependencies:
 ```
+python process.py --input_dir data/test_npn/input/ test_npn data/test_npn/output/
 nohup python process.py --input_dir data/npn/input/ --drop_invalid npn data/npn/output/ &
 ```
 
@@ -192,7 +209,7 @@ line, and specified on the commandline like 'loader.py @params.conf'.
 ```
 An example of running the loading script (ensure proper IP access to esr.biocodellc.com):
 ```
-python loader.py --es_input_dir data/neon/output/output_reasoned_csv --index NEON --drop-existing --alias NEON elasticsearch
+python loader.py --es_input_dir data/npn/output/output_reasoned_csv/ --index npn --drop-existing --alias ppo --host esr.biocodellc.com:80 elasticsearch
 ```
 
 ## Config Files

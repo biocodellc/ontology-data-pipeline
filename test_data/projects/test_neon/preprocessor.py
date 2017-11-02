@@ -101,7 +101,6 @@ class PreProcessor(AbstractPreProcessor):
         # JBD removing these two lines as they lead to inconsistent ontology errors
         #df["lower_count"] = df["lower_count"].fillna(0.0).astype(int)
         #df["upper_count"] = df["upper_count"].fillna(0.0).astype(int)
-
-        df.fillna('', inplace=True)  # replace all null values
+        #df.fillna('', inplace=True)  # replace all null values
 
         return df.rename(columns=COLUMNS_MAP)
