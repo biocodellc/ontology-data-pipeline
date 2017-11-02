@@ -37,8 +37,11 @@ class ClimateData(object):
         lat_idx = np.abs(self.air_data['lats'] - lat).argmin()
         lon_idx = np.abs(self.air_data['lons'] - lon).argmin()
 
-        return self.air_data['air'][date_idx][lat_idx][lon_idx]
 
+        air_value = self.air_data['air'][date_idx][lat_idx][lon_idx]
+        air_value = float(str(round(air_value, 1)))
+
+        return air_value
 
 def loadAirData(file):
     """
@@ -66,7 +69,6 @@ def loadAirData(file):
     lats = nc.variables['lat'][:]
     lons = nc.variables['lon'][:]
     air = nc.variables['air'][:]  # shape is time,lat,lon
-
     return {
         'dates': dates,
         'lats': lats,
