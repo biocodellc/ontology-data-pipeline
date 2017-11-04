@@ -35,7 +35,7 @@ def test_end_to_end(project):
     # file containing actual results we want to compare to
     actual_results_file_name = os.path.join(output_path,"output_reasoned_csv","data_1.ttl.csv")
     # file containing expected results
-    expected_results_file_name = os.path.join('test_data','test_'+project+'_results.txt')
+    expected_results_file_name = os.path.join('test_data','test_'+project+'_results.csv')
     # name of file to store output text, if test fails we can learn more information in this file
     output_file = 'output.txt'
 
