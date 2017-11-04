@@ -1,62 +1,62 @@
 field,defined_by,lower_count,upper_count,lower_percent,upper_percent,notes
 Harvest,,,,,,Ellen: not sure this assignment is valid since abscission was not natural but caused by humans. Perhaps {ripening fruit presence} is better?
-50 % autumnal leaf fall,{abscised leaf presence},1,,,,
-autumnal leaf fall: >=20% of leaves fallen,{abscised leaf presence},1,,,,
-autumnal leaf fall: >=30% of leaves fallen,{abscised leaf presence},1,,,,
-autumnal leaf fall: >=40% of leaves fallen,{abscised leaf presence},1,,,,
-autumnal leaf fall: >=60% of leaves fallen,{abscised leaf presence},1,,,,
-autumnal leaf fall: >=70% of leaves fallen,{abscised leaf presence},1,,,,
-autumnal leaf fall: >=80% of leaves fallen,{abscised leaf presence},1,,,,
-autumnal leaf fall: first fallen leaves (sporadically),{abscised leaf presence},1,,,,
-End of autumnal leaf fall (95% fallen),{abscised leaf presence},1,,,,
-First leaves seperated (mouse ear),{expanding true leaf presence},1,,,,Ellen: This is BBCH 10 and I am not sure if this should be {unfolding true leaf presence} or {non-senescing unfolded true leaf}. I need to discuss with Kjell. Kjell: This should be mapped as {expanding leaf presence}
-Leaf unfolding (>=50%),{non-senescing unfolded true leaf presence},1,,,,"Kjell: This should be mapped as {non-senescing unfolded true leaf}. There is no official BBCH code for this, but as far as I know PEP observations are always made at the whole-tree level meaning that at this stage of plant development {non-senescing unfolded true leaf} are present"
+50 % autumnal leaf fall,{abscised leaf presence},,,50,,
+autumnal leaf fall: >=20% of leaves fallen,{abscised leaf presence},,,20,,
+autumnal leaf fall: >=30% of leaves fallen,{abscised leaf presence},,,30,,
+autumnal leaf fall: >=40% of leaves fallen,{abscised leaf presence},,,40,,
+autumnal leaf fall: >=60% of leaves fallen,{abscised leaf presence},,,60,,
+autumnal leaf fall: >=70% of leaves fallen,{abscised leaf presence},,,70,,
+autumnal leaf fall: >=80% of leaves fallen,{abscised leaf presence},,,80,,
+autumnal leaf fall: first fallen leaves (sporadically),{abscised leaf presence},,,1,,
+End of autumnal leaf fall (95% fallen),{abscised leaf presence},,,95,,
+First leaves seperated (mouse ear),{unfolding true leaf presence},1,,,,Ellen: This is BBCH 10 and I am not sure if this should be {unfolding true leaf presence} or {non-senescing unfolded true leaf}. I need to discuss with Kjell. Kjell: This should be mapped as {expanding leaf presence}
+Leaf unfolding (>=50%),{non-senescing unfolded true leaf presence},,,50,,"Kjell: This should be mapped as {non-senescing unfolded true leaf}. There is no official BBCH code for this, but as far as I know PEP observations are always made at the whole-tree level meaning that at this stage of plant development {non-senescing unfolded true leaf} are present"
 Beginning of flowering ,{open flower presence},1,,,,
-End of flowering,,,,,,Kjell: This BBCH code (69) is used to report 'end' of flowering and thus there may be NO {open flower presence}
-First flower buds visible,{unopened floral structure presence},1,,,,"Ramona: I suggest that we get rid of ""unopened flowers"" and just keep flower buds. As I mentioned in an earlier email thread ""PO:reproductive bud is very loosely defined as A bud (aka an undeveloped shoot system) that develops into a reproductive shoot system, so that in fact covers both unopened flower and inflorescence buds (as in a tree bud) and unopened flowers (as seen in herbaceous plant). Using the PO definition, I think it is sufficient for us to include only reproductive bud as a synonym of unopened flower, inflorescence bud, and flower bud.  JBD: changing this to unopened floral structure presence"""
+End of flowering,{senesced flower presence},1,,,,Kjell: This BBCH code (69) is used to report 'end' of flowering and thus there may be NO {open flower presence}
+First flower buds visible,{unopened flower presence},1,,,,"Ramona: I suggest that we get rid of ""unopened flowers"" and just keep flower buds. As I mentioned in an earlier email thread ""PO:reproductive bud is very loosely defined as A bud (aka an undeveloped shoot system) that develops into a reproductive shoot system, so that in fact covers both unopened flower and inflorescence buds (as in a tree bud) and unopened flowers (as seen in herbaceous plant). Using the PO definition, I think it is sufficient for us to include only reproductive bud as a synonym of unopened flower, inflorescence bud, and flower bud.  JBD: changing this to unopened floral structure presence"""
 "First individual flowers visible (still closed), G: Half of inflorescence emerged (middle of heading)",{unopened floral structure presence},1,,,,"Ramona: I suggest that we get rid of ""unopened flowers"" and just keep flower buds. As I mentioned in an earlier email thread PO:reproductive bud is very loosely defined as 'A bud (aka an undeveloped shoot system) that develops into a reproductive shoot system, so that in fact covers both unopened flower and inflorescence buds (as in a tree bud) and unopen flowers (as seen in herbaceous plant). Using the PO definition, I think it is sufficient for us to include only reproductive bud as a synonym of unopened flower, inflorescence bud, and flower bud."
 "Flower buds present, still enclosed by leaves (oilseed rape)",{unopened flower presence},1,,,,"Ramona: I suggest that we get rid of ""unopened flowers"" and just keep flower buds. As I mentioned in an earlier email thread ""PO:reproductive bud is very loosely defined as A bud (aka an undeveloped shoot system) that develops into a reproductive shoot system, so that in fact covers both unopened flower and inflorescence buds (as in a tree bud) and unopen flowers (as seen in herbaceous plant). Using the PO definition, I think it is sufficient for us to include only reproductive bud as a synonym of unopened flower, inflorescence bud, and flower bud."
-Flowering 10% (male),{open flower presence},1,,,,
-Full flowering,{open flower presence},1,,,,"Kjell: only used for BBCH 65, that is, 50% of flowers open"
+Flowering 10% (male),{open flower presence},,,10,,
+Full flowering,{open flower presence},,,50,,"Kjell: only used for BBCH 65, that is, 50% of flowers open"
 "Harvestable vegetative plant parts or vegetatively propagated organs have reached 30% of final size, G: Flag leaf sheath just visibly swollen (mid-boot)",,,,,,Kjell: This BBCH code (49) is about vegetative parts and thus should not be used for mapping flowering
 "Harvestable vegetative plant parts or vegetatively propagated organs have reached 50% of final size, G: Flag leaf sheath swollen (late-boot)",,,,,,Kjell: This BBCH code (49) is about vegetative parts and thus should not be used for mapping flowering
 "Harvestable vegetative plant parts or vegetatively propagated organs have reached 70% of final size, G: Flag leaf sheath opening",,,,,,Kjell: This BBCH code (49) is about vegetative parts and thus should not be used for mapping flowering
 "Harvestable vegetative plant parts or vegetatively propagated organs have reached final size, G: First awns visible, Skinset complete",,,,,,Kjell: This BBCH code (49) is about vegetative parts and thus should not be used for mapping flowering
 "Inflorescence or flower buds visible, G: Beginning of heading",{unopened floral structure presence},1,,,,"Ramona: Beginning of heading is only for grasses, so we can't map all cases to fresh flower head presence. Actually, I don't know why we want to make this fresh flower presence, as BBCH describes it as ""tip of inflorescence emerged from sheath, first spikelet just visible "" which would map better to ""reproductive bud presences"" . We need more info from Kjell on how this one is scored.  Kjell: This must have been a mistake from me! I think ths should be mapped as {reproductive bud presence} "
-End of flowering: fruit set visible,{flower presence},,,0,,"John: Need to set lower_percent = 0; Kjell: This BBCH code (69) is mainly used for flowering and thus should not be used for mapping fruiting. I would not use it for mapping presence of flowering either, since it is used to report 'end' of flowering. For a phenologist, it is useful to estimate flowering period (BBCH69-BBCH60)."
-Flowering finishing: majority of petals fallen or dry,{open flower presence},1,,,,Kjell: This is a two-thing observation. Both {open flower presence} and {senescence flower presence} are correct. I would still prefer to map it as {open flower presence} as BBCH69 is more commonly used for end of flowering.
+End of flowering: fruit set visible,{senesced flower presence},1,,,,"John: Need to set lower_percent = 0; Kjell: This BBCH code (69) is mainly used for flowering and thus should not be used for mapping fruiting. I would not use it for mapping presence of flowering either, since it is used to report 'end' of flowering. For a phenologist, it is useful to estimate flowering period (BBCH69-BBCH60)."
+Flowering finishing: majority of petals fallen or dry,{open flower presence},,,70,,Kjell: This is a two-thing observation. Both {open flower presence} and {senescence flower presence} are correct. I would still prefer to map it as {open flower presence} as BBCH69 is more commonly used for end of flowering.
 "G: First true leaf emerged from coleoptile, D, M: Cotyledons completely unfolded, P: First leaves separated",{unfolding true leaf presence},1,,,,
 G: Flag leaf sheath extending,{mature true leaf presence},1,,,,
-Leaf unfolding (50%),{non-senescing unfolded true leaf presence},1,,,,"Kjell: This should be mapped as {non-senescing unfolded true leaf}. There is no official BBCH code for this, but as far as I know PEP observations are always made at the whole-tree level meaning that at this stage of plant development {non-senescing unfolded true leaf} are present"
+Leaf unfolding (50%),{non-senescing unfolded true leaf presence},,,50,,"Kjell: This should be mapped as {non-senescing unfolded true leaf}. There is no official BBCH code for this, but as far as I know PEP observations are always made at the whole-tree level meaning that at this stage of plant development {non-senescing unfolded true leaf} are present"
 Leaf unfolding (first visible leaf stalk),{non-senescing unfolded true leaf presence},1,,,,Kjell: I assume this is BBCH11 and then it should be mapped as {non-senescing unfolded true leaf}.
 "2 side shoots visible, G: 2 tillers visible",{mature true leaf presence},1,,,,"Ellen: I am assuming that plant does not start branching until after mature leaf are presence. Kjell: That's probably ok. In the BBCH code side shoots only refers to herbs and and tillers for cereals, and the mapping is ok for all examples."
-"2 true leaves, leaf pairs or whorls unfolded",{non-senescing unfolded true leaf presence},1,,,,Ellen: There might also be expanding leaf presence but we don't know.
-25% of the permanent grassland shows fresh green,{non-senescing unfolded true leaf presence},1,,,,
-"3 true leaves, leaf pairs or whorls unfolded",{non-senescing unfolded true leaf presence},1,,,,Ellen: There might also be expanding leaf presence but we don't know.
+"2 true leaves, leaf pairs or whorls unfolded",{non-senescing unfolded true leaf presence},2,,,,Ellen: There might also be expanding leaf presence but we don't know.
+25% of the permanent grassland shows fresh green,,1,,,,
+"3 true leaves, leaf pairs or whorls unfolded",{non-senescing unfolded true leaf presence},3,,,,Ellen: There might also be expanding leaf presence but we don't know.
 "4 side shoots visible, G: 4 tillers visible",{mature true leaf presence},1,,,,"Ellen: I am assuming that plant does not start branching until after mature leaf are presence. Kjell: That's probably ok. In the BBCH code side shoots only refers to herbs and and tillers for cereals, and the mapping is ok for all examples."
-"4 true leaves, leaf pairs or whorls unfolded",{non-senescing unfolded true leaf presence},1,,,,Ellen: There might also be expanding leaf presence but we don't know.
+"4 true leaves, leaf pairs or whorls unfolded",{non-senescing unfolded true leaf presence},4,,,,Ellen: There might also be expanding leaf presence but we don't know.
 "5 side shoots visible, G: 5 tillers visible",{mature true leaf presence},1,,,,"Ellen: I am assuming that plant does not start branching until after mature leaf are presence. Kjell: That's probably ok. In the BBCH code side shoots only refers to herbs and and tillers for cereals, and the mapping is ok for all examples. "
-"5 true leaves, leaf pairs or whorls unfolded",{non-senescing unfolded true leaf presence},1,,,,Ellen: There might also be expanding leaf presence but we don't know.
+"5 true leaves, leaf pairs or whorls unfolded",{non-senescing unfolded true leaf presence},5,,,,Ellen: There might also be expanding leaf presence but we don't know.
 "6 side shoots visible, G: 6 tillers visible",{mature true leaf presence},1,,,,"Ellen: I am assuming that plant does not start branching until after mature leaf are presence. Kjell: That's probably ok. In the BBCH code side shoots only refers to herbs and and tillers for cereals, and the mapping is ok for all examples. "
-"6 true leaves, leaf pairs or whorls unfolded",{non-senescing unfolded true leaf presence},1,,,,Ellen: There might also be expanding leaf presence but we don't know.
+"6 true leaves, leaf pairs or whorls unfolded",{non-senescing unfolded true leaf presence},6,,,,Ellen: There might also be expanding leaf presence but we don't know.
 "7 side shoots visible, G: 7 tillers visible",{mature true leaf presence},1,,,,"Ellen: I am assuming that plant does not start branching until after mature leaf are presence. Kjell: That's probably ok. In the BBCH code side shoots only refers to herbs and and tillers for cereals, and the mapping is ok for all examples. "
-"7 true leaves, leaf pairs or whorls unfolded",{non-senescing unfolded true leaf presence},1,,,,Ellen: There might also be expanding leaf presence but we don't know.
+"7 true leaves, leaf pairs or whorls unfolded",{non-senescing unfolded true leaf presence},7,,,,Ellen: There might also be expanding leaf presence but we don't know.
 "8 side shoots visible, G: 8 tillers visible",{mature true leaf presence},1,,,,"Ellen: I am assuming that plant does not start branching until after mature leaf are presence. Kjell: That's probably ok. In the BBCH code side shoots only refers to herbs and and tillers for cereals, and the mapping is ok for all examples. "
-"8 true leaves, leaf pairs or whorls unfolded",{non-senescing unfolded true leaf presence},1,,,,Ellen: There might also be expanding leaf presence but we don't know.
+"8 true leaves, leaf pairs or whorls unfolded",{non-senescing unfolded true leaf presence},8,,,,Ellen: There might also be expanding leaf presence but we don't know.
 "9 or more side shoots visible, G: 9 or more tillers visible",{mature true leaf presence},1,,,,"Ellen: I am assuming that plant does not start branching until after mature leaf are presence. Kjell: That's probably ok. In the BBCH code side shoots only refers to herbs and and tillers for cereals, and the mapping is ok for all examples. "
-"9 or more true leaves, leaf pairs or whorls unfolded",{non-senescing unfolded true leaf presence},1,,,,There might also be expanding leaf presence but we don't know.
+"9 or more true leaves, leaf pairs or whorls unfolded",{non-senescing unfolded true leaf presence},9,,,,There might also be expanding leaf presence but we don't know.
 Beginning of leaf-fall,{abscised leaf presence},1,,,,"Ramona: We think our proposal is to change this to just {abscised leaf presence} but we want to know more about how this category is determined in the field.   Our working supposition is that ""Beginning of leaf fall"" is when there are 0-5% of the leaves abscised, but we need more details from Kjell. In theory, 0-5% of leaves falling means there should also be 95-100% leaves on a plant, but based just on the label, we don't know what stage those leaves are in. They could be senescing, mature, or immature.KJELL: AGREE! I think it is much better to use {abscised leaf presence} only. Even if we often have to write instructions to the observers in such a way that we talk about both the leaves that are still on the tree and those that have fallen, I think it is much better if the PPO only talks about whtat we formally knows from the data. The PEP includes many different (national/regional) protocols, so if a specific protocol can be mapped to mutliple PPO classes, that is soemthing we should deal with in the phase of applying the PPO not in the phase where we are now."
-end of first cut for hay winning (=> 90% of the area),{mature true leaf presence},1,,,,
-end of the first cut for silage winning (=> 90% of the area),{mature true leaf presence},1,,,,
-first cut for hay winning,{mature true leaf presence},1,,,,Ellen: Not a phenological stage
-first cut for hay winning (=> 50% of the area),{mature true leaf presence},1,,,,
-first cut for silage winning,{mature true leaf presence},1,,,,
-first cut for silage winning (=> 50% of the area),{mature true leaf presence},1,,,,
+end of first cut for hay winning (=> 90% of the area),,,,,,
+end of the first cut for silage winning (=> 90% of the area),,,,,,
+first cut for hay winning,,,,,,Ellen: Not a phenological stage
+first cut for hay winning (=> 50% of the area),,,,,,
+first cut for silage winning,,,,,,
+first cut for silage winning (=> 50% of the area),,,,,,
 "First side shoot visible, G: First tiller visible",{mature true leaf presence},1,,,,"Ellen: I am assuming that plant does not start branching until after mature leaf are presence. Kjell: That's probably ok. In the BBCH code side shoots only refers to herbs and and tillers for cereals, and the mapping is ok for all examples. "
 "First true leaf, leaf pair or whorl unfolded, P: First leaves unfolded",{non-senescing unfolded true leaf presence},1,,,,Ellen: There might also be expanding leaf presence but we don't know. 
 "Leaf unfolding (5.true leaf, leaf pairs or whoris unfolded)",{non-senescing unfolded true leaf presence},1,,,,"Ellen: Check on this. Is it the same BBCH code as the # true leaves which we give {non-scenescing true leaf presence} above?; Kjell: Ellen is right, this is BBCH15"
 "Maximum stem length or rosette diameter reached, G: 9 or more nodes detectable, end of height growth (e.g. Pinus, Picea",{mature true leaf presence},1,,,,
-"start of  harvest for silage (corn, grass)",{mature true leaf presence},1,,,,
+"start of  harvest for silage (corn, grass)",,,,,,
 "Stem (rosette) 10% of final length (diameter), G: 1 node detectable",{mature true leaf presence},1,,,,Ellen: Assuming the normal pattern in which mature leaf correspond to nodes.
 "Stem (rosette) 20% of final length (diameter), G: 2 nodes detectable",{mature true leaf presence},1,,,,
 "Stem (rosette) 30% of final length (diameter), G: 3 nodes detectable",{mature true leaf presence},1,,,,
@@ -67,13 +67,13 @@ first cut for silage winning (=> 50% of the area),{mature true leaf presence},1,
 "Stem (rosette) 80% of final length (diameter), G: 8 nodes detectable",{mature true leaf presence},1,,,,
 Beginning of sprouting,{new shoot system presence},1,,,,
 "Onset of height growth (e.g. Pinus, Picea)",,,,,,
-20% of flowers open,{open flower presence},1,,,,
-"30% of flowers open, maize: male beginning of pollen shedding, female: tips of stigmata visible",{open flower presence},1,,,,
-40% of flowers open,{open flower presence},1,,,,
+20% of flowers open,{open flower presence},,,20,,
+"30% of flowers open, maize: male beginning of pollen shedding, female: tips of stigmata visible",{open flower presence},,,30,,
+40% of flowers open,{open flower presence},,,40,,
 Beginnin of flowering: first flowers open (sporadically),{open flower presence},1,,,,
-Beginning of flowering: 10% of flowers open,{open flower presence},1,,,,
+Beginning of flowering: 10% of flowers open,{open flower presence},,,10,,
 "First flower petals visible (in petalled forms), G: Inflorescence fully emerged (end of heading)",{unopened flower presence},1,,,,
-"Full flowering: 50% of flowers open, first petals may be fallen",{open flower presence},1,,,,
+"Full flowering: 50% of flowers open, first petals may be fallen",{open flower presence},,,50,,
 "10% of fruits have reached final size or fruit has reached 10% of final size, G: Caryopsis watery ripe",{ripening fruit presence},1,,,,
 20% of fruits have reached final size or fruit has reached 20% of final size,{ripening fruit presence},1,,,,
 "30% of fruits have reached final size or fruit has reached 30% of final size, G: Early milk",{ripening fruit presence},1,,,,
@@ -93,26 +93,26 @@ Nearly all fruit have reached final size,{ripening fruit presence},1,,,,
 "olive: fruit deep green colour becomes lightgreen, yellowish",{ripening fruit presence},1,,,,
 Soft dough,{ripening fruit presence},1,,,,
 start of Corn - cob - mix harvest for silage,{ripening fruit presence},1,,,,
-50% of leaves fallen,{abscised leaf presence},1,,,,
-Autumnal coloring of leaf (50%),{senescing true leaf presence},1,,,,
+50% of leaves fallen,{abscised leaf presence},,,50,,
+Autumnal coloring of leaf (50%),{senescing true leaf presence},,,50,,
 autumnal colouration: first discoloured leaves (sporadically),{senescing true leaf presence},1,,,,
-autumnal colouration: leaves beginning of discolour (=>50%),{senescing true leaf presence},1,,,,
-autumnal colouration: leaves beginning of discolour (=>60%),{senescing true leaf presence},1,,,,
-autumnal colouration: leaves beginning of discolour (=>70%),{senescing true leaf presence},1,,,,
-autumnal colouration: leaves beginning of discolour (=>80%),{senescing true leaf presence},1,,,,
-autumnal colouration: leaves beginning of discolour (>=20%),{senescing true leaf presence},1,,,,
-autumnal colouration: leaves beginning of discolour (>=30%),{senescing true leaf presence},1,,,,
-autumnal colouration: leaves beginning of discolour (>=40%),{senescing true leaf presence},1,,,,
-Coloring of leaves (100%),{senescing true leaf presence},1,,,,
-end of autumnal colouration: nearly all leaves are discoloured (>=90%),{senescing true leaf presence},1,,,,
+autumnal colouration: leaves beginning of discolour (=>50%),{senescing true leaf presence},,,50,,
+autumnal colouration: leaves beginning of discolour (=>60%),{senescing true leaf presence},,,60,,
+autumnal colouration: leaves beginning of discolour (=>70%),{senescing true leaf presence},,,70,,
+autumnal colouration: leaves beginning of discolour (=>80%),{senescing true leaf presence},,,80,,
+autumnal colouration: leaves beginning of discolour (>=20%),{senescing true leaf presence},,,20,,
+autumnal colouration: leaves beginning of discolour (>=30%),{senescing true leaf presence},,,30,,
+autumnal colouration: leaves beginning of discolour (>=40%),{senescing true leaf presence},,,40,,
+Coloring of leaves (100%),{senescing true leaf presence},,,100,,
+end of autumnal colouration: nearly all leaves are discoloured (>=90%),{senescing true leaf presence},,,90,,
 leaf beginning to discolour,{senescing true leaf presence},1,,,,
-start of autumnal colouration: leaves beginning of discolour (>=10%),{senescing true leaf presence},1,,,,
+start of autumnal colouration: leaves beginning of discolour (>=10%),{senescing true leaf presence},,,10,,
 "Beginning of seed imbibition, P, V: Beginning of bud swelling",,,,,,
 "D: Hypocotyl with cotyledons growing towards soil surface, P, V: Shoot growing towards soil surface",,,,,,
 "Dry seed (seed dressing takes place at stage 00), P, V: Winter dormancy or resting period",,,,,,
 "Elongation of radicle, formation of root hairs and /or lateral roots",,,,,,
 end of harvest,,,,,,
-"End of leaf fall, plants or above ground parts dead or dormant, P Plant resting or dormant",{abscised leaf presence},,,,100,Set upper_percent to 100%
+"End of leaf fall, plants or above ground parts dead or dormant, P Plant resting or dormant",{abscised leaf presence},,,100,100,Set upper_percent to 100%
 "G: Coleoptile emerged from caryopsis, D, M: Hypocotyl with cotyledons or shoot breaking through seed coat, P, V: Beginning of sprouting or bud breaking",,,,,,
 "G: Emergence: Coleoptile breaks through soil surface, D, M: Emergence: Cotyledons break through soil surface(except hypogeal germination),D, V: Emergence: Shoot/leaf breaks through soil surface, P: Bud shows green tips",,,,,,
 "Grapevine bleeding, pruned grapes start to loss water from the cuts",,,,,,
