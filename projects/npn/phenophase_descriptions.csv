@@ -64,6 +64,7 @@ Ripe fruits (1 location),{ripe fruit presence},,50,,,,TRUE
 Ripe seeds (grasses),{ripe fruit presence},,1,,,,
 Emerging leaves (1 location),{breaking leaf bud presence},,1,,,,
 "Young unfolded leaves (evergreen, 1 location)",{immature unfolded true leaf presence},,1,,,,
+"Young unfolded leaves (evergreen 1 location)",{immature unfolded true leaf presence},,1,,,,
 >=50% of leaves fallen (deciduous),,Agreed to not map this definition,,,,,
 >=50% of needles fallen (larch),,Agreed to not map this definition,,,,,
 >=75% of full leaf size (deciduous),,Agreed to not map this definition,,,,,

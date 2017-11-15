@@ -22,7 +22,8 @@ class PreProcessor(AbstractPreProcessor):
                                             usecols=['Dataset_ID', 'Source'])
 
         chunk_size = 100000
-        df = pd.read_csv(os.path.join(self.input_dir, "test_data.csv"), header=0, chunksize=chunk_size)
+        df = pd.read_csv(os.path.join(self.input_dir, "npn_observations_data.csv"), header=0, chunksize=chunk_size)
+        #df = pd.read_csv(os.path.join(self.input_dir, "test_data.csv"), header=0, chunksize=chunk_size)
 
         for chunk in df:
             print("\tprocessing next {} records".format(len(chunk)))
@@ -66,8 +67,13 @@ class PreProcessor(AbstractPreProcessor):
     # with -9999.  Force defaults overrides intensity_value descriptions with default values for phenophases where
     # user count data do not make sense for PPO purposes.
     def _force_defaults(self, row):
-        if self.descriptions[(self.descriptions['field'] == row['phenophase_description'])]['force_default_value'].values[0]:
-            row['intensity_value'] = '-9999'
+        #print (self.descriptions['field']['defined_by']).values[0]
+        try:
+            if self.descriptions[(self.descriptions['field'] == row['phenophase_description'])]['force_default_value'].values[0]:
+                row['intensity_value'] = '-9999'
+        except IndexError:
+            # thrown if missing phenophase_description in phenophase_descriptions.csv file
+            pass
 
         return row
 
