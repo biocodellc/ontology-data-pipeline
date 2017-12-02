@@ -88,7 +88,9 @@ class ESLoader(object):
             "mappings": {
                 TYPE: {
                     "properties": {
-                        "plantStructurePresenceTypes": {"type": "keyword"}
+                        "plantStructurePresenceTypes": {"type": "keyword"},
+                        "dayOfYear": { "type": "integer" },
+                        "year": { "type": "integer" }
                     }
                 }
             }
