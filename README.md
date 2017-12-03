@@ -53,6 +53,7 @@ The processing pipeline implements the following steps:
 ## Dependencies
 
 
+### Install python
 Reccomended running python version 3.5.1 , installed using [pyenv](https://github.com/pyenv/pyenv)
 [MacOSX installation instructions](macosx.python.installation.md)
 
@@ -60,12 +61,16 @@ The python dependencies are found in `requirements.txt`. These can be installed 
 
 ```pip install -r requirements.txt --user```
 
-
-Additional dependencies:
+### Additional dependencies:
 
 * Java 8
 * [ontopilot](https://github.com/stuckyb/ontopilot) (Will be propted to download during cli exectuion if not found)
 * [query_fetcher](https://github.com/biocodellc/query_fetcher) (Will be propted to download during cli exectuion if not found)
+
+### Running tests, make sure everything works as expected!:
+
+```./pytest.sh```
+
 
 ## Usage
 
@@ -197,9 +202,9 @@ elastic_search:
 As an alternative to the commandline, params can be placed in a file, one per
 line, and specified on the commandline like 'loader.py @params.conf'.
 ```
-An example of running the loading script (ensure proper IP access to esr.biocodellc.com):
+An example of running the loading script (ensure proper IP access to tarly.cyverse.org):
 ```
-python loader.py --es_input_dir data/npn/output/output_reasoned_csv/ --index npn --drop-existing --alias ppo --host esr.biocodellc.com:80 elasticsearch
+python loader.py --es_input_dir data/npn/output/output_reasoned_csv/ --index npn --drop-existing --alias ppo --host tarly.cyverse.org:80 elasticsearch
 ```
 
 ## Config Files
