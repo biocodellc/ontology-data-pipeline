@@ -52,10 +52,14 @@ The processing pipeline implements the following steps:
     
 ## Dependencies
 
-The python dependencies are found in `requirements.txt`. These can be installed by running `pip install -r requirements.txt`.
 
 Reccomended running python version 3.5.1 , installed using [pyenv](https://github.com/pyenv/pyenv)
 [MacOSX installation instructions](macosx.python.installation.md)
+
+The python dependencies are found in `requirements.txt`. These can be installed by running 
+
+```pip install -r requirements.txt --user```
+
 
 Additional dependencies:
 
