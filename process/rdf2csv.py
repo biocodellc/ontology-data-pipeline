@@ -31,7 +31,8 @@ def convert_rdf2csv(input_file, output_dir, sparql_file, query_fetcher_path):
     # to remember to replace the prefix in any downstream apps
     with fileinput.FileInput(filename, inplace=True) as file:
         for line in file:
-            print(line.replace('http://purl.obolibrary.org/obo/', 'obo:'), end='')
+            print(line.replace('http://purl.obolibrary.org/obo/', 'obo:'), end="");
+            #line.replace('http://purl.obolibrary.org/obo/', 'obo:')
 
     fileinput.close()
 
