@@ -90,7 +90,8 @@ class ESLoader(object):
                     "properties": {
                         "plantStructurePresenceTypes": {"type": "keyword"},
                         "dayOfYear": { "type": "integer" },
-                        "year": { "type": "integer" }
+                        "year": { "type": "integer" },
+                        "adjustedNcepReanalysisMonthlyMeanTemp": { "type": "float" },
                     }
                 }
             }
