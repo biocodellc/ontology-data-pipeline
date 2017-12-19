@@ -34,6 +34,9 @@ class PreProcessor(AbstractPreProcessor):
         # Add an index name
         # df.index.name = 'record_id'
 
+        # drop all records where the user is unsure of what was coded (this is phenophase_status = -1)
+        df = df[df.phenophase_status != -1]
+
         # Handle cases where we want to force a default intensity value 
         # First, fill out the force_default_value column with False where there is no value
         self.descriptions['force_default_value'] = self.descriptions['force_default_value'].fillna(False)
