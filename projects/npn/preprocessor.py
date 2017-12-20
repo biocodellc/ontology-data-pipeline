@@ -28,7 +28,7 @@ class PreProcessor(AbstractPreProcessor):
         df = pd.read_csv(os.path.join(self.input_dir, "npn_observations_data.csv"), header=0, chunksize=chunk_size*num_processes)
         #df = pd.read_csv(os.path.join(self.input_dir, "test_data.csv"), header=0, chunksize=chunk_size)
 
-        for chunk in data:
+        for chunk in df:
             chunks = [chunk.ix[chunk.index[i:i + chunk_size]] for i in
                 range(0, chunk.shape[0], chunk_size)]
 
@@ -38,7 +38,7 @@ class PreProcessor(AbstractPreProcessor):
 #        for chunk in df:
 #            print("\tprocessing next {} records".format(len(chunk)))
 
-    def _transform_chunk(self, df):
+    def _transform_chunk(self, chunk):
         self._transform_data(chunk).to_csv(self.output_file, columns=self.headers, mode='a', header=False, index=False)
 
     def _transform_data(self, df):
