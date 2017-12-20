@@ -21,14 +21,23 @@ class PreProcessor(AbstractPreProcessor):
         self.dataset_metadata = pd.read_csv(DATASET_METADATA_FILE, header=0, skipinitialspace=True,
                                             usecols=['Dataset_ID', 'Source'])
 
+        num_processes = multiprocessing.cpu_count()
         chunk_size = 100000
-        df = pd.read_csv(os.path.join(self.input_dir, "npn_observations_data.csv"), header=0, chunksize=chunk_size)
+        df = pd.read_csv(os.path.join(self.input_dir, "npn_observations_data.csv"), header=0, chunksize=chunk_size*num_processes)
         #df = pd.read_csv(os.path.join(self.input_dir, "test_data.csv"), header=0, chunksize=chunk_size)
 
-        for chunk in df:
-            print("\tprocessing next {} records".format(len(chunk)))
-            self._transform_data(chunk).to_csv(self.output_file, columns=self.headers, mode='a',
-                                               header=False, index=False)
+	for chunk in data:
+            chunks = [chunk.ix[chunk.index[i:i + chunk_size]] for i in
+                      range(0, chunk.shape[0], chunk_size)]
+
+            with multiprocessing.Pool(processes=num_processes) as pool:
+                pool.map(self._transform_chunk, chunks)
+
+#        for chunk in df:
+#            print("\tprocessing next {} records".format(len(chunk)))
+
+    def _transform_chunk(self, df):
+        self._transform_data(chunk).to_csv(self.output_file, columns=self.headers, mode='a', header=False, index=False)
 
     def _transform_data(self, df):
         # Add an index name
