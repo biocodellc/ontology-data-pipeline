@@ -2,7 +2,9 @@
 
 """proprocessor.AbstractPreProcessor implementation for preprocessing npn data"""
 
+
 import os, csv
+import multiprocessing
 import pandas as pd
 from preprocessor import AbstractPreProcessor
 
