@@ -26,9 +26,9 @@ class PreProcessor(AbstractPreProcessor):
         df = pd.read_csv(os.path.join(self.input_dir, "npn_observations_data.csv"), header=0, chunksize=chunk_size*num_processes)
         #df = pd.read_csv(os.path.join(self.input_dir, "test_data.csv"), header=0, chunksize=chunk_size)
 
-	for chunk in data:
+        for chunk in data:
             chunks = [chunk.ix[chunk.index[i:i + chunk_size]] for i in
-                      range(0, chunk.shape[0], chunk_size)]
+                range(0, chunk.shape[0], chunk_size)]
 
             with multiprocessing.Pool(processes=num_processes) as pool:
                 pool.map(self._transform_chunk, chunks)
