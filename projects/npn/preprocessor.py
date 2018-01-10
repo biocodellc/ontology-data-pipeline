@@ -63,7 +63,7 @@ class PreProcessor(AbstractPreProcessor):
         df = df.apply(lambda row: self._set_defaults(row), axis=1)
 
         # set the source
-        df['source'] = 'NPN'
+        df['source'] = 'USA-NPN'
         df = df.merge(self.dataset_metadata, left_on='dataset_id', right_on='Dataset_ID', how='left')
 
         # Normalize Date to just Year. we don't need to store actual date because we use only Year + DayOfYear
