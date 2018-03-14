@@ -92,6 +92,8 @@ class ESLoader(object):
                         "dayOfYear": { "type": "integer" },
                         "year": { "type": "integer" },
                         "adjustedNcepReanalysisMonthlyMeanTemp": { "type": "float" },
+                        "latitude": { "type": "float" },
+                        "longitude": { "type": "float" }                        
                     }
                 }
             }
