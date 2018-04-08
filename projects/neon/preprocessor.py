@@ -53,8 +53,9 @@ class PreProcessor(AbstractPreProcessor):
 
         individuals = pd.read_csv(per_individual_file, header=0, skipinitialspace=True,
                                   usecols=['decimalLatitude', 'decimalLongitude', 'namedLocation', 'individualID',
-                                           'scientificName', 'addDate'])
+                                           'scientificName', 'date'])
 
+        individuals = individuals.rename(index=str, columns={"date": "addDate"})
         # take the latest entry of an individualID as the source of truth
         individuals = individuals.sort_values('addDate', ascending=False).drop_duplicates('individualID')
 
