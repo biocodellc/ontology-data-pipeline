@@ -153,10 +153,10 @@ As an alternative to the commandline, params can be placed in a file, one per
 line, and specified on the commandline like 'process.py @params.conf'.
 ```
 Examples of loading the processing script which will run the pre-processor and
-all dependencies:
+all dependencies, specifying a local copy of the PPO ontology:
 ```
-python process.py --input_dir data/test_npn/input/ test_npn data/test_npn/output/
-nohup python process.py --input_dir data/npn/input/ --drop_invalid npn data/npn/output/ &
+python process.py --ontology file:/vol_d/ppo-data-pipeline/config/ppo.owl --input_dir data/test_npn/input/ test_npn data/test_npn/output/
+nohup python process.py --ontology file:/vol_d/ppo-data-pipeline/config/ppo.owl --input_dir data/npn/input/ --drop_invalid npn data/npn/output/ &
 ```
 
 Running the loader.py script:
