@@ -153,10 +153,11 @@ As an alternative to the commandline, params can be placed in a file, one per
 line, and specified on the commandline like 'process.py @params.conf'.
 ```
 Examples of loading the processing script which will run the pre-processor and
-all dependencies, specifying a local copy of the PPO ontology:
+all dependencies, specifying a local copy of the PPO ontology using nohup and running background:
 ```
-python process.py --ontology file:/vol_d/ppo-data-pipeline/config/ppo.owl --input_dir data/test_npn/input/ test_npn data/test_npn/output/
 nohup python process.py --ontology file:/vol_d/ppo-data-pipeline/config/ppo.owl --input_dir data/npn/input/ --drop_invalid npn data/npn/output/ &
+nohup python process.py --ontology file:/vol_d/ppo-data-pipeline/config/ppo.owl --input_dir data/neon/input/ --drop_invalid neon data/neon/output/ &
+nohup python process.py --ontology file:/vol_d/ppo-data-pipeline/config/ppo.owl --input_dir data/pep725/input/ --drop_invalid pep725 data/pep725/output/ &
 ```
 
 Running the loader.py script:
@@ -205,6 +206,8 @@ line, and specified on the commandline like 'loader.py @params.conf'.
 An example of running the loading script (ensure proper IP access to tarly.cyverse.org):
 ```
 python loader.py --es_input_dir data/npn/output/output_reasoned_csv/ --index npn --drop-existing --alias ppo --host tarly.cyverse.org:80 elasticsearch
+python loader.py --es_input_dir data/neon/output/output_reasoned_csv/ --index neon --drop-existing --alias ppo --host tarly.cyverse.org:80 elasticsearch
+python loader.py --es_input_dir data/pep725/output/output_reasoned_csv/ --index pep725 --drop-existing --alias ppo --host tarly.cyverse.org:80 elasticsearch
 ```
 
 ## Config Files
