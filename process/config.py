@@ -18,8 +18,11 @@ DEFAULT_PROJECT_BASE = "projects"
 DEFAULT_BASE_DIR = os.path.join(os.path.dirname(__file__), '../projects')
 
 VALID_RULES = ['RequiredValue', 'ControlledVocabulary', 'UniqueValue', 'Integer', 'Float']
-DEFAULT_ONTOLOGY = "https://raw.githubusercontent.com/PlantPhenoOntology/ppo/master/releases/2017-10-20/ppo.owl"
 DEFAULT_CONFIG_DIR = os.path.join(os.path.dirname(__file__), "../config")
+#commenting out pointer to default ontology being located at github and we need to reference local version
+# instead.  This is because github (i think) is limiting the number of connections per hour
+#DEFAULT_ONTOLOGY = "https://raw.githubusercontent.com/PlantPhenoOntology/ppo/master/releases/2017-10-20/ppo.owl"
+DEFAULT_ONTOLOGY = os.path.join(DEFAULT_CONFIG_DIR,'ppo.owl')
 
 DEFAULT_HEADERS = ['record_id', 'scientific_name', 'genus', 'specific_epithet', 'year', 'day_of_year', 'latitude',
                    'longitude', 'source', 'phenophase_name', 'lower_count', 'upper_count', 'lower_percent',
