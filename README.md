@@ -76,18 +76,19 @@ The python dependencies are found in `requirements.txt`. These can be installed 
 
 Before running the processing script, you will likely need to fetch data.  Some of the
 projects likely will have an API that you can obtain data from and these are written 
-into a data_fetcher.py script. 
+into a data_fetcher.py script for NPN and NEON. PEP725 data needs mysql tables to be
+extracted manually:
 
 ```
-$ python ./projects/npn/data_fetcher.py 
-usage: data_fetcher.py [-h] output_dir
+python ./projects/npn/data_fetcher.py data/npn/input/
+python ./projects/neon/data_fetcher.py data/neon/input/
 ```
 
-Running the data fetch for NPN, for example, we would want to write the output of the
-data_fetcher script into the input directory used for the processing script, like:
-
+NOTE: when updating data, we currently need to manually update the citation and data 
+usage policy file with the date of load, which is found at the following location (after
+updating this file we need to git pull changes in the ppo-data-server repository):
 ```
-$ python ./projects/npn/data_fetcher.py data/npn/input/
+https://raw.githubusercontent.com/biocodellc/ppo-data-server/master/citation_and_data_use_policies.txt
 ```
 
 Running from the process.py script:
