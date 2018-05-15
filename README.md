@@ -2,7 +2,7 @@
 
 python cli processing pipeline for processing ontology data.
 
-`process.Process` is the main entry point for the application. `process.py` is a convince wrapper script for running the
+`process.Process` is the main entry point for the application. `process.py` is a convenience wrapper script for running the
 app from the source tree.
 
 The processing pipeline implements the following steps:
@@ -19,8 +19,8 @@ The processing pipeline implements the following steps:
     for the reasoning phase. Each project will need to contain a `config` directory with the following files that will 
     be used to triplify the preprocessed data:
     
-    NOTE: Wherever there is a uri expressed in any of the following files, you have the option of using ontology label substitution
-    If the uri is of the format `{label name here}`, the appropriate uri will be substituted from the provided ontology
+    NOTE: Wherever there is a uri expressed in any of the following files, you have the option of using ontology label substitution.
+    If the uri is of the format `{label name here}`, the appropriate uri will be substituted from the provided ontology. See the [OntoPilot Documentation](https://github.com/stuckyb/ontopilot/wiki/Ontology-development#column-names-for-all-ontology-entities) for details term identifier abbreviations.
     
     1. [entity.csv](#entity.csv)
     2. [mapping.csv](#mapping.csv)
@@ -42,13 +42,14 @@ The processing pipeline implements the following steps:
 
     This is a separate cli used for loading reasoned data into elasticsearch and/or blazegraph.
     
-    `loader.loader` is the main entry point for the application. `loader.py` is a convince wrapper script for running the
+    `loader.loader` is the main entry point for the application. `loader.py` is a convenience wrapper script for running the
     app from the source tree.
 
     * Uploading
     
         1. BlazeGraph
         2. ElasticSearch
+        
     
 ## Dependencies
 
@@ -153,8 +154,8 @@ optional arguments:
 As an alternative to the commandline, params can be placed in a file, one per
 line, and specified on the commandline like 'process.py @params.conf'.
 ```
-Examples of loading the processing script which will run the pre-processor and
-all dependencies, specifying a local copy of the PPO ontology using nohup and running background:
+Examples of loading the processing script which will run the pre-processor and all 
+dependencies, specifying a local copy of the PPO ontology using nohup and running background:
 ```
 nohup python process.py --ontology file:/vol_d/ppo-data-pipeline/config/ppo.owl --input_dir data/npn/input/ --drop_invalid npn data/npn/output/ &
 nohup python process.py --ontology file:/vol_d/ppo-data-pipeline/config/ppo.owl --input_dir data/neon/input/ --drop_invalid neon data/neon/output/ &
@@ -260,6 +261,7 @@ The following files are required:
     * `subject_entity_alias`
     
         The alias of the entity which is the subject of this relationship
+        
     * `predicate`
     
         The uri which defines the relationship
