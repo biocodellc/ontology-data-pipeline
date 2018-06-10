@@ -157,9 +157,12 @@ line, and specified on the commandline like 'process.py @params.conf'.
 Examples of loading the processing script which will run the pre-processor and all 
 dependencies, specifying a local copy of the PPO ontology using nohup and running background:
 ```
-nohup python process.py --ontology file:/vol_d/ppo-data-pipeline/config/ppo.owl --input_dir data/npn/input/ --drop_invalid npn data/npn/output/ &
-nohup python process.py --ontology file:/vol_d/ppo-data-pipeline/config/ppo.owl --input_dir data/neon/input/ --drop_invalid neon data/neon/output/ &
-nohup python process.py --ontology file:/vol_d/ppo-data-pipeline/config/ppo.owl --input_dir data/pep725/input/ --drop_invalid pep725 data/pep725/output/ &
+nohup python process.py --ontology file:/home/jdeck/code/ppo-data-pipeline/config/ppo.owl \
+    --input_dir data/npn/input/ --drop_invalid npn data/npn/output/ --num_processes 4 &
+nohup python process.py --ontology file:/home/jdeck/code/ppo-data-pipeline/config/ppo.owl \
+    --input_dir data/neon/input/ --drop_invalid neon data/neon/output/ --num_processes 4 &
+nohup python process.py --ontology file:/home/jdeck/code/ppo-data-pipeline/config/ppo.owl \
+    --input_dir data/pep725/input/ --drop_invalid pep725 data/pep725/output/ --num_processes 4 &
 ```
 
 Running the loader.py script:
