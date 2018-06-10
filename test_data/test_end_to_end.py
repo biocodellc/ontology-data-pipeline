@@ -31,8 +31,8 @@ def test_end_to_end(project):
     config_path = os.path.join('test_data','config')
     # reference to ontology. Do NOT change this as it will interfere with rest results. it is Okay if ontology is
     # out of date.  Here we reference a specific release of the ontology itself so it should be static
-    #ontology_url = 'https://raw.githubusercontent.com/PlantPhenoOntology/ppo/master/releases/2017-10-20/ppo.owl'
-    ontology_url = os.path.join('file:/',config_path,'ppo.owl')
+    ontology_url = 'https://raw.githubusercontent.com/PlantPhenoOntology/ppo/master/releases/2017-10-20/ppo.owl'
+    #ontology_url = os.path.join('file:/',config_path,'ppo.owl')
     # file containing actual results we want to compare to
     actual_results_file_name = os.path.join(output_path,"output_reasoned_csv","data_1.ttl.csv")
     # file containing expected results
