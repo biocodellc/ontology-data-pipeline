@@ -74,6 +74,9 @@ class ESLoader(object):
             for row in reader:
                 row['plantStructurePresenceTypes'] = row['plantStructurePresenceTypes'].split("|")
                 row['loaded_ts'] = datetime.datetime.now()
+                # row['location'] = "coordinates : [" + row['latitude'] ,  row['longitude'] + "]";
+                #row['location'] = "45,37"
+                row['location'] = row['latitude'] + "," + row['longitude'] 
                 data.append({k: v for k, v in row.items() if v})  # remove any empty values
 
             elasticsearch.helpers.bulk(client=self.es, index=self.index_name, actions=data, doc_type=TYPE,
@@ -93,7 +96,8 @@ class ESLoader(object):
                         "year": { "type": "integer" },
                         "adjustedNcepReanalysisMonthlyMeanTemp": { "type": "float" },
                         "latitude": { "type": "float" },
-                        "longitude": { "type": "float" }                        
+                        "longitude": { "type": "float" },                        
+                        "location": { "type": "geo_point" }                        
                     }
                 }
             }
