@@ -1,0 +1,10 @@
+field,defined_by,lower_count,upper_count,lower_percent,upper_percent,notes
+buds present,{unopened flower presence},1,,,,"Botanist, check this please"
+fruits present,{ripening fruit presence},1,,,,"Botanist, check this please"
+leaves expanded,{mature true leaf presence},1,,,,"Botanist, check this please"
+leaves expanding,{non-senescing unfolded true leaf presence},1,,,,"Botanist, check this please"
+no flowers,{open flower presence},,0,,,"Botanist, check this please"
+no leaves,{mature true leaf presence},,0,,,"Botanist, check this please"
+opened flowers present,{open flower presence},1,,,,"Botanist, check this please"
+senesced flowers present,{senesced flower presence},1,,,,"Botanist, check this please"
+unopened flowers present,{unopened flower presence},1,,,,"Botanist, check this please"
