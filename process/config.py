@@ -228,7 +228,7 @@ class Config(object):
         mapping of the data csv to entities for triplifying.
         Expected columns are: column,entity_alias
         """
-        file = os.path.join(self.config_dir, 'mapping.csv')
+        file = os.path.join(self.base_dir, 'mapping.csv')
 
         if not os.path.exists(file):
             raise RuntimeError("mapping.csv file missing from configuration directory")
@@ -249,7 +249,7 @@ class Config(object):
         Parse relations.csv file. Used to define the relations between entities for triplifying
         Expected columns are: subject_entity_alias,predicate,object_entity_alias
         """
-        file = os.path.join(self.config_dir, 'relations.csv')
+        file = os.path.join(self.base_dir, 'relations.csv')
 
         if not os.path.exists(file):
             raise RuntimeError("relations.csv file missing from configuration directory")
