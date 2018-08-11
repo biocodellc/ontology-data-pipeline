@@ -2,6 +2,12 @@
 
 A flexible, scalable pipeline for integration of observation data from multiple sources. Little or no programming is required to adapt the pipeline for use with different kinds of data, ontologies, or reasoning profiles, and output is compatible with any type of storage technology. 
 
+## Getting started
+
+You can begin by cloning or forking this repository and installing on your laptop or server.  The next step is familiarizing yourself with the [configuration files](https://github.com/biocodellc/ppo-data-pipeline/blob/master/README.md#config-files) and reading through the documentation on this page.  
+
+## Running the pipeline
+
 Described here is the command-line tool for running the pipeline and getting started processing data.
 
 `process.Process` is the main entry point for the application. `process.py` is a convenience wrapper script for running the
