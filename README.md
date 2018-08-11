@@ -227,13 +227,13 @@ python loader.py --es_input_dir data/pep725/output/output_reasoned_csv/ --index 
 
 ## Config Files
 
-We provide a set of default configuration files found under `config` directory as well as in each project directory.   Project configuration files include [`entity.csv`](#entity.csv), `mapping.csv`, `relations.csv`. These are the base configuration files we use for reasoning against the application ontology (e.g. [Plant Phenology Ontology](https://github.com/PlantPhenoOntology/PPO/)). These files  configure the data validation, triplifying, reasoning, and rdf2csv converting.
+We provide a set of default configuration files found under `config` directory as well as in each project directory.   Project configuration files include [`entity.csv`](#entity.csv), [`mapping.csv`](#mapping.csv), [`relations.csv`](#relations.csv), and [`phenophase_descriptions.csv`](https://github.com/biocodellc/ppo-data-pipeline#descriptions).  The remaining configuration files below are found in the `config` directory.  Together, these are the required configuration files we use for reasoning against the application ontology (e.g. [Plant Phenology Ontology](https://github.com/PlantPhenoOntology/PPO/)). These files configure the data validation, triplifying, reasoning, and rdf2csv converting.
  
 The following files are required:
 
 ##### <a name="entity.csv"></a>
 
-1. `entity.csv` (project directory) - This file specifies the entities to create when triplifying. The file expects the following columns:
+1. `entity.csv` (found in each project directory) - This file specifies the entities to create when triplifying. The file expects the following columns:
 
     * `alias`
         
@@ -252,7 +252,7 @@ The following files are required:
         The identifier root for each unique entity. This is typically an [BCID](http://biscicol.org) identifier
     
 ##### <a name="mapping.csv"></a>
-2. `mapping.csv` (project directory)
+2. `mapping.csv` (found in each project directory)
 
     * `column`
     
@@ -267,7 +267,7 @@ The following files are required:
         The alias of the entity this column is a property of
         
 ##### <a name="relations.csv"></a>
-3. `relations.csv` (project directory)
+3. `relations.csv` (found in each project directory)
 
     * `subject_entity_alias`
     
@@ -282,7 +282,7 @@ The following files are required:
         The alias of the entity which is the object of this relationship
         
 ##### <a name="descriptions"></a>
-4. <a name="pheno_descriptions"></a>`phenophase_descriptions.csv` (project directory)
+4. <a name="pheno_descriptions"></a>`phenophase_descriptions.csv` (found in each project directory)
 
     * `field`
     
