@@ -227,15 +227,13 @@ python loader.py --es_input_dir data/pep725/output/output_reasoned_csv/ --index 
 
 ## Config Files
 
-We provide a set of default configuration files found under `config` directory. These are the base configuration files
-we use for reasoning against the [Plant Phenology Ontology](https://github.com/PlantPhenoOntology/PPO/). These files 
-configure the data validation, triplifying, reasoning, and rdf2csv converting.
+We provide a set of default configuration files found under `config` directory as well as in each project directory. These are the base configuration files we use for reasoning against the application ontology (e.g. [Plant Phenology Ontology](https://github.com/PlantPhenoOntology/PPO/)). These files  configure the data validation, triplifying, reasoning, and rdf2csv converting.
  
 The following files are required:
 
 ##### <a name="entity.csv"></a>
 
-1. `entity.csv` - This file specifies the entities to create when triplifying. The file expects the following columns:
+1. `entity.csv` (project directory) - This file specifies the entities to create when triplifying. The file expects the following columns:
 
     * `alias`
         
@@ -254,7 +252,7 @@ The following files are required:
         The identifier root for each unique entity. This is typically an [BCID](http://biscicol.org) identifier
     
 ##### <a name="mapping.csv"></a>
-2. `mapping.csv`
+2. `mapping.csv` (project directory)
 
     * `column`
     
@@ -269,7 +267,7 @@ The following files are required:
         The alias of the entity this column is a property of
         
 ##### <a name="relations.csv"></a>
-3. `relations.csv`
+3. `relations.csv` (project directory)
 
     * `subject_entity_alias`
     
@@ -284,7 +282,7 @@ The following files are required:
         The alias of the entity which is the object of this relationship
         
 ##### <a name="descriptions"></a>
-4. <a name="pheno_descriptions"></a>`phenophase_descriptions.csv`
+4. <a name="pheno_descriptions"></a>`phenophase_descriptions.csv` (project directory)
 
     * `field`
     
