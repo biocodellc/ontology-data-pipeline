@@ -227,7 +227,7 @@ python loader.py --es_input_dir data/pep725/output/output_reasoned_csv/ --index 
 
 ## Config Files
 
-We provide a set of default configuration files found under `config` directory as well as in each project directory. These are the base configuration files we use for reasoning against the application ontology (e.g. [Plant Phenology Ontology](https://github.com/PlantPhenoOntology/PPO/)). These files  configure the data validation, triplifying, reasoning, and rdf2csv converting.
+We provide a set of default configuration files found under `config` directory as well as in each project directory.   Project configuration files include [`entity.csv`](#entity.csv), `mapping.csv`, `relations.csv`. These are the base configuration files we use for reasoning against the application ontology (e.g. [Plant Phenology Ontology](https://github.com/PlantPhenoOntology/PPO/)). These files  configure the data validation, triplifying, reasoning, and rdf2csv converting.
  
 The following files are required:
 
