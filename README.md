@@ -13,7 +13,9 @@ The processing pipeline implements the following steps:
 
     This step involves transforming the data into a common format for triplifying. This will usually involve writing a 
     custom `PreProcessor` for each project to be ingested. The `preprocessor` module contains an abstract class 
-    `AbstractPreProcessor` that can be inherited by the project preprocessor.
+    `AbstractPreProcessor` that can be inherited by the project preprocessor.  We suggest adapting one of the projects included 
+    in this package as a template from which to start.  The purpose of the pre-processor is to configure the data to conform to the 
+    structure specified in the [headers configuration file](https://github.com/biocodellc/ppo-data-pipeline/blob/master/config/headers.csv).  
     
 2. Triplifier
 
