@@ -1,6 +1,8 @@
-# Plant Phenology Ontology Data Processor
+# A high-throughput ontology-based pipeline for data integration
 
-python cli processing pipeline for processing ontology data.
+A flexible, scalable pipeline for integration of observation data from multiple sources. Little or no programming is required to adapt the pipeline for use with different kinds of data, ontologies, or reasoning profiles, and output is compatible with any type of storage technology. 
+
+Described here is the command-line tool for running the pipeline and getting started processing data.
 
 `process.Process` is the main entry point for the application. `process.py` is a convenience wrapper script for running the
 app from the source tree.
