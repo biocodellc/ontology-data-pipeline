@@ -1,5 +1,8 @@
 alias,concept_uri,unique_key,identifier_root,notes
 plantStructurePresence,http://www.w3.org/1999/02/22-rdf-syntax-ns#type,record_id,http://n2t.net/ark:/99999/plantStructurePresence/,rdf:type designation means we intend to pull type values from translationTable. see mapping file
+wholePlantStructurePresence,http://www.w3.org/1999/02/22-rdf-syntax-ns#type,record_id,http://n2t.net/ark:/99999/wholePlantStructurePresence/,rdf:type designation means we intend to pull type values from translationTable. see mapping file
 phenologicalObservingProcess,{plant phenological trait},record_id,http://n2t.net/ark:/99999/phenologicalObservingProcess/,
 measurementDatum,http://purl.obolibrary.org/obo/IAO_0000109,record_id,http://n2t.net/ark:/99999/measurementDatum/,
+wholeMeasurementDatum,http://purl.obolibrary.org/obo/IAO_0000109,record_id,http://n2t.net/ark:/99999/wholeMeasurementDatum/,
 partPlant,http://purl.obolibrary.org/obo/PPO_0000015,record_id,http://n2t.net/ark:/99999/partPlant/,
+wholePlant,http://purl.obolibrary.org/obo/PO_0000003,record_id,http://n2t.net/ark:/99999/wholePlant/,

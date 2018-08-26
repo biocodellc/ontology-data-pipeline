@@ -3,3 +3,7 @@ plantStructurePresence,{has quality measurement},measurementDatum,
 plantStructurePresence,{quality of},partPlant,
 partPlant,{is_specified_input_of},phenologicalObservingProcess,
 phenologicalObservingProcess,{has_specified_output},measurementDatum,
+wholeMeasurementDatum,{generated from},measurementDatum
+wholeMeasurementDatum,{quality measurement of},wholePlantStructurePresence
+wholePlantStructurePresence{quality of},wholePlant
+partPlant,{is or was part of},wholePlant
