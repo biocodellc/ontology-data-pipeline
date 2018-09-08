@@ -39,13 +39,14 @@ class PreProcessor(AbstractPreProcessor):
 
         # Set default lower and upper counts
         data = data.apply(lambda row: self._set_defaults(row), axis=1)
-
         return data
 
     def _set_defaults(self, row):
         try:
             row['lower_count'] = self.descriptions[self.descriptions['field'] == row['phenophase_name']]['lower_count'].values[0]
             row['upper_count'] = self.descriptions[self.descriptions['field'] == row['phenophase_name']]['upper_count'].values[0]
+            row['lower_count_partplant'] = self.descriptions[self.descriptions['field'] == row['phenophase_name']]['lower_count_partplant'].values[0]
+            row['upper_count_partplant'] = self.descriptions[self.descriptions['field'] == row['phenophase_name']]['upper_count_partplant'].values[0]
         except IndexError:
             # thrown if missing phenophase_description in phenophase_descriptions.csv file
             pass

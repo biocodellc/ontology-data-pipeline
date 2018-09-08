@@ -10,8 +10,8 @@ genus,http://rs.tdwg.org/dwc/terms/genus,partPlant,
 specific_epithet,http://rs.tdwg.org/dwc/terms/specificEpithet,partPlant,
 scientific_name,http://rs.tdwg.org/dwc/terms/scientificName,partPlant,
 phenophase_name,http://www.w3.org/1999/02/22-rdf-syntax-ns#type,plantStructurePresence,"Using rdf:type indicates the values will be object properties, in this case defined by a list association in rules.csv."
-lower_count,{lower count},measurementDatum,
-upper_count,{upper count},measurementDatum,
-lower_percent,{lower percent},measurementDatum,
-upper_percent,{upper percent},measurementDatum,
+lower_count_partplant,{lower count},measurementDatum,
+upper_count_partplant,{upper count},measurementDatum,
+lower_count,{lower count},wholeMeasurementDatum
+upper_count,{upper count},wholeMeasurementDatum
 adjusted_ncep_reanalysis_monthly_mean_temp,http://rs.tdwg.org/dwc/terms/measurementValue,phenologicalObservingProcess,

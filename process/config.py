@@ -24,7 +24,7 @@ DEFAULT_CONFIG_DIR = os.path.join(os.path.dirname(__file__), "../config")
 DEFAULT_ONTOLOGY = "https://raw.githubusercontent.com/PlantPhenoOntology/ppo/master/releases/2017-10-20/ppo.owl"
 
 DEFAULT_HEADERS = ['record_id', 'scientific_name', 'genus', 'specific_epithet', 'year', 'day_of_year', 'latitude',
-                   'longitude', 'source', 'phenophase_name', 'lower_count', 'upper_count', 'lower_percent',
+                   'longitude', 'source', 'phenophase_name', 'lower_count_partplant', 'upper_count_partplant', 'lower_count', 'upper_count', 'lower_percent',
                    'upper_percent']
 
 
