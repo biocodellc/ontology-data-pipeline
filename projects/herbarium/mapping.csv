@@ -14,4 +14,3 @@ lower_count_partplant,{lower count},measurementDatum,
 upper_count_partplant,{upper count},measurementDatum,
 lower_count,{lower count},wholeMeasurementDatum
 upper_count,{upper count},wholeMeasurementDatum
-adjusted_ncep_reanalysis_monthly_mean_temp,http://rs.tdwg.org/dwc/terms/measurementValue,phenologicalObservingProcess,
