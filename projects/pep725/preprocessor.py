@@ -33,14 +33,14 @@ class PreProcessor(AbstractPreProcessor):
     def _process_data(self):
         self.frames = {
             'genus': pd.read_csv(self.input_dir + FILES['genus'], sep=';', header=0, usecols=['genus_id', 'genus'],
-                                 skipinitialspace=True),
+                                 skipinitialspace=True,dtype='object'),
             'species': pd.read_csv(self.input_dir + FILES['species'], sep=';', header=0, skipinitialspace=True,
-                                   usecols=['species_id', 'species']),
+                                   usecols=['species_id', 'species'],dtype='object'),
             'stations': pd.read_csv(self.input_dir + FILES['stations'], sep=';', header=0, skipinitialspace=True,
-                                    usecols=['s_id', 'lat', 'lon']),  # , 'alt', 'name']),
+                                    usecols=['s_id', 'lat', 'lon'],dtype='object'),  # , 'alt', 'name']),
             'phase': pd.read_csv(self.input_dir + FILES['phase'], sep=';', header=0,
-                                 usecols=['phase_id', 'description'], skipinitialspace=True),
-            'phenophase_descriptions': pd.read_csv(PHENOPHASE_DESCRIPTIONS_FILE, header=0, skipinitialspace=True)
+                                 usecols=['phase_id', 'description'], skipinitialspace=True,dtype='object'),
+            'phenophase_descriptions': pd.read_csv(PHENOPHASE_DESCRIPTIONS_FILE, header=0, skipinitialspace=True,dtype='object')
         }
 
         num_processes = multiprocessing.cpu_count()

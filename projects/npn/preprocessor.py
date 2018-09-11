@@ -19,9 +19,9 @@ COLUMNS_MAP = {
 
 class PreProcessor(AbstractPreProcessor):
     def _process_data(self):
-        self.descriptions = pd.read_csv(PHENOPHASE_DESCRIPTIONS_FILE, header=0, skipinitialspace=True)
+        self.descriptions = pd.read_csv(PHENOPHASE_DESCRIPTIONS_FILE, header=0, skipinitialspace=True, dtype='object')
         self.dataset_metadata = pd.read_csv(DATASET_METADATA_FILE, header=0, skipinitialspace=True,
-                                            usecols=['Dataset_ID', 'Source'])
+                                            usecols=['Dataset_ID', 'Source'], dtype='object')
 
         num_processes = multiprocessing.cpu_count()
         chunk_size = 100000
