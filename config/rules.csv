@@ -1,5 +1,5 @@
 rule,columns,level,list
 UniqueValue,record_id,error,
 RequiredValue,source|genus|specific_epithet|day_of_year|year|latitude|longitude|phenophase_name|record_id,error,
-Integer,year|day_of_year,error,
+Integer,year|day_of_year|lower_count|upper_count|lower_count_partplant|upper_count_partplant,error,
 Float,latitude|longitude,error,

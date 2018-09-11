@@ -6,6 +6,7 @@ import re, uuid
 import os
 import multiprocessing
 import pandas as pd
+import math
 from preprocessor import AbstractPreProcessor
 
 PHENOPHASE_DESCRIPTIONS_FILE = os.path.join(os.path.dirname(__file__), 'phenophase_descriptions.csv')
@@ -14,7 +15,7 @@ DATA_FILE = os.path.join(FILE_PREFIX+'_data.csv')
 
 class PreProcessor(AbstractPreProcessor):
     def _process_data(self):
-        self.descriptions = pd.read_csv(PHENOPHASE_DESCRIPTIONS_FILE, header=0, skipinitialspace=True)
+        self.descriptions = pd.read_csv(PHENOPHASE_DESCRIPTIONS_FILE, header=0, skipinitialspace=True, dtype='object')
 
         num_processes = multiprocessing.cpu_count()
         chunk_size = 100000
@@ -37,14 +38,22 @@ class PreProcessor(AbstractPreProcessor):
         # Create a unique record ID for each observation
         data['record_id'] = data.apply(lambda x: uuid.uuid4(), axis=1)
 
+        # Capitalize genus
+        data['genus'] = data['genus'].str.capitalize()
+
+        # Create ScientificName
+        data['scientific_name'] = data['genus'] + ' ' + data['specific_epithet']
+
         # Set default lower and upper counts
         data = data.apply(lambda row: self._set_defaults(row), axis=1)
+
         return data
 
     def _set_defaults(self, row):
         try:
             row['lower_count'] = self.descriptions[self.descriptions['field'] == row['phenophase_name']]['lower_count'].values[0]
             row['upper_count'] = self.descriptions[self.descriptions['field'] == row['phenophase_name']]['upper_count'].values[0]
+
             row['lower_count_partplant'] = self.descriptions[self.descriptions['field'] == row['phenophase_name']]['lower_count_partplant'].values[0]
             row['upper_count_partplant'] = self.descriptions[self.descriptions['field'] == row['phenophase_name']]['upper_count_partplant'].values[0]
         except IndexError:
