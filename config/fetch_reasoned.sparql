@@ -11,10 +11,11 @@ prefix urn: <urn:>
 # Use the concat/group_concat function to push all plantStructurePresence types into an array within a field.
 # this enables ElasticSearch to index this easily while shrinking output file sizes
 SELECT  
-(?phenologyObservingProcess as ?eventId) ?dayOfYear ?year ?latitude ?longitude ?genus ?specificEpithet ?scientificName ?typePlant ?lower_count ?upper_count ?lower_percent ?upper_percent ?source ?subSource ?adjustedNcepReanalysisMonthlyMeanTemp (group_concat(distinct ?traitType;separator='|') as ?plantStructurePresenceTypes)
+(?phenologyObservingProcess as ?eventId) ?dayOfYear ?year ?latitude ?longitude ?genus ?specificEpithet ?scientificName ?lower_count ?upper_count ?lower_percent ?upper_percent ?source ?subSource ?adjustedNcepReanalysisMonthlyMeanTemp (group_concat(distinct ?traitType;separator='|') as ?plantStructurePresenceTypes)
 
 WHERE {    
-        ?plant a ?typePlant . 
+	# only look for wholeplant type of plants
+        #?plant a obo:PPO_0000003 . 
 
         ?plant dwc:genus ?genus . 
         OPTIONAL {?plant dwc:specificEpithet ?specificEpithet} . 
@@ -28,14 +29,14 @@ WHERE {
 
 	# remove declarations of owl:namedIndividual
 	FILTER (?traitType != <http://www.w3.org/2002/07/owl#NamedIndividual>) .
-	FILTER (?typePlant != <http://www.w3.org/2002/07/owl#NamedIndividual>) .
+	#FILTER (?typePlant != <http://www.w3.org/2002/07/owl#NamedIndividual>) .
         ?plantStructurePresence obo:PPO_0000008 ?measurementDatum .
 
 	# Join phenologyObservingProcess to measurementDatum
         ?measurementDatum obo:OBI_0000312 ?phenologyObservingProcess .
 
         # Set the type for phenologyObservingProcess and return properties
-        ?phenologyObservingProcess rdf:type obo:PPO_0002000 .
+        ?phenologyObservingProcess rdf:type obo:PPO_0007004 .
         ?phenologyObservingProcess dwc:startDayOfYear ?dayOfYear .
         ?phenologyObservingProcess dwc:year ?year .
         ?phenologyObservingProcess dwc:decimalLatitude ?latitude .
@@ -50,5 +51,5 @@ WHERE {
         OPTIONAL {?measurementDatum obo:PPO_0000003 ?lower_percent} .
         OPTIONAL {?measurementDatum obo:PPO_0000004 ?upper_percent} .
 }
-GROUP BY ?phenologyObservingProcess ?dayOfYear ?year ?latitude ?longitude ?genus ?specificEpithet ?scientificName ?typePlant ?lower_count ?upper_count ?lower_percent ?upper_percent ?source ?subSource ?adjustedNcepReanalysisMonthlyMeanTemp
+GROUP BY ?phenologyObservingProcess ?dayOfYear ?year ?latitude ?longitude ?genus ?specificEpithet ?scientificName ?lower_count ?upper_count ?lower_percent ?upper_percent ?source ?subSource ?adjustedNcepReanalysisMonthlyMeanTemp
 ORDER BY ASC(?phenologyObservingProcess)
