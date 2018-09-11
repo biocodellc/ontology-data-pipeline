@@ -10,6 +10,11 @@ from climate.data_fetcher import AIR_DATA_FILE, NOAA_SERVER, fetch_data
 
 
 class ClimateData(object):
+    """
+    This class can be called by the preprocessor.  It is no longer being used
+    in the main processor but is being kept here to show an example of how it
+    can be integrated back into the main codebase.
+    """
     def __init__(self, data_dir):
         air_data_file = os.path.join(data_dir, AIR_DATA_FILE)
 
