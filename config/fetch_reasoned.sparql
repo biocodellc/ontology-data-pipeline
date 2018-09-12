@@ -11,11 +11,11 @@ prefix urn: <urn:>
 # Use the concat/group_concat function to push all plantStructurePresence types into an array within a field.
 # this enables ElasticSearch to index this easily while shrinking output file sizes
 SELECT  
-(?phenologyObservingProcess as ?eventId) ?dayOfYear ?year ?latitude ?longitude ?genus ?specificEpithet ?scientificName ?lower_count ?upper_count ?lower_percent ?upper_percent ?source ?subSource ?adjustedNcepReanalysisMonthlyMeanTemp (group_concat(distinct ?traitType;separator='|') as ?plantStructurePresenceTypes)
+(?phenologyObservingProcess as ?eventId) ?dayOfYear ?year ?latitude ?longitude ?genus ?specificEpithet ?scientificName ?lower_count ?upper_count ?lower_percent ?upper_percent ?source ?subSource (group_concat(distinct ?traitType;separator='|') as ?plantStructurePresenceTypes)
 
 WHERE {    
 	# only look for wholeplant type of plants
-        #?plant a obo:PPO_0000003 . 
+        ?plant a obo:PPO_0000003 . 
 
         ?plant dwc:genus ?genus . 
         OPTIONAL {?plant dwc:specificEpithet ?specificEpithet} . 
@@ -43,7 +43,6 @@ WHERE {
         ?phenologyObservingProcess dwc:decimalLongitude ?longitude .
 	OPTIONAL {?phenologyObservingProcess dc:creator ?source} .
 	OPTIONAL {?phenologyObservingProcess urn:subSource ?subSource} .
-	OPTIONAL {?phenologyObservingProcess dwc:measurementValue ?adjustedNcepReanalysisMonthlyMeanTemp} .
 
 	# Return properties of measurementDatum
         OPTIONAL {?measurementDatum obo:PPO_0000001 ?lower_count} .
@@ -51,5 +50,5 @@ WHERE {
         OPTIONAL {?measurementDatum obo:PPO_0000003 ?lower_percent} .
         OPTIONAL {?measurementDatum obo:PPO_0000004 ?upper_percent} .
 }
-GROUP BY ?phenologyObservingProcess ?dayOfYear ?year ?latitude ?longitude ?genus ?specificEpithet ?scientificName ?lower_count ?upper_count ?lower_percent ?upper_percent ?source ?subSource ?adjustedNcepReanalysisMonthlyMeanTemp
+GROUP BY ?phenologyObservingProcess ?dayOfYear ?year ?latitude ?longitude ?genus ?specificEpithet ?scientificName ?lower_count ?upper_count ?lower_percent ?upper_percent ?source ?subSource 
 ORDER BY ASC(?phenologyObservingProcess)
