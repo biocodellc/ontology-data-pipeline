@@ -1,4 +1,4 @@
-field,defined_by,lower_count_partplant,upper_count_partplant,lower_count,upper_count,notes
+field,defined_by,lower_count_partplant,upper_count_partplant,lower_count_wholeplant,upper_count_wholeplant,notes
 fruits present,{fruit presence},1,,1,,
 expanded leaves present,{unfolded true leaf presence},1,,1,,
 expanding leaves present,{unfolding true leaf presence},1,,1,,

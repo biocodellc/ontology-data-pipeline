@@ -14,6 +14,7 @@ FILE_PREFIX = "herbarium_"
 DATA_FILE = os.path.join(FILE_PREFIX+'_data.csv')
 
 class PreProcessor(AbstractPreProcessor):
+
     def _process_data(self):
         self.descriptions = pd.read_csv(PHENOPHASE_DESCRIPTIONS_FILE, header=0, skipinitialspace=True, dtype='object')
 
@@ -35,8 +36,10 @@ class PreProcessor(AbstractPreProcessor):
 
         data.fillna("", inplace=True)  # replace all null values
 
-        # Create a unique record ID for each observation
-        data['record_id'] = data.apply(lambda x: uuid.uuid4(), axis=1)
+        # Create a UUID for each observation, stored in the record_id field
+        #data['record_id'] = data.apply(lambda x: uuid.uuid4(), axis=1)
+        # Create a simple integer increment for each observation, stored in the record_id field
+        data.insert(0,'record_id',range(1,1+len(data)))
 
         # Capitalize genus
         data['genus'] = data['genus'].str.capitalize()
@@ -51,8 +54,8 @@ class PreProcessor(AbstractPreProcessor):
 
     def _set_defaults(self, row):
         try:
-            row['lower_count'] = self.descriptions[self.descriptions['field'] == row['phenophase_name']]['lower_count'].values[0]
-            row['upper_count'] = self.descriptions[self.descriptions['field'] == row['phenophase_name']]['upper_count'].values[0]
+            row['lower_count_wholeplant'] = self.descriptions[self.descriptions['field'] == row['phenophase_name']]['lower_count_wholeplant'].values[0]
+            row['upper_count_wholeplant'] = self.descriptions[self.descriptions['field'] == row['phenophase_name']]['upper_count_wholeplant'].values[0]
 
             row['lower_count_partplant'] = self.descriptions[self.descriptions['field'] == row['phenophase_name']]['lower_count_partplant'].values[0]
             row['upper_count_partplant'] = self.descriptions[self.descriptions['field'] == row['phenophase_name']]['upper_count_partplant'].values[0]
