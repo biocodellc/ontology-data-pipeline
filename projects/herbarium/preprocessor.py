@@ -47,6 +47,9 @@ class PreProcessor(AbstractPreProcessor):
         # Create ScientificName
         data['scientific_name'] = data['genus'] + ' ' + data['specific_epithet']
 
+        # Specify basis_of_record
+        data['basis_of_record'] = 'PreservedSpecimen'
+
         # Set default lower and upper counts
         data = data.apply(lambda row: self._set_defaults(row), axis=1)
 

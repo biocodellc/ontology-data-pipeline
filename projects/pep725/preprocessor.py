@@ -75,6 +75,7 @@ class PreProcessor(AbstractPreProcessor):
         joined_data['specific_epithet'] = joined_data.apply(
             lambda row: re.sub('^%s' % row['genus'], "", row['species']).strip(), axis=1)
         joined_data['source'] = 'PEP725'
+        joined_data['basis_of_record'] = 'HumanObservation'
 
         return joined_data.rename(columns=COLUMNS_MAP)
 

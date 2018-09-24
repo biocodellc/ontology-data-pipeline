@@ -74,6 +74,7 @@ class PreProcessor(AbstractPreProcessor):
     @staticmethod
     def _transform_data(data):
         data['source'] = 'NEON'
+        data['basis_of_record'] = 'HumanObservation'
         data['genus'] = data.apply(lambda row: row.scientificName.split()[0] if pd.notnull(row.scientificName) else "",
                                    axis=1)
         data['specific_epithet'] = data.apply(

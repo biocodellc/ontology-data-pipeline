@@ -64,6 +64,7 @@ class PreProcessor(AbstractPreProcessor):
 
         # set the source
         df['source'] = 'USA-NPN'
+        df['basis_of_record'] = 'HumanObservation'
         df = df.merge(self.dataset_metadata, left_on='dataset_id', right_on='Dataset_ID', how='left')
 
         # Normalize Date to just Year. we don't need to store actual date because we use only Year + DayOfYear

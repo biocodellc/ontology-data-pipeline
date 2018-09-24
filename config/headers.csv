@@ -1,1 +1,1 @@
-record_id, scientific_name, genus, specific_epithet, year, day_of_year, latitude, longitude, source, sub_source, phenophase_name, lower_count_wholeplant, upper_count_wholeplant, lower_count_partplant, upper_count_partplant, lower_percent, upper_percent
+record_id, scientific_name, genus, specific_epithet, year, day_of_year, latitude, longitude, source, sub_source, phenophase_name, basis_of_record, lower_count_wholeplant, upper_count_wholeplant, lower_count_partplant, upper_count_partplant, lower_percent, upper_percent
