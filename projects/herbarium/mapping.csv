@@ -10,10 +10,12 @@ genus,http://rs.tdwg.org/dwc/terms/genus,partPlant,
 specific_epithet,http://rs.tdwg.org/dwc/terms/specificEpithet,partPlant,
 scientific_name,http://rs.tdwg.org/dwc/terms/scientificName,partPlant,
 basis_of_record,http://rs.tdwg.org/dwc/terms/basisOfRecord,partPlant,
+phenophase_name,http://rs.tdwg.org/dwc/terms/eventRemarks,partPlant
 genus,http://rs.tdwg.org/dwc/terms/genus,wholePlant,
 specific_epithet,http://rs.tdwg.org/dwc/terms/specificEpithet,wholePlant,
 scientific_name,http://rs.tdwg.org/dwc/terms/scientificName,wholePlant,
 basis_of_record,http://rs.tdwg.org/dwc/terms/basisOfRecord,wholePlant,
+phenophase_name,http://rs.tdwg.org/dwc/terms/eventRemarks,wholePlant
 phenophase_name,http://www.w3.org/1999/02/22-rdf-syntax-ns#type,wholePlantStructurePresence,"Using rdf:type indicates the values will be object properties, in this case defined by a list association in rules.csv."
 phenophase_name,http://www.w3.org/1999/02/22-rdf-syntax-ns#type,partPlantStructurePresence,"Using rdf:type indicates the values will be object properties, in this case defined by a list association in rules.csv."
 lower_count_partplant,{lower count},partPlantMeasurementDatum,
