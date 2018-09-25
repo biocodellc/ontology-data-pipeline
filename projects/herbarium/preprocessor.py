@@ -7,6 +7,7 @@ import os
 import multiprocessing
 import pandas as pd
 import math
+import numpy as np
 from preprocessor import AbstractPreProcessor
 
 PHENOPHASE_DESCRIPTIONS_FILE = os.path.join(os.path.dirname(__file__), 'phenophase_descriptions.csv')
@@ -59,9 +60,13 @@ class PreProcessor(AbstractPreProcessor):
         try:
             row['lower_count_wholeplant'] = self.descriptions[self.descriptions['field'] == row['phenophase_name']]['lower_count_wholeplant'].values[0]
             row['upper_count_wholeplant'] = self.descriptions[self.descriptions['field'] == row['phenophase_name']]['upper_count_wholeplant'].values[0]
+            row['lower_percent_wholeplant'] = np.nan
+            row['upper_percent_wholeplant'] = np.nan 
 
             row['lower_count_partplant'] = self.descriptions[self.descriptions['field'] == row['phenophase_name']]['lower_count_partplant'].values[0]
             row['upper_count_partplant'] = self.descriptions[self.descriptions['field'] == row['phenophase_name']]['upper_count_partplant'].values[0]
+            row['lower_percent_partplant'] = np.nan
+            row['upper_percent_partplant'] = np.nan
         except IndexError:
             # thrown if missing phenophase_description in phenophase_descriptions.csv file
             pass

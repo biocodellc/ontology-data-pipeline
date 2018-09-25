@@ -10,45 +10,59 @@ prefix urn: <urn:>
 
 # Use the concat/group_concat function to push all plantStructurePresence types into an array within a field.
 # this enables ElasticSearch to index this easily while shrinking output file sizes
-SELECT  
-(?phenologyObservingProcess as ?eventId) ?dayOfYear ?year ?latitude ?longitude ?genus ?specificEpithet ?scientificName ?lower_count ?upper_count ?lower_percent ?upper_percent ?source ?subSource (group_concat(distinct ?traitType;separator='|') as ?plantStructurePresenceTypes)
+SELECT  (?phenologicalObservingProcess as ?eventId) ?dayOfYear ?year ?latitude ?longitude ?genus ?specificEpithet ?scientificName ?basisOfRecord ?eventRemarks ?lower_count_partplant ?upper_count_partplant ?lower_count_wholeplant ?upper_count_wholeplant ?lower_percent_partplant ?upper_percent_partplant ?lower_percent_wholeplant ?upper_percent_wholeplant ?source ?subSource (group_concat(distinct ?traitTypes;separator='|') as ?plantStructurePresenceTypes)
 
 WHERE {    
-	# only look for wholeplant type of plants
-        ?plant a obo:PPO_0000003 . 
 
-        ?plant dwc:genus ?genus . 
-        OPTIONAL {?plant dwc:specificEpithet ?specificEpithet} . 
-        OPTIONAL {?plant dwc:scientificName ?scientificName} . 
+	# Create a list of plantTraits for wholePlants these will be grouped by in the "GROUP BY" clause
+	# NOTE that in attempting to look for trait types associated with part plants makes this sparql query super SLOW!!
+	# if people need partPlantStructurePresences asserted (really only different for absence data, then we need
+	# to alter this query at this point and look for partPlantStructurePresence Types)
+        ?wholePlantStructurePresence rdf:type ?traitTypes .
 
-	# Join plantStructurePresence to plant
-        ?plantStructurePresence obo:RO_0000080 ?plant .
+	# Do not report namedindividual, not particularly useful in our output
+        FILTER (?traitTypes != <http://www.w3.org/2002/07/owl#NamedIndividual>) .
 
-	# Setup queries for the rdf:type of the plantStructurePresence (trait type) category
-        ?plantStructurePresence rdf:type ?traitType .
+	# The joins here are largely derived from the relations.csv file
+	# since these can be different for different projects we need to think carefully
+	# how to address joins in this section for the different projects.
+	# Using SPARQL property paths is one possible solution
+	?wholePlant rdf:type obo:PO_0000003 .
+        ?partPlant obo:OBI_0000295 ?phenologicalObservingProcess .
+	?phenologicalObservingProcess obo:OBI_0000299 ?partPlantMeasurementDatum .
+	?phenologicalObservingProcess ?p ?partPlantMeasurementDatum .
+	?wholePlantMeasurementDatum obo:PPO_0000014 ?partPlantMeasurementDatum .
+	?wholePlantStructurePresence obo:PPO_0000008 ?wholePlantMeasurementDatum .
+	?wholePlantStructurePresence obo:RO_0000080 ?wholePlant .
+        ?partPlantStructurePresence obo:PPO_0000008 ?partPlantMeasurementDatum .
+        ?partPlantStructurePresence obo:RO_0000080 ?partPlant .
+	?partPlant rdf:type obo:PPO_0000015 .
+	?partPlant obo:PPO_0000015 ?wholePlant .
 
-	# remove declarations of owl:namedIndividual
-	FILTER (?traitType != <http://www.w3.org/2002/07/owl#NamedIndividual>) .
-	#FILTER (?typePlant != <http://www.w3.org/2002/07/owl#NamedIndividual>) .
-        ?plantStructurePresence obo:PPO_0000008 ?measurementDatum .
+	# Plant attributes
+        ?wholePlant dwc:genus ?genus . 
+        OPTIONAL {?wholePlant dwc:specificEpithet ?specificEpithet} . 
+        OPTIONAL {?wholePlant dwc:scientificName ?scientificName} . 
+        OPTIONAL {?wholePlant dwc:basisOfRecord ?basisOfRecord} . 
+        OPTIONAL {?wholePlant dwc:eventRemarks ?eventRemarks} . 
 
-	# Join phenologyObservingProcess to measurementDatum
-        ?measurementDatum obo:OBI_0000312 ?phenologyObservingProcess .
-
-        # Set the type for phenologyObservingProcess and return properties
-        ?phenologyObservingProcess rdf:type obo:PPO_0007004 .
-        ?phenologyObservingProcess dwc:startDayOfYear ?dayOfYear .
-        ?phenologyObservingProcess dwc:year ?year .
-        ?phenologyObservingProcess dwc:decimalLatitude ?latitude .
-        ?phenologyObservingProcess dwc:decimalLongitude ?longitude .
-	OPTIONAL {?phenologyObservingProcess dc:creator ?source} .
-	OPTIONAL {?phenologyObservingProcess urn:subSource ?subSource} .
+        # PhenologicalObservingProcess Attributes
+        ?phenologicalObservingProcess dwc:startDayOfYear ?dayOfYear .
+        ?phenologicalObservingProcess dwc:year ?year .
+        ?phenologicalObservingProcess dwc:decimalLatitude ?latitude .
+        ?phenologicalObservingProcess dwc:decimalLongitude ?longitude .
+	OPTIONAL {?phenologicalObservingProcess dc:creator ?source} .
+	OPTIONAL {?phenologicalObservingProcess urn:subSource ?subSource} .
 
 	# Return properties of measurementDatum
-        OPTIONAL {?measurementDatum obo:PPO_0000001 ?lower_count} .
-        OPTIONAL {?measurementDatum obo:PPO_0000002 ?upper_count} .
-        OPTIONAL {?measurementDatum obo:PPO_0000003 ?lower_percent} .
-        OPTIONAL {?measurementDatum obo:PPO_0000004 ?upper_percent} .
+        OPTIONAL {?partPlantMeasurementDatum obo:PPO_0000001 ?lower_count_partplant} .
+        OPTIONAL {?partPlantMeasurementDatum obo:PPO_0000002 ?upper_count_partplant} .
+        OPTIONAL {?wholePlantMeasurementDatum obo:PPO_0000001 ?lower_count_wholeplant} .
+        OPTIONAL {?wholePlantMeasurementDatum obo:PPO_0000002 ?upper_count_wholeplant} .
+        OPTIONAL {?partPlantMeasurementDatum obo:PPO_0000003 ?lower_percent_partplant} .
+        OPTIONAL {?partPlantMeasurementDatum obo:PPO_0000004 ?upper_percent_partplant} .
+        OPTIONAL {?wholePlantMeasurementDatum obo:PPO_0000003 ?lower_percent_wholeplant} .
+        OPTIONAL {?wholePlantMeasurementDatum obo:PPO_0000004 ?upper_percent_wholeplant} .
 }
-GROUP BY ?phenologyObservingProcess ?dayOfYear ?year ?latitude ?longitude ?genus ?specificEpithet ?scientificName ?lower_count ?upper_count ?lower_percent ?upper_percent ?source ?subSource 
+GROUP BY ?phenologicalObservingProcess ?dayOfYear ?year ?latitude ?longitude ?genus ?specificEpithet ?scientificName ?basisOfRecord ?eventRemarks ?lower_count_partplant ?upper_count_partplant ?lower_count_wholeplant ?upper_count_wholeplant ?lower_percent_partplant ?upper_percent_partplant ?lower_percent_wholeplant ?upper_percent_wholeplant ?source ?subSource 
 ORDER BY ASC(?phenologyObservingProcess)

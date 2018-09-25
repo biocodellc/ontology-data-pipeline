@@ -1,5 +1,0 @@
-subject_entity_alias,predicate,object_entity_alias,notes
-plantStructurePresence,{has quality measurement},measurementDatum,
-plantStructurePresence,{quality of},wholePlant,
-wholePlant,{is_specified_input_of},phenologicalObservingProcess,
-phenologicalObservingProcess,{has_specified_output},measurementDatum,

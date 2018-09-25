@@ -1,0 +1,28 @@
+column,uri,entity_alias,notes
+record_id,http://rs.tdwg.org/dwc/terms/EventID,phenologicalObservingProcess,
+latitude,http://rs.tdwg.org/dwc/terms/decimalLatitude,phenologicalObservingProcess,each column can contain multiple entity aliases where it can appear.  Use comma seperation
+longitude,http://rs.tdwg.org/dwc/terms/decimalLongitude,phenologicalObservingProcess,
+year,http://rs.tdwg.org/dwc/terms/year,phenologicalObservingProcess,
+day_of_year,http://rs.tdwg.org/dwc/terms/startDayOfYear,phenologicalObservingProcess,
+source,http://purl.org/dc/elements/1.1/creator,phenologicalObservingProcess,
+sub_source,urn:subSource,phenologicalObservingProcess,
+genus,http://rs.tdwg.org/dwc/terms/genus,partPlant,
+specific_epithet,http://rs.tdwg.org/dwc/terms/specificEpithet,partPlant,
+scientific_name,http://rs.tdwg.org/dwc/terms/scientificName,partPlant,
+basis_of_record,http://rs.tdwg.org/dwc/terms/basisOfRecord,partPlant,
+phenophase_name,http://rs.tdwg.org/dwc/terms/eventRemarks,partPlant
+genus,http://rs.tdwg.org/dwc/terms/genus,wholePlant,
+specific_epithet,http://rs.tdwg.org/dwc/terms/specificEpithet,wholePlant,
+scientific_name,http://rs.tdwg.org/dwc/terms/scientificName,wholePlant,
+basis_of_record,http://rs.tdwg.org/dwc/terms/basisOfRecord,wholePlant,
+phenophase_name,http://rs.tdwg.org/dwc/terms/eventRemarks,wholePlant
+phenophase_name,http://www.w3.org/1999/02/22-rdf-syntax-ns#type,wholePlantStructurePresence,"Using rdf:type indicates the values will be object properties, in this case defined by a list association in rules.csv."
+phenophase_name,http://www.w3.org/1999/02/22-rdf-syntax-ns#type,partPlantStructurePresence,"Using rdf:type indicates the values will be object properties, in this case defined by a list association in rules.csv."
+lower_count_partplant,{lower count},partPlantMeasurementDatum,
+upper_count_partplant,{upper count},partPlantMeasurementDatum,
+lower_count_wholeplant,{lower count},wholePlantMeasurementDatum
+upper_count_wholeplant,{upper count},wholePlantMeasurementDatum
+lower_percent_partplant,{lower percent},partPlantMeasurementDatum,
+upper_percent_partplant,{upper percent},partPlantMeasurementDatum,
+lower_percent_wholeplant,{lower percent},wholePlantMeasurementDatum
+upper_percent_wholeplant,{upper percent},wholePlantMeasurementDatum

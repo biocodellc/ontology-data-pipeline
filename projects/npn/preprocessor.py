@@ -99,11 +99,15 @@ class PreProcessor(AbstractPreProcessor):
 
         try:
             if row.phenophase_status == 0:
-                row['lower_percent'] = self.descriptions[self.descriptions['field'] == row['phenophase_description']]['lower_percent_absent'].values[0]
-                row['upper_percent'] = self.descriptions[self.descriptions['field'] == row['phenophase_description']]['upper_percent_absent'].values[0]
+                row['lower_percent_partplant'] = self.descriptions[self.descriptions['field'] == row['phenophase_description']]['lower_percent_absent'].values[0]
+                row['upper_percent_partplant'] = self.descriptions[self.descriptions['field'] == row['phenophase_description']]['upper_percent_absent'].values[0]
+                row['lower_percent_wholeplant'] = self.descriptions[self.descriptions['field'] == row['phenophase_description']]['lower_percent_absent'].values[0]
+                row['upper_percent_wholeplant'] = self.descriptions[self.descriptions['field'] == row['phenophase_description']]['upper_percent_absent'].values[0]
             else:
-                row['lower_percent'] = self.descriptions[self.descriptions['field'] == row['phenophase_description']]['lower_percent_present'].values[0]
-                row['upper_percent'] = self.descriptions[self.descriptions['field'] == row['phenophase_description']]['upper_percent_present'].values[0]
+                row['lower_percent_partplant'] = self.descriptions[self.descriptions['field'] == row['phenophase_description']]['lower_percent_present'].values[0]
+                row['upper_percent_partplant'] = self.descriptions[self.descriptions['field'] == row['phenophase_description']]['upper_percent_present'].values[0]
+                row['lower_percent_wholeplant'] = self.descriptions[self.descriptions['field'] == row['phenophase_description']]['lower_percent_present'].values[0]
+                row['upper_percent_wholeplant'] = self.descriptions[self.descriptions['field'] == row['phenophase_description']]['upper_percent_present'].values[0]
         except IndexError:
             # thrown if missing phenophase_description in phenophase_descriptions.csv file
             pass

@@ -96,13 +96,11 @@ class PreProcessor(AbstractPreProcessor):
                 'need to manually insert the correct counts in the intensity_values.csv file.')
 
         # if phenophaseStatus is 'yes' and no phenophaseIntensity, set lower_count = 1
-        df.loc[df.phenophaseIntensity.isnull() & df.phenophaseStatus.str.match('yes', case=False), 'lower_count'] = 1
+        df.loc[df.phenophaseIntensity.isnull() & df.phenophaseStatus.str.match('yes', case=False), 'lower_count_partplant'] = 1
+        df.loc[df.phenophaseIntensity.isnull() & df.phenophaseStatus.str.match('yes', case=False), 'lower_count_wholeplant'] = 1
         # if phenophaseStatus is 'yes' and no phenophaseIntensity, set lower_count = 1
-        df.loc[df.phenophaseIntensity.isnull() & df.phenophaseStatus.str.match('no', case=False), 'upper_count'] = 0
-
-        # JBD removing these two lines as they lead to inconsistent ontology errors
-        #df["lower_count"] = df["lower_count"].fillna(0.0).astype(int)
-        #df["upper_count"] = df["upper_count"].fillna(0.0).astype(int)
+        df.loc[df.phenophaseIntensity.isnull() & df.phenophaseStatus.str.match('no', case=False), 'upper_count_partplant'] = 0
+        df.loc[df.phenophaseIntensity.isnull() & df.phenophaseStatus.str.match('no', case=False), 'upper_count_wholeplant'] = 0
 
         df.fillna('', inplace=True)  # replace all null values
 
