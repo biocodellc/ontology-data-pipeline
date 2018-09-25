@@ -57,7 +57,7 @@ class Triplifier(object):
                 # if there is a specified list for this column & the field contains a defined_by, substitute the
                 # defined_by value for the list field
                 literal_val = True
-                if list_for_column:
+                if list_for_column and uri == "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>":
                     for i in list_for_column:
                         if i['field'] == val and i['defined_by']:
                             val = i['defined_by']
