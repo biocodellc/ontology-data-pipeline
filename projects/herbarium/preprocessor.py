@@ -44,7 +44,6 @@ class PreProcessor(AbstractPreProcessor):
 
         # rename incoming columns
         data = data.rename(index=str,columns={
-            "Source":"source",
             "subSource":"sub_source",
             "institutionCode":"institution_code",
             "collectionCode":"collection_code",
@@ -60,6 +59,9 @@ class PreProcessor(AbstractPreProcessor):
 
         # Specify basis_of_record
         data['basis_of_record'] = 'Preserved Specimen'
+
+        # Specify source as Herbarium
+        data['source'] = 'HERBARIUM'
 
         # Set default lower and upper counts
         data = data.apply(lambda row: self._set_defaults(row), axis=1)
