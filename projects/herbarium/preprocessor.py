@@ -42,6 +42,16 @@ class PreProcessor(AbstractPreProcessor):
         # Create a simple integer increment for each observation, stored in the record_id field
         data.insert(0,'record_id',range(1,1+len(data)))
 
+        # rename incoming columns
+        data = data.rename(index=str,columns={
+            "Source":"source",
+            "subSource":"sub_source",
+            "institutionCode":"institution_code",
+            "collectionCode":"collection_code",
+            "basisOfRecord":"basis_of_record",
+            "species":"specific_epithet",
+            "phenophase_description":"phenophase_name"})
+
         # Capitalize genus
         data['genus'] = data['genus'].str.capitalize()
 
@@ -49,7 +59,7 @@ class PreProcessor(AbstractPreProcessor):
         data['scientific_name'] = data['genus'] + ' ' + data['specific_epithet']
 
         # Specify basis_of_record
-        data['basis_of_record'] = 'PreservedSpecimen'
+        data['basis_of_record'] = 'Preserved Specimen'
 
         # Set default lower and upper counts
         data = data.apply(lambda row: self._set_defaults(row), axis=1)
