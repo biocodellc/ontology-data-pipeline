@@ -5,4 +5,4 @@ partPlantMeasurementDatum,http://purl.obolibrary.org/obo/IAO_0000109,record_id,u
 wholePlant,http://purl.obolibrary.org/obo/PO_0000003,individualID,urn:wholePlant/,
 wholePlantStructurePresence,http://www.w3.org/1999/02/22-rdf-syntax-ns#type,record_id,urn:wholePlantStructurePresence/,rdf:type designation means we intend to pull type values from translationTable. see mapping file
 wholePlantMeasurementDatum,http://purl.obolibrary.org/obo/IAO_0000027,record_id,urn:wholePlantMeasurementDatum/,
-partPlant,http://purl.obolibrary.org/obo/PPO_0000015,individualID,urn:partPlant/,
+partPlant,http://purl.obolibrary.org/obo/PPO_0001053,individualID,urn:partPlant/,

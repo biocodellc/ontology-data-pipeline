@@ -36,7 +36,7 @@ WHERE {
 	?wholePlantStructurePresence obo:RO_0000080 ?wholePlant .
         ?partPlantStructurePresence obo:PPO_0000008 ?partPlantMeasurementDatum .
         ?partPlantStructurePresence obo:RO_0000080 ?partPlant .
-	?partPlant rdf:type obo:PPO_0000015 .
+	?partPlant rdf:type obo:PPO_0001053 .
 	?partPlant obo:PPO_0000015 ?wholePlant .
 
 	# Plant attributes
