@@ -66,21 +66,33 @@ The processing pipeline implements the following steps:
 
 ### Install python
 Reccomended running python version 3.5.1 , installed using [pyenv](https://github.com/pyenv/pyenv)
-[MacOSX installation instructions](macosx.python.installation.md)
 
 The python dependencies are found in `requirements.txt`. These can be installed by running 
 
 ```pip install -r requirements.txt --user```
 
+
+### Installing Python in Mac Environment
+```
+brew install pyenv
+```
+
+Also reccomend using virtual environments, for example:
+```
+pyenv install 3.5.1
+
+brew install pyenv-virtaulenv
+pyenv virtualenv 3.5.1 ppo-pipeline
+
+# this will automatically activate this environment
+# in the directory here
+pyenv local ppo-pipeline
+```
 ### Additional dependencies:
 
 * Java 8
 * [ontopilot](https://github.com/stuckyb/ontopilot) (Will be propted to download during cli exectuion if not found)
 * [query_fetcher](https://github.com/biocodellc/query_fetcher) (Will be propted to download during cli exectuion if not found)
-
-### Running tests, make sure everything works as expected!:
-
-```./pytest.sh```
 
 
 ## Usage

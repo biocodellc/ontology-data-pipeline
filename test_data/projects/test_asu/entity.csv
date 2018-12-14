@@ -1,5 +1,0 @@
-alias,concept_uri,unique_key,identifier_root,notes
-plantStructurePresence,http://www.w3.org/1999/02/22-rdf-syntax-ns#type,record_id,http://n2t.net/ark:/21547/Anl2, setting concept uri to rdf:type means that we intend to use a translation table for values which is set in the mapping file,
-phenologicalObservingProcess,{plant phenological trait},record_id,http://n2t.net/ark:/21547/Anm2,
-measurementDatum,http://purl.obolibrary.org/obo/IAO_0000109,record_id,http://n2t.net/ark:/21547/Ann2,
-wholePlant,http://purl.obolibrary.org/obo/PO_0000003,record_id,http://n2t.net/ark:/21547/Ano2,

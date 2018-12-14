@@ -1,7 +1,0 @@
-field,defined_by,Notes
-Reproductive,{reproductive structure presence},Derived from the measurementOrFAct Value field
-Flowering,{open flower presence},Derived from the measurementOrFAct Value field
-Fruiting,{ripening fruit presence},Derived from the measurementOrFAct Value field
-Budding,{non-dormant leaf bud presence},Derived from the measurementOrFAct Value field
-"Mostly old",{plant structure presence},Derived from the measurementOrFAct Value field
-"mostly young",{plant structure presence},Derived from the measurementOrFAct Value field

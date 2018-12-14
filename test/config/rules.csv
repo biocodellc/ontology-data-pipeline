@@ -1,6 +1,0 @@
-rule,columns,level,list
-UniqueValue,record_id,error,
-RequiredValue,day_of_year|year|latitude|longitude|phenophase_name|record_id,error,
-RequiredValue,source,,
-Integer,year|day_of_year,warning,
-Float,latitude|longitude,error,

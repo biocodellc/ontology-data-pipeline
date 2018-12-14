@@ -1,8 +1,0 @@
-genus,species,observation_id,observation_date,dataset_id,day_of_year,intensity_value,latitude,longitude,phenophase_description,phenophase_status,notes
-Acer,rubrum,1,5/19/11,1,139,More than 10,43.08535,-70.69133,Breaking leaf buds,1,Test a dataset_id setting and intensity value seeting with phenophase_status = 1 (present)
-Acer,rubrum,2,5/19/11,-9999,139,-9999,43.08535,-70.69133,Breaking leaf buds,1,Test no intensity_value phenophase_status = 1 (present)
-Acer,rubrum,3,5/21/11,-9999,141,75-94%,43.08535,-70.69133,Breaking leaf buds,1,Test with percent intensity_value and phenophase_status = 1 (present)
-Acer,rubrum,4,5/19/09,-9999,139,-9999,43.08535,-70.69133,Full flowering (lilac),0,Test with no intensity_value and phenophase_status = 0 (absent)
-Acer,rubrum,5,5/25/09,-9999,145,-9999,43.08535,-70.69133,Leaves,1,Test no intensity_value phenophase_status = 1 (present)
-Acer,rubrum,6,5/25/09,-9999,145,-9999,43.08535,-70.69133,Open flowers (grasses/sedges),0,Test upper_percent_absent default setting in phenophase descriptions
-Acer,rubrum,7,5/25/09,-9999,145,More than 10,43.08535,-70.69133,Increasing leaf size,1,Test force_default_value setting in phenophase_descrptions file by specifying an intensity_value and reading force_default_value is True

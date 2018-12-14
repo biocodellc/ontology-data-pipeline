@@ -1,3 +1,0 @@
-record_id,scientific_name,genus,specific_epithet,year,day_of_year,latitude,longitude,source,phenophase_name
-1,,,,invalid_year,1,-12.99,13.00,source,invalid_name,
-1,,,,2010.00,1.0,,,source,Reproductive,

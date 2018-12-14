@@ -1,5 +1,0 @@
-rule,columns,level,list
-UniqueValue,record_id,error,
-RequiredValue,source|genus|specific_epithet|day_of_year|year|latitude|longitude|phenophase_name|record_id|basis_of_record,error,
-Integer,year|day_of_year|lower_count_partplant|upper_count_partplant|lower_count_wholeplant|upper_count_wholeplant,error,
-Float,latitude|longitude,error,

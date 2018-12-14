@@ -1,9 +1,0 @@
-subject_entity_alias,predicate,object_entity_alias,notes
-partPlantStructurePresence,{has quality datum},partPlantMeasurementDatum,
-partPlantStructurePresence,{quality of},partPlant,
-partPlant,{is_specified_input_of},phenologicalObservingProcess,
-phenologicalObservingProcess,{has_specified_output},partPlantMeasurementDatum,
-wholePlantMeasurementDatum,{generated from},partPlantMeasurementDatum,
-wholePlantStructurePresence, {has quality datum}, wholePlantMeasurementDatum,
-wholePlantStructurePresence,{quality of},wholePlant,
-partPlant,{is or was part of},wholePlant,
