@@ -13,7 +13,7 @@ import pandas as pd
 from .rdf2csv import convert_rdf2csv
 from .splitter import split_file
 from .utils import  loadClass, clean_dir, fetch_ontopilot, fetch_query_fetcher
-from .config import Config, DEFAULT_CONFIG_DIR, DEFAULT_BASE_DIR, DEFAULT_PROJECT_BASE
+from .config import Config
 from .reasoner import run_reasoner
 from .triplifier import Triplifier
 from .validator import Validator
@@ -162,10 +162,10 @@ class Process(object):
         if self.config.preprocessor:
             PreProcessor = loadClass(self.config.preprocessor)
         else:
-            if DEFAULT_PROJECT_BASE is not self.config.project_base:
-                PreProcessor = loadClass("{}.{}.{}".format(self.config.project_base, "preprocessor", "PreProcessor"))
-            else:
-                PreProcessor = loadClass("{}.{}.{}.{}".format("projects", self.config.project, "preprocessor", "PreProcessor"))
+            #if DEFAULT_PROJECT_BASE is not self.config.project_base:
+            #    PreProcessor = loadClass("{}.{}.{}".format(self.config.project_base, "preprocessor", "PreProcessor"))
+            #else:
+            PreProcessor = loadClass("{}.{}.{}.{}".format("projects", self.config.project, "preprocessor", "PreProcessor"))
 
         preprocessor = PreProcessor(self.config.input_dir, self.config.output_csv_dir)
         preprocessor.run()
@@ -202,20 +202,30 @@ def main():
     )
 
     parser.add_argument(
+        "--ontology",
+        help="specify a filepath/url of the ontology to use for reasoning/triplifying",
+        required=True
+    )
+    parser.add_argument(
+        "--headers",
+        help="specify a filepath/url of the headers to use for input and output",
+        required=True
+    )
+
+    parser.add_argument(
         "--config_dir",
-        help="optionally specify the path of the directory containing the configuration files. defaults to " + DEFAULT_CONFIG_DIR
+        help="Specify the path of the directory containing the configuration files.",
+        required=True
     )
     parser.add_argument(
         "--project_base",
-        help="optionally specify where the python modules reside for the preprocessor live.  This is specified in python dotted notation. specifying project_base you will likely want to specify a custom base_dir as well. defaults to " + DEFAULT_PROJECT_BASE
+        help="optionally specify where the python modules reside for the preprocessor live.  This is specified in python dotted notation. specifying project_base you will likely want to specify a custom base_dir as well.",
+        required=True
     )
     parser.add_argument(
         "--base_dir",
-        help="optionally specify the the base directory containing the project files. specifying base_dir you will likely want to specify a custom project-base as well. defaults to " + DEFAULT_BASE_DIR
-    )
-    parser.add_argument(
-        "--ontology",
-        help="optionally specify a filepath/url of the ontology to use for reasoning/triplifying"
+        help="Specify the the base directory containing the project files.",
+        required=True
     )
     parser.add_argument(
         "--preprocessor",

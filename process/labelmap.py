@@ -150,4 +150,7 @@ class LabelMap:
             #     label = annotation_axiom.find('rdfs:label', annotation_axiom.nsmap)
             label = annotation_axiom.find('rdfs:label', root.nsmap)
             if label is not None and label.text:
-                self.add(label.text, annotation_axiom.attrib["{{{}}}about".format(annotation_axiom.nsmap['rdf'])])
+                try:
+                    self.add(label.text, annotation_axiom.attrib["{{{}}}about".format(annotation_axiom.nsmap['rdf'])])
+                except:
+                    print("WARNING:, error parsing label "+label.text)

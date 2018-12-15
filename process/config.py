@@ -14,18 +14,19 @@ QUERY_FETCHER_VERSION = '0.0.1'
 QUERY_FETCHER_REPO_URL = 'http://repo.biocodellc.com/repository/maven-public/org/biocode/query_fetcher/{}/'.format(
     QUERY_FETCHER_VERSION)
 
-DEFAULT_PROJECT_BASE = "projects"
-DEFAULT_BASE_DIR = os.path.join(os.path.dirname(__file__), '../projects')
+#DEFAULT_PROJECT_BASE = "projects"
+#DEFAULT_BASE_DIR = os.path.join(os.path.dirname(__file__), '../projects')
 
 VALID_RULES = ['RequiredValue', 'ControlledVocabulary', 'UniqueValue', 'Integer', 'Float']
-DEFAULT_CONFIG_DIR = os.path.join(os.path.dirname(__file__), "../config")
+#DEFAULT_CONFIG_DIR = os.path.join(os.path.dirname(__file__), "../config")
+
 # NOTE: the default ontology used here is located at github.  Be wary of too many connections
 # to this file at git...may want to specify a local filepath for the ontology instead
-DEFAULT_ONTOLOGY = "https://raw.githubusercontent.com/PlantPhenoOntology/ppo/master/releases/2017-10-20/ppo.owl"
+#DEFAULT_ONTOLOGY = "https://raw.githubusercontent.com/PlantPhenoOntology/ppo/master/releases/2017-10-20/ppo.owl"
 
-DEFAULT_HEADERS = ['record_id', 'scientific_name', 'genus', 'specific_epithet', 'year', 'day_of_year', 'latitude', 'longitude', 'source', 'phenophase_name', 
-                   'lower_count_partplant', 'upper_count_partplant', 'lower_percent_partplant', 'upper_percent_partplant', 
-                   'lower_count_wholeplant', 'upper_count_wholeplant', 'lower_percent_wholeplant', 'upper_percent_wholeplant']
+#DEFAULT_HEADERS = ['record_id', 'scientific_name', 'genus', 'specific_epithet', 'year', 'day_of_year', 'latitude', 'longitude', 'source', 'phenophase_name', 
+#                   'lower_count_partplant', 'upper_count_partplant', 'lower_percent_partplant', 'upper_percent_partplant', 
+#                   'lower_count_wholeplant', 'upper_count_wholeplant', 'lower_percent_wholeplant', 'upper_percent_wholeplant']
 
 
 class Config(object):
@@ -44,20 +45,20 @@ class Config(object):
         for key in kwargs:
             setattr(self, key, kwargs[key])
 
-        if not self.config_dir:
-            self.config_dir = DEFAULT_CONFIG_DIR
-        if not self.project_base:
-            self.project_base = DEFAULT_PROJECT_BASE
-        if not self.base_dir:
-            self.base_dir = os.path.join(DEFAULT_BASE_DIR, self.project)
-        if not self.ontology:
-            self.ontology = DEFAULT_ONTOLOGY
-        if not self.headers:
-            self.headers = DEFAULT_HEADERS
+        #if not self.config_dir:
+        #    self.config_dir = DEFAULT_CONFIG_DIR
+        #if not self.project_base:
+        #    self.project_base = DEFAULT_PROJECT_BASE
+        #if not self.base_dir:
+        #    self.base_dir = os.path.join(DEFAULT_BASE_DIR, self.project)
+#        if not self.ontology:
+#            self.ontology = DEFAULT_ONTOLOGY
+#        if not self.headers:
+#            self.headers = DEFAULT_HEADERS
         if not self.chunk_size:
             self.chunk_size = 50000
 
-        
+         
         self.ontopilot = os.path.join(os.path.dirname(__file__), '../lib/ontopilot-{}.jar'.format(ONTOPILOT_VERSION))
         self.ontopilot_repo_url = ONTOPILOT_REPO_URL
         self.queryfetcher = os.path.join(os.path.dirname(__file__), '../lib/query_fetcher-{}.jar'.format(QUERY_FETCHER_VERSION))
@@ -92,7 +93,7 @@ class Config(object):
 
         self.lists = {}
         self.rules = []
-        self._add_default_rules()
+        #self._add_default_rules()
         self._parse_rules()
 
         self.entities = []
@@ -188,23 +189,23 @@ class Config(object):
                         r['defined_by'] = self._get_uri_from_label(r['defined_by'])
                         self.lists[file_name].append(r)
 
-    def _add_default_rules(self):
-        list_name = 'phenophase_descriptions.csv'
-        self.rules.append({
-            'rule': 'ControlledVocabulary',
-            'columns': ['phenophase_name'],
-            'level': 'error',
-            'list': list_name
-        })
-
-        self._parse_list(list_name)
+    #def _add_default_rules(self):
+    #    list_name = 'phenophase_descriptions.csv'
+    #    self.rules.append({
+    #        'rule': 'ControlledVocabulary',
+    #        'columns': ['phenophase_name'],
+    #        'level': 'error',
+    #        'list': list_name
+    #    })
+#
+    #        self._parse_list(list_name)
 
     def _parse_entities(self):
         """
         Parse entity.csv file. Used to define the entities for triplifying
         Expected columns are: alias,concept_uri,unique_key,identifier_root
         """
-        file = os.path.join(self.base_dir, 'entity.csv')
+        file = os.path.join(self.config_dir, 'entity.csv')
 
         if not os.path.exists(file):
             raise RuntimeError("entity.csv file missing from configuration directory")
