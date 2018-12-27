@@ -14,14 +14,20 @@ def clean_dir(dir):
     os.makedirs(dir)
 
 
-def loadClass(python_path):
+def loadClass(python_path,class_name):
     """
     dynamically loads a class given a dotted python path
     :param python_path:
     :return:
     """
-    module_name, class_name = python_path.rsplit('.', 1)
-    mod = importlib.import_module(module_name)
+    # old code
+    #module_name, class_name = python_path.rsplit('.', 1)
+    #mod = importlib.import_module(module_name)
+    #return getattr(mod, class_name)
+
+    spec = importlib.util.spec_from_file_location(class_name, python_path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
     return getattr(mod, class_name)
 
 
