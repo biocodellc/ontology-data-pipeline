@@ -18,23 +18,20 @@ class AbstractPreProcessor(object):
         input_dir: The directory containing the input file to process
         output_dir: The directory to write the processed data to.
         output_file: The file path for the processed data csv
-        headers: The columns the output_file_path attribute will contain
+        headers: Read in the headers from the config/headers.csv file
 
 
     Abstract Methods:
         __process_data: This method is called from the run method and is where the actual data processing should be done.
-            See the headers attribute for the columns expected to be written to the output_file attribute.
 
     The __input_dir is available as a private class attribute.
     """
-    headers = ['record_id', 'individualID', 'scientific_name', 'genus', 'specific_epithet', 'year', 'day_of_year', 'latitude',
-               'longitude', 'source', 'sub_source', 'phenophase_name', 'basis_of_record', 'lower_count_partplant', 
-               'upper_count_partplant', 'lower_count_wholeplant', 'upper_count_wholeplant', 'lower_percent_partplant', 'upper_percent_partplant', 'lower_percent_wholeplant', 'upper_percent_wholeplant']
 
-    def __init__(self, input_dir, output_dir):
+    def __init__(self, input_dir, output_dir, headers_file):
         self.input_dir = input_dir
         self.output_dir = output_dir
         self.output_file = os.path.join(output_dir, 'data.csv')
+        self.headers = headers_file
 
     def run(self):
         self.__clean()
@@ -44,6 +41,7 @@ class AbstractPreProcessor(object):
         self._process_data()
 
     def _write_headers(self):
+        #print(self.headers_file)
         with open(self.output_file, 'w') as f:
             writer = csv.writer(f)
             writer.writerow(self.headers)

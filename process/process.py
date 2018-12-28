@@ -18,6 +18,7 @@ from .reasoner import run_reasoner
 from .triplifier import Triplifier
 from .validator import Validator
 
+
 """process.Process: provides entry point main()."""
 __version__ = "0.1.0"
 
@@ -34,14 +35,12 @@ class Process(object):
         self.validator = Validator(config)
 
     def run(self):
-        print('step1')
         fetch_ontopilot(self.config.ontopilot, self.config.ontopilot_repo_url)
         fetch_query_fetcher(self.config.queryfetcher, self.config.queryfetcher_repo_url)
-        print('step2')
 
         clean_dir(self.config.output_unreasoned_dir)
         clean_dir(self.config.output_reasoned_dir)
-        print('step3')
+
         if self.config.reasoned_sparql:
             clean_dir(self.config.output_reasoned_csv_dir)
 
@@ -50,7 +49,6 @@ class Process(object):
         else:
             self._triplify_data()
 
-        print('step4')
         self._reason_all()
 
         print('step5')
@@ -169,7 +167,7 @@ class Process(object):
         else:
             PreProcessor = loadClass(os.path.join(self.config.project_base, self.config.project, "preprocessor.py"), "PreProcessor")
 
-        preprocessor = PreProcessor(self.config.input_dir, self.config.output_csv_dir)
+        preprocessor = PreProcessor(self.config.input_dir, self.config.output_csv_dir, self.config.headers)
         preprocessor.run()
 
         return preprocessor.output_file

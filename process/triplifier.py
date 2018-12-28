@@ -76,12 +76,18 @@ class Triplifier(object):
 
         # format and print all triples describing relations
         for relation in self.config.relations:
-            subject_entity = self.config.get_entity(relation['subject_entity_alias'])
-            object_entity = self.config.get_entity(relation['object_entity_alias'])
-            s = "<{}{}>".format(subject_entity['identifier_root'], self._get_value(row, subject_entity['unique_key']))
-            p = "<{}>".format(relation['predicate'])
-            o = "<{}{}>".format(object_entity['identifier_root'], self._get_value(row, object_entity['unique_key']))
-            row_triples.append("{} {} {}".format(s, p, o))
+            try:
+                subject_entity = self.config.get_entity(relation['subject_entity_alias'])
+                object_entity = self.config.get_entity(relation['object_entity_alias'])
+            
+                s = "<{}{}>".format(subject_entity['identifier_root'], self._get_value(row, subject_entity['unique_key']))
+                p = "<{}>".format(relation['predicate'])
+                o = "<{}{}>".format(object_entity['identifier_root'], self._get_value(row, object_entity['unique_key']))
+                row_triples.append("{} {} {}".format(s, p, o))
+            except:
+                #TODO: raise proper errors and exit script
+                print("Error assigning relations between a subject and an object.  "
+                "Check to be sure the relation names map to entity names")
 
         return row_triples
 
@@ -148,13 +154,13 @@ class Triplifier(object):
         if column in self.integer_columns:
             coerce_integer = True
 
-        val = row_data[column]
 
         # need to perform coercion here as pandas can't store ints along floats and strings. The only way to coerce
         # to ints is to drop all strings and null values. We don't want to do this in the case of a warning.
         if coerce_integer:
             return int(float(val)) if re.fullmatch("[+-]?\d+(\.0+)?", str(val)) else val
 
+        val = str(row_data[column])
         return val
 
     @staticmethod
