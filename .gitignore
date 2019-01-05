@@ -1,0 +1,4 @@
+.cache/*
+.python-version
+lib/*
+**/__pycache__/*
