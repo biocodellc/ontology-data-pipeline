@@ -20,7 +20,7 @@ def convert_rdf2csv(input_file, output_dir, sparql_file, query_fetcher_path):
     filename = str(stdout.decode('utf-8')).replace('writing ','').replace('\n','').lstrip()
 
     if not os.path.isfile(filename):
-        raise RuntimeError("Failed to find filename from query_fetcher {}".format(filename))
+        raise RuntimeError("Could not find output file from query_fetcher.  You can isolate the process and debug using: " +subprocess.list2cmdline(cmd))
 
     # with process.stdout:
     #     for line in iter(process.stdout.readline, b''):
