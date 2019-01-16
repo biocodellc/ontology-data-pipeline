@@ -182,7 +182,7 @@ class DataValidator(object):
 
             # returns rows where value isn't an int, ignoring empty values
             invalid_data = self.data[self.data[col].apply(
-                lambda x: False if not x or pd.isnull(x) or re.fullmatch("[+-]?\d+(\.0+)?", str(x)) else True
+                lambda x: False if not x or pd.isnull(x) or re.fullmatch(r"[+-]?\d+(\.0+)?", str(x)) else True
             )]
 
             self.invalid_data = self.invalid_data.append(invalid_data.drop(self.invalid_data.index, errors='ignore'))
@@ -196,7 +196,7 @@ class DataValidator(object):
 
     def _float_rule(self, columns, error_level):
         # This will convert all numbers to floats if possible, otherwise return a the value
-        mapper = lambda x: float(x) if re.fullmatch("[+-]?\d+(\.\d+)?", str(x)) else x
+        mapper = lambda x: float(x) if re.fullmatch(r"[+-]?\d+(\.\d+)?", str(x)) else x
 
         valid = True
 

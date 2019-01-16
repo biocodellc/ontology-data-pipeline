@@ -2,3 +2,6 @@
 .python-version
 lib/*
 **/__pycache__/*
+**/*.pyc
+*.spec
+build/*

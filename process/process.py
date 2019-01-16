@@ -8,6 +8,7 @@ import math
 import multiprocessing
 from itertools import repeat
 
+import numpy
 import pandas as pd
 
 from .rdf2csv import convert_rdf2csv

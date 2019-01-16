@@ -160,15 +160,15 @@ class Triplifier(object):
         # need to perform coercion here as pandas can't store ints along floats and strings. The only way to coerce
         # to ints is to drop all strings and null values. We don't want to do this in the case of a warning.
         if coerce_integer:
-            return int(float(val)) if re.fullmatch("[+-]?\d+(\.0+)?", str(val)) else val
+            return int(float(val)) if re.fullmatch(r"[+-]?\d+(\.0+)?", str(val)) else val
 
         return val
 
     @staticmethod
     def _get_type(val):
-        if re.fullmatch("[+-]?\d+", str(val)):
+        if re.fullmatch(r"[+-]?\d+", str(val)):
             return 'integer'
-        elif re.fullmatch("[+-]?\d+\.\d+", str(val)):
+        elif re.fullmatch(r"[+-]?\d+\.\d+", str(val)):
             return 'float'
         else:
             return 'string'

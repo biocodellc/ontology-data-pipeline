@@ -10,7 +10,7 @@ You can begin by forking this repository and installing on your laptop or server
   * [ovt-data-pipeline](https://github.com/futres/ovt-data-pipeline) a data pipeline for processing vertebrate trait measurements
 
 ## Installation
-Reccomended running python version 3.5.1 , installed using [pyenv](https://github.com/pyenv/pyenv)
+Reccomended running python version 3.7.2 , installed using [pyenv](https://github.com/pyenv/pyenv)
 
 The ontology-data-pipeline typically will need to run with another repository that contains configuration
 files.  Here, we offer an example of installing the ontology-data-pipeline environment in conjunction with
@@ -40,11 +40,11 @@ cd ontology-data-pipeline
 
 # First make sure you pyenv installed.  If the following steps fail, see: https://github.com/pyenv/pyenv
 eval "$(pyenv init -)"
-pyenv install 3.5.1
-pyenv local 3.5.1
+pyenv install 3.7.2
+pyenv local 3.7.2
 
 # Verify that the proper python version is running:
-# the following command should output Python 3.5.1
+# the following command should output Python 3.7.2
 python -V
 
 # install libraries
@@ -60,7 +60,7 @@ pytest
 
 #  Change into the ovt data pipeline directory
 cd ../ovt-data-pipeline
-pyenv local 3.5.1
+pyenv local 3.7.2
 
 # At this point you can follow the instructions for the ovt-data-pipeline (or other repository)
 ```
