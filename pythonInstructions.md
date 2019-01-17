@@ -28,6 +28,8 @@ pyenv local 3.7.2
 
 # install virtualenv if necessary
 apt-get install python-virtualenv
+# or...
+pip install virtualenv
 
 # setup your virtualenvironment directory if necessary
 mkdir /home/myusername/virtualenvironment
