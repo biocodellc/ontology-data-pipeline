@@ -1,6 +1,6 @@
 # A high-throughput ontology-based pipeline for data integration
 
-A flexible, scalable pipeline for integration of observation data from multiple sources. The code is written to be adaptable to all kinds of data, ontologies, or reasoning profiles, and output is compatible with any type of storage technology.  This codebase is designed to run in coordination with a specified ontology, written using [OWL](https://www.w3.org/OWL/). 
+A flexible, scalable pipeline for integration and alignment of multiple data sources. The code is written to be adaptable to all kinds of data, ontologies, or reasoning profiles, and output is compatible with any type of storage technology.  This codebase is designed to run in coordination with a specified ontology, written using [OWL](https://www.w3.org/OWL/). 
 
 ## Getting started
 
