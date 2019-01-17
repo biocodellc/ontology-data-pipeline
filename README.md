@@ -30,7 +30,7 @@ cd ontology-data-pipeline
 pip install -r requirements
 
 # verify that the tests run
-pytest
+python -m pytest
 
 # If the tests pass, you can then proceed to setting up the configuration repository...
 cd ..
