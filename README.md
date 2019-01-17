@@ -1,6 +1,6 @@
 # A high-throughput ontology-based pipeline for data integration
 
-A flexible, scalable pipeline for integration of observation data from multiple sources. Little or no programming is required to adapt the pipeline for use with different kinds of data, ontologies, or reasoning profiles, and output is compatible with any type of storage technology. 
+A flexible, scalable pipeline for integration of observation data from multiple sources. The code is written to be adaptable to all kinds of data, ontologies, or reasoning profiles, and output is compatible with any type of storage technology.  This codebase is designed to run in coordination with a specified ontology, written using [OWL](https://www.w3.org/OWL/). 
 
 ## Getting started
 
@@ -10,24 +10,19 @@ You can begin by forking this repository and installing on your laptop or server
   * [ovt-data-pipeline](https://github.com/futres/ovt-data-pipeline) a data pipeline for processing vertebrate trait measurements
 
 ## Installation
-Reccomended running python version 3.7.2 
+The pipeline has been tested and run using several versions of python.  The current requirements file runs well with python 3.7.2 and so we reccomend you start with that version of python.
+
 Visit our [python instructions](pythonInstructions.md) for installation instructions with python, if you need it.
 
-The ontology-data-pipeline typically will need to run with another repository that contains configuration
-files.  Here, we offer an example of installing the ontology-data-pipeline environment in conjunction with
-the ovt-data-pipeline codebase.  While we use the ovt-data-pipeline codebase as an example here, you may 
-also create your own repository for your own sources.  If you want to create your own pipeline environment, we
-reccomend forking the ovt-data-pipeline or the ppo-data-pipeline configuration and starting with that.  It will
-make configuration much easier for your new project.
+The ontology-data-pipeline typically will need to run with another repository that contains configuration files.  Here, we offer an example of installing the ontology-data-pipeline environment in conjunction with the [ovt-data-pipeline codebase](https://github.com/biocodellc/ontology-data-pipeline).  While we use the ovt-data-pipeline codebase as an example here, you may  also create your own repository for your own sources.  If you want to create your own pipeline environment, we reccomend forking the ovt-data-pipeline or the ppo-data-pipeline configuration and starting with that.  It will make configuration much easier for your new project.
 
 ```
 # create a root directory to hold code for our projects
 mkdir pipeline
 cd pipeline
+
 # clone the ontology-data-pipeline
 git clone https://github.com/biocodellc/ontology-data-pipeline.git
-# for example, lets assume we are going to run the ovt-data-pipeline repository
-git clone https://github.com/futres/ovt-data-pipeline.git
 
 cd ontology-data-pipeline
 
@@ -37,7 +32,12 @@ pip install -r requirements
 # verify that the tests run
 pytest
 
-# If the tests path, you can follow the instructions for the ovt-data-pipeline (or other repository)
+# If the tests pass, you can then proceed to setting up the configuration repository...
+cd ..
+git clone https://github.com/futres/ovt-data-pipeline.git
+cd ovt-data-pipeline
+# continue from there.
+
 ```
 
 ### Additional dependencies:
