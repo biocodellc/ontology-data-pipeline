@@ -28,6 +28,8 @@ pyenv local 3.7.2
 
 # install virtualenv if necessary
 apt-get install python-virtualenv
+# or...
+pip install virtualenv
 
 # setup your virtualenvironment directory if necessary
 mkdir /home/myusername/virtualenvironment
@@ -35,6 +37,9 @@ mkdir /home/myusername/virtualenvironment
 # create the virtualenvironment
 virtualenv --python=/home/myusername/.pyenv/versions/3.7.2/bin/python ~/virtualenvironment/ontology-data-pipeline
 source ~/virtualenvironment/ontology-data-pipeline/bin/activate
+
+# you may want to add the following line to your .bashrc:
+alias ontology-data-pipeline='source ~/virtualenvironment/ontology-data-pipeline/bin/activate'
 ```
 You should see a prompt like: ```(ontology-data-pipeline) myusername@myhost:$```
 
