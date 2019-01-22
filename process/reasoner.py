@@ -2,6 +2,7 @@
 import logging
 import subprocess
 import os
+import re
 
 CUR_DIR = os.path.join(os.path.dirname(__file__))
 
@@ -18,7 +19,11 @@ def run_reasoner(input_file, output_file, config_file, ontopilot_path):
     stdout, stderr = proc.communicate()
 
     # take filename from stdout from process, decode and clean up output
-    output = str(stdout.decode('utf-8')).replace('writing ','').replace('\n','').lstrip()
+    output = str(stdout.decode('utf-8')).replace('writing ','').replace('\n','').replace(CUR_DIR,'').lstrip()
 
     if not os.path.exists(output_file):
         raise RuntimeError("Failed to perform reasoning on {}".format(input_file) + ".  " + output)
+
+    # provide docker friendly output (this way user looks for file in relative path home environment instead of docker mount)
+    cleanfilename = re.sub('^%s' % '/process/', '', output_file)
+    logging.info('reasoned output at ' + cleanfilename)

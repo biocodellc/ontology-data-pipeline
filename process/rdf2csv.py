@@ -3,6 +3,7 @@ import logging
 import subprocess
 import fileinput
 import os
+import re
 
 
 def convert_rdf2csv(input_file, output_dir, sparql_file, query_fetcher_path):
@@ -22,6 +23,7 @@ def convert_rdf2csv(input_file, output_dir, sparql_file, query_fetcher_path):
     if not os.path.isfile(filename):
         raise RuntimeError("Could not find output file from query_fetcher.  You can isolate the process and debug using: " +subprocess.list2cmdline(cmd))
 
+
     # with process.stdout:
     #     for line in iter(process.stdout.readline, b''):
     #         logging.debug(line)
@@ -36,4 +38,9 @@ def convert_rdf2csv(input_file, output_dir, sparql_file, query_fetcher_path):
 
     fileinput.close()
 
+
     logging.info(stdout)
+
+    # provide docker friendly output (this way user looks for file in relative path home environment instead of docker mount)
+    cleanfilename = re.sub('^%s' % '/process/', '', filename)
+    logging.info('reasoned_csv output at ' + cleanfilename)
