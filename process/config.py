@@ -4,6 +4,7 @@ import os
 import csv
 import re
 import rfc3987
+import pandas as pd
 
 from .labelmap import LabelMap
 
@@ -51,7 +52,6 @@ class Config(object):
         if not self.chunk_size:
             self.chunk_size = 50000
 
-         
         self.ontopilot = os.path.join(os.path.dirname(__file__), '../lib/ontopilot-{}.jar'.format(ONTOPILOT_VERSION))
         self.ontopilot_repo_url = ONTOPILOT_REPO_URL
         self.queryfetcher = os.path.join(os.path.dirname(__file__), '../lib/query_fetcher-{}.jar'.format(QUERY_FETCHER_VERSION))
@@ -296,12 +296,16 @@ class Config(object):
 
         return newdef
 
+    # read the mapping.csv file and convert to a list to use as column headers
+    # This replaces the need for a separate headers.csv file
     def _parse_headers(self):
-        file = os.path.join(self.config_dir, 'headers.csv')
+        file = os.path.join(self.config_dir, 'mapping.csv')
         if os.path.exists(file):
-            with open(file) as f:
-                reader = csv.reader(f, skipinitialspace=True)
-                self.headers = next(reader)
+        #    with open(file) as f:
+        #        reader = csv.reader(f, skipinitialspace=True)
+        #        self.headers = next(reader)
+            df = pd.read_csv(file)
+            self.headers = df['column'].unique().tolist()
 
     def _find_sparql(self):
         self.reasoned_sparql = os.path.join(self.config_dir, 'fetch_reasoned.sparql')

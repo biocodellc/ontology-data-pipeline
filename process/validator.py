@@ -25,8 +25,8 @@ class Validator(object):
         self._init_tracker()  # to track unique values across multiple files
         self.lock = manager.RLock()
 
-        with open(config.invalid_data_file, 'w') as f:
-            csv.writer(f).writerow(config.headers)
+        with open(self.config.invalid_data_file, 'w') as f:
+            csv.writer(f).writerow(self.config.headers)
 
     def validate(self, data_frame):
         return DataValidator(data_frame, self.config, self.unique_values_tracker, self.lock).validate()
