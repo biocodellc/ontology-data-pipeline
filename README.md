@@ -10,7 +10,7 @@ You can begin by either 1) forking this repository and installing on your laptop
   * [ovt-data-pipeline](https://github.com/futres/ovt-data-pipeline) a data pipeline for processing vertebrate trait measurements
 
 ## Installation
-The pipeline has been tested and run using several versions of python.  The current requirements file runs well with python 3.7.2 and so we reccomend you start with that version of python.
+The pipeline has been tested and run using several versions of python.  The current requirements file runs well with python 3.6.8 and so we reccomend you start with that version of python.
 
 Visit our [python instructions](pythonInstructions.md) for installation instructions with python, if you need it.
 
@@ -26,7 +26,7 @@ git clone https://github.com/biocodellc/ontology-data-pipeline.git
 
 cd ontology-data-pipeline
 
-# Install libraries (make sure you have python 3.7.2 installed)
+# Install libraries (make sure you have python 3.6.8 installed)
 pip install -r requirements
 
 # verify that the tests run
