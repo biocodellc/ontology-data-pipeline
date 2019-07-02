@@ -12,7 +12,7 @@ def run_reasoner(input_file, output_file, config_file, ontopilot_path):
 
     cmd = ['java', '-jar', ontopilot_path, '-i', input_file, '-o', output_file, '-c', config_file, 'inference_pipeline']
 
-    logging.debug("running reasonder with: ")
+    logging.debug("running reasoner with: ")
     logging.debug(subprocess.list2cmdline(cmd))
 
     proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
