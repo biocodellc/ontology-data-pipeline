@@ -77,6 +77,9 @@ class Process(object):
             if file.endswith(".ttl"):
                 files.append(file)
 
+        if (num_processes < 1)
+            num_processes = 1
+
         with multiprocessing.Pool(processes=num_processes) as pool:
             pool.starmap(self._csv2rdf, zip(files))
 
