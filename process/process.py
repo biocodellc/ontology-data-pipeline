@@ -57,7 +57,7 @@ class Process(object):
 
     def _reason_all(self):
         num_processes = math.floor(self.config.num_processes / 2)
-        if num_processes < 1:
+        if (num_processes < 1):
             num_processes = 1
 
         for root, dirs, files in os.walk(self.config.output_unreasoned_dir):
@@ -77,7 +77,7 @@ class Process(object):
             if file.endswith(".ttl"):
                 files.append(file)
 
-        if (num_processes < 1)
+        if (num_processes < 1):
             num_processes = 1
 
         with multiprocessing.Pool(processes=num_processes) as pool:
