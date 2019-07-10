@@ -59,12 +59,19 @@ class Triplifier(object):
                 # if there is a specified list for this column & the field contains a defined_by, substitute the
                 # defined_by value for the list field
                 literal_val = True
+
                 if list_for_column and "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" in uri:
                     for i in list_for_column:
                         if i['field'] == val and i['defined_by']:
                             val = i['defined_by']
                             literal_val = False
                             break
+
+                # if this is not a list but URI specified is rdf:type for mapping column then we assume this is object Property
+                # and attempt to convert 
+                elif "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" in uri:
+                    val = self.config._get_uri_from_label(val)
+                    literal_val = False
 
                 # format and print all of the instance data triples
                 if (not isNull(val)):
@@ -155,7 +162,11 @@ class Triplifier(object):
         if column in self.integer_columns:
             coerce_integer = True
 
-        val = str(row_data[column])
+        # TODO: This line breaks in certain situations. Workaround for now: return an empty string on exception
+        try:
+            val = str(row_data[column])
+        except:
+            return ''
 
         # need to perform coercion here as pandas can't store ints along floats and strings. The only way to coerce
         # to ints is to drop all strings and null values. We don't want to do this in the case of a warning.
