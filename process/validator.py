@@ -40,8 +40,7 @@ class Validator(object):
 
 class DataValidator(object):
     """
-    performs basic data validation. Ensures that the data adheres to the specified rules and contains all of the columns
-    specified in the config.headers
+    performs basic data validation. Ensures that the data adheres to the specified rules
     """
 
     def __init__(self, df, config, unique_values_tracker, lock):
@@ -52,17 +51,7 @@ class DataValidator(object):
         self.lock = lock
 
     def validate(self):
-        self._validate_columns()
         return self._validate_data()
-
-    def _validate_columns(self):
-        data_columns = self.data.columns.values.tolist()
-
-        for col in self.config.headers:
-            if col not in data_columns:
-                raise InvalidData("Missing required column: `{}`".format(col))
-
-        return True
 
     def _validate_data(self):
         valid = True
@@ -152,6 +141,7 @@ class DataValidator(object):
                     valid = False
 
         return valid
+
 
     def _controlled_vocab_rule(self, columns, error_level, list_name):
         valid = True
