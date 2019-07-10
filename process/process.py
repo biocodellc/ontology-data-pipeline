@@ -178,20 +178,22 @@ class Process(object):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="PPO data pipeline cmd line application.",
+        description="ontology data pipeline command line application.",
         epilog="As an alternative to the commandline, params can be placed in a file, one per line, and specified on "
                "the commandline like '%(prog)s @params.conf'.",
         fromfile_prefix_chars='@')
 
     parser.add_argument(
-        "project",
+        "--project",
         help="This is the name of the directory containing the project specific files. All project config directories" +
-             "must be placed in the `projects` directory."
+             "must be placed in the `projects` directory.",
+        dest="project"
     )
 
     parser.add_argument(
-        "input_dir",
-        help="path of the directory containing the data to process"
+        "--input_dir",
+        help="path of the directory containing the data to process",
+        dest="input_dir"
     )
 
     parser.add_argument(
@@ -210,8 +212,9 @@ def main():
     )
 
     parser.add_argument(
-        "project_base",
-        help="Specify where the python modules reside for the preprocessor live.  This is specified in python dotted notation.  The base_dir (base directory) is set using the project_base with a directory name for the project"
+        "--project_base",
+        help="Specify where the python modules reside for the preprocessor live.  This is specified in python dotted notation.  The base_dir (base directory) is set using the project_base with a directory name for the project",
+        dest="project_base"
     )
 
     parser.add_argument(
