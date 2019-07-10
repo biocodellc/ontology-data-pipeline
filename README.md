@@ -7,7 +7,7 @@ A flexible, scalable pipeline for integration and alignment of multiple data sou
 You can begin by either 1) forking this repository and installing on your laptop or server, or 2) using our [ontology-data-pipeline docker repository](https://cloud.docker.com/u/jdeck88/repository/docker/jdeck88/ontology-data-pipeline) to eliminate library and dependency headaches (see the [ovt-data-pipeline](https://github.com/futres/ovt-data-pipeline)) repository for information on how to implement docker and an ontology-data-pipeline project.  The next step is familiarizing yourself with the [configuration files](https://github.com/biocodellc/ontology-data-pipeline/blob/master/README.md#config-files) and reading through the documentation on this page.  The configuration files themselves should be hosted in a different repository than this one.  Examples of two implementations of the ontology-data-pipeline are:
  
   * [ppo-data-pipeline](https://github.com/biocodellc/ppo-data-pipeline) a data pipeline for processing plant phenology observations
-  * [ovt-data-pipeline](https://github.com/futres/ovt-data-pipeline) a data pipeline for processing vertebrate trait measurements
+  * [fovt-data-pipeline](https://github.com/futres/fovt-data-pipeline) a data pipeline for processing vertebrate trait measurements
 
 ## Installation
 The pipeline has been tested and run using several versions of python.  The current requirements file runs well with python 3.6.8 and so we reccomend you start with that version of python.
@@ -34,8 +34,8 @@ python -m pytest
 
 # If the tests pass, you can then proceed to setting up the configuration repository...
 cd ..
-git clone https://github.com/futres/ovt-data-pipeline.git
-cd ovt-data-pipeline
+git clone https://github.com/futres/fovt-data-pipeline.git
+cd fovt-data-pipeline
 # continue from there.
 
 ```
@@ -243,23 +243,23 @@ The following files are required:
 
 ##### <a name="entity.csv"></a>
 
-1. `entity.csv` (found in each project directory) - This file specifies the entities to create when triplifying. The file expects the following columns:
+1. `entity.csv` (found in each project directory) - This file specifies the entities (instances of classes) to create when triplifying. The file expects the following columns:
 
     * `alias`
         
-        The name used to refer to the entity
+        The name used to refer to the entity. This is usually a shortened version of the class label.
         
     * `concept_uri`
     
-        The uri which defines this entity
+        The uri which defines this entity (class).
         
     * `unique_key`
     
-        The column used to uniquely identify the entity
+        The column used to uniquely identify the entity. Whenever there is a unique value for the property specified by "unique key", a new instance will be created.
         
     * `identifier_root`
     
-        The identifier root for each unique entity. This is typically an [BCID](http://biscicol.org) identifier
+        The identifier root for each unique entity (instance created). This is typically an [BCID](http://biscicol.org) identifier
     
 ##### <a name="mapping.csv"></a>
 2. `mapping.csv` (found in each project directory)
@@ -270,11 +270,11 @@ The following files are required:
         
     * `uri`
     
-        The uri which defines this column
+        The uri which defines this column. These generally are data properties.
         
     * `entity_alias`
     
-        The alias of the entity this column is a property of
+        The alias of the entity (from entity.csv) this column is a property of
         
 ##### <a name="relations.csv"></a>
 3. `relations.csv` (found in each project directory)
@@ -289,9 +289,11 @@ The following files are required:
         
     * `object_entity_alias`
     
-        The alias of the entity which is the object of this relationship       
+        The alias of the entity which is the object of this relationship 
         
-4. `excluded_types.csv` - Used by ontopilot
+ The terms in this file come from the source ontology.
+        
+4. `excluded_types.csv` - Used by ontopilot to specify the ontology classes for which instances will NOT be created during reasoning. You can choose to exlude a class or its ancestors or both. This prevents the creation of unneeded instances for root level classes on which no one is likely to query.
 
 5. `reasoner.conf` - ontopilot inferencing configuration file
 
