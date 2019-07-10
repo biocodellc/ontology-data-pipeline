@@ -10,7 +10,7 @@ from .labelmap import LabelMap
 
 # We use the Sonatype Nexus Repository Manager to store libraries
 #ONTOPILOT_VERSION = '2019-01-15'
-ONTOPILOT_VERSION = '2017-08-04'
+ONTOPILOT_VERSION = '2019-07-10'
 ONTOPILOT_REPO_URL = 'http://repo.biocodellc.com/repository/3rd-party/org/biocode/ontopilot/{}/'.format(
     ONTOPILOT_VERSION)
 QUERY_FETCHER_VERSION = '0.0.1'
@@ -162,6 +162,7 @@ class Config(object):
 
         self.rules.extend(rules)
 
+
     def _parse_list(self, file_name):
         """
         Parse list_name.csv file. The file name is specified in the list column of the rules.csv file and contains the
@@ -302,9 +303,9 @@ class Config(object):
     def _parse_headers(self):
         file = os.path.join(self.config_dir, 'mapping.csv')
         if os.path.exists(file):
-        #    with open(file) as f:
-        #        reader = csv.reader(f, skipinitialspace=True)
-        #        self.headers = next(reader)
+            with open(file) as f:
+                reader = csv.reader(f, skipinitialspace=True)
+                self.headers = next(reader)
             df = pd.read_csv(file)
             self.headers = df['column'].unique().tolist()
 
