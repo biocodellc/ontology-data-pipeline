@@ -13,7 +13,7 @@ import pandas as pd
 
 from .rdf2csv import convert_rdf2csv
 from .splitter import split_file
-from .utils import  loadClass, clean_dir, fetch_ontopilot, fetch_query_fetcher
+from .utils import  loadClass, clean_dir
 from .config import Config
 from .reasoner import run_reasoner
 from .triplifier import Triplifier
@@ -36,8 +36,6 @@ class Process(object):
         self.validator = Validator(config)
 
     def run(self):
-        fetch_ontopilot(self.config.ontopilot, self.config.ontopilot_repo_url)
-        fetch_query_fetcher(self.config.queryfetcher, self.config.queryfetcher_repo_url)
 
         clean_dir(self.config.output_unreasoned_dir)
         clean_dir(self.config.output_reasoned_dir)
