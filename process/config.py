@@ -55,7 +55,7 @@ class Config(object):
 
         ontopilotjar = os.path.join(os.path.dirname(__file__), '../lib/ontopilot-{}.jar'.format(ONTOPILOT_VERSION))
         jaxbapijar = os.path.join(os.path.dirname(__file__), '../lib/jaxb-api-2.2.3.jar')
-        self.ontopilot = ontipilotjar + ":" + jaxbapijar
+        self.ontopilot = ontopilotjar + ":" + jaxbapijar
         self.ontopilot_repo_url = ONTOPILOT_REPO_URL
         self.queryfetcher = os.path.join(os.path.dirname(__file__), '../lib/query_fetcher-{}.jar'.format(QUERY_FETCHER_VERSION))
         self.queryfetcher_repo_url = QUERY_FETCHER_REPO_URL
