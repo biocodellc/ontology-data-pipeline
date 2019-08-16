@@ -29,29 +29,21 @@ class Process(object):
     def __init__(self, config):
         self.config = config
 
-        if not self.config.data_file:
-            self.config.data_file = self._preprocess_data()
-
         self.triplifier = Triplifier(config)
         self.validator = Validator(config)
 
     def run(self):
 
+        # clean all directory
         clean_dir(self.config.output_unreasoned_dir)
         clean_dir(self.config.output_reasoned_dir)
+        clean_dir(self.config.output_reasoned_csv_dir)
 
-        if self.config.reasoned_sparql:
-            clean_dir(self.config.output_reasoned_csv_dir)
-
-        if self.config.split_data_column:
-            self._split_and_triplify_data()
-        else:
-            self._triplify_data()
+        self._triplify_all()
 
         self._reason_all()
 
-        if self.config.reasoned_sparql:
-            self._reasoned2csv()
+        self._csv2rdf_all()
 
     def _reason_all(self):
         num_processes = math.floor(self.config.num_processes / 2)
@@ -68,7 +60,7 @@ class Process(object):
         convert_rdf2csv(os.path.join(self.config.output_reasoned_dir,file),self.config.output_reasoned_csv_dir,
                         self.config.reasoned_sparql, self.config.queryfetcher)
 
-    def _reasoned2csv(self):
+    def _csv2rdf_all(self):
         num_processes = math.floor(self.config.num_processes / 2)
         files = []
         for file in os.listdir(self.config.output_reasoned_dir):
@@ -81,34 +73,7 @@ class Process(object):
         with multiprocessing.Pool(processes=num_processes) as pool:
             pool.starmap(self._csv2rdf, zip(files))
 
-    def _split_and_triplify_data(self):
-        """
-        splits the parent dataframe into many files based on the config.split_data_column. There will be a minimum of
-        1 file for each unique value in the split_data_column column, with config.chunk_size being the max number of
-        records in each file
-        """
-        logging.debug("\tsplitting input data on {}".format(self.config.split_data_column))
-
-        clean_dir(self.config.output_csv_split_dir)
-
-        split_file(self.config.data_file, self.config.output_csv_split_dir, self.config.split_data_column,
-                   self.config.chunk_size)
-
-        for root, dirs, files in os.walk(self.config.output_csv_split_dir):
-            files = [os.path.join(root, f) for f in files]
-
-            with multiprocessing.Pool(processes=self.config.num_processes) as pool:
-                pool.map(self._triplify_file, files)
-
-    def _triplify_file(self, file):
-        data = pd.read_csv(file, header=0, skipinitialspace=True)
-
-        logging.debug("\tvalidating records in {}".format(file))
-
-        triples_file = os.path.join(self.config.output_unreasoned_dir, file.rsplit('/', 1)[-1].replace('.csv', '.n3'))
-        self._triplify(data, triples_file)
-
-    def _triplify_data(self):
+    def _triplify_all(self):
         num_processes = self.config.num_processes
         data = pd.read_csv(self.config.data_file, header=0, skipinitialspace=True,
                            chunksize=self.config.chunk_size * num_processes)
@@ -160,20 +125,6 @@ class Process(object):
         out_file = os.path.join(self.config.output_reasoned_dir, file.replace('.n3', '.ttl'))
         run_reasoner(os.path.join(root, file), out_file, self.config.reasoner_config, self.config.ontopilot)
 
-    def _preprocess_data(self):
-
-        clean_dir(self.config.output_csv_dir)
-        if self.config.preprocessor:
-            PreProcessor = loadClass(self.config.preprocessor, "PreProcessor")
-        else:
-            PreProcessor = loadClass(os.path.join(self.config.project_base, self.config.project, "preprocessor.py"), "PreProcessor")
-
-        preprocessor = PreProcessor(self.config.input_dir, self.config.output_csv_dir, self.config.headers)
-        preprocessor.run()
-
-        return preprocessor.output_file
-
-
 def main():
     parser = argparse.ArgumentParser(
         description="ontology data pipeline command line application.",
@@ -182,18 +133,9 @@ def main():
         fromfile_prefix_chars='@')
 
     parser.add_argument(
-        "--project",
-        help="This is the name of the directory containing the project specific files. All project config directories" +
-             "must be placed in the `projects` directory.",
-        dest="project"
+        "data_file",
+        help="Specify the data file to load."
     )
-
-    parser.add_argument(
-        "--input_dir",
-        help="path of the directory containing the data to process",
-        dest="input_dir"
-    )
-
     parser.add_argument(
         "output_dir",
         help="path of the directory to place the processed data"
@@ -210,24 +152,6 @@ def main():
     )
 
     parser.add_argument(
-        "--project_base",
-        help="Specify where the python modules reside for the preprocessor live.  This is specified in python dotted notation.  The base_dir (base directory) is set using the project_base with a directory name for the project",
-        dest="project_base"
-    )
-
-    parser.add_argument(
-        "--data_file",
-        help="optionally specify the data file to load. This will skip the preprocessor step and used the supplied data "
-             "file instead",
-        dest="data_file"
-    )
-
-    parser.add_argument(
-        "--preprocessor",
-        help="optionally specify the dotted python path of the preprocessor class. This will be loaded instead of "
-             "looking for a PreProcessor in the supplied project directory. \n Ex:\t projects.asu.proprocessor.PreProcessor",
-    )
-    parser.add_argument(
         "--drop_invalid",
         help="Drop any data that does not pass validation, log the results, and continue the process",
         action="store_true"
@@ -239,7 +163,7 @@ def main():
     )
     parser.add_argument(
         "--reasoner_config",
-        help="optionally specify the reasoner configuration file"
+        help="optionally specify the reasoner configuration file. Default is to look for reasoner.config in the configuration directory"
     )
     parser.add_argument(
         "-v",
@@ -260,13 +184,6 @@ def main():
         help="number of process to use for parallel processing of data. Defaults to cpu_count of the machine",
         type=int,
         default=multiprocessing.cpu_count()
-    )
-    parser.add_argument(
-        "-s",
-        "--split_data",
-        help="column to split the data on. This will split the data file into many files with each file containing no "
-             "more records then the specified chunk_size, using the specified column values as the filenames",
-        dest="split_data_column"
     )
     args = parser.parse_args()
 
