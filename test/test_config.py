@@ -11,7 +11,7 @@ def test_config(tmpdir):
     base_dir = os.path.dirname(__file__)
 
     # Mimic the argument constructor from process:
-    ns = Namespace(chunk_size=50000, config_dir='test/config', data_file=None, drop_invalid=True, input_dir='test/data/input', log_file=False, num_processes=4, ontology='https://raw.githubusercontent.com/PlantPhenoOntology/ppo/master/releases/2018-10-26/ppo.owl', output_dir='test/data/output', preprocessor=None, project='test', project_base='projects', reasoner_config=None, split_data_column=None, verbose=True)
+    ns = Namespace(chunk_size=50000, config_dir='test/config', data_file=None, drop_invalid=True, input_dir='test/data/input', log_file=False, num_processes=4, ontology='test/test-ontology.owl', output_dir='test/data/output', preprocessor=None, project='test', project_base='projects', reasoner_config=None, split_data_column=None, verbose=True)
 
     # Build the Config class
     config = Config(**ns.__dict__)

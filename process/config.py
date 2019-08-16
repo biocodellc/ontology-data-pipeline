@@ -296,7 +296,10 @@ class Config(object):
 
         if len(newdef) != 0:
             # attempt parsing wlth the rfc3987 library and throws error if not a valid IRI
-            rfc3987.parse(newdef, rule='IRI')
+            try:
+                rfc3987.parse(newdef, rule='IRI')
+            except KeyError:
+                raise RuntimeError('Unable to interpret the label "' + newdef + '" as an IRI.')
 
         return newdef
 

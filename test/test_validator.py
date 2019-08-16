@@ -15,7 +15,7 @@ def config(tmpdir):
     base_dir = os.path.dirname(__file__)
 
     def make_config(data_file):
-        ns = Namespace(chunk_size=50000, config_dir='test/config', data_file=os.path.join(base_dir, data_file), drop_invalid=True, input_dir='test/data', log_file=False, num_processes=4, ontology='https://raw.githubusercontent.com/PlantPhenoOntology/ppo/master/releases/2018-07-31/ppo.owl', output_dir='test/data', preprocessor=None, project='test', project_base='projects', reasoner_config=None, split_data_column=None, verbose=True)
+        ns = Namespace(chunk_size=50000, config_dir='test/config', data_file=os.path.join(base_dir, data_file), drop_invalid=True, input_dir='test/data', log_file=False, num_processes=4, ontology='test/test-ontology.owl', output_dir='test/data', preprocessor=None, project='test', project_base='projects', reasoner_config=None, split_data_column=None, verbose=True)
 
         #Build the Config class
         return Config(**ns.__dict__)

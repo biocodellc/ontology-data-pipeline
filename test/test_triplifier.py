@@ -14,7 +14,8 @@ def config(tmpdir):
     base_dir = os.path.dirname(__file__)
 
     def make_config(data_file):
-        ns = Namespace(chunk_size=50000, config_dir='test/config', data_file=os.path.join(base_dir, data_file), drop_invalid=True, input_dir='test/data/input', log_file=False, num_processes=4, ontology='https://raw.githubusercontent.com/PlantPhenoOntology/ppo/master/releases/2018-07-31/ppo.owl', output_dir='test/data/output', preprocessor=None, project='test', project_base='projects', reasoner_config=None, split_data_column=None, verbose=True)
+        #ns = Namespace(chunk_size=50000, config_dir='test/config', data_file=os.path.join(base_dir, data_file), drop_invalid=True, input_dir='test/data/input', log_file=False, num_processes=4, ontology='https://raw.githubusercontent.com/PlantPhenoOntology/ppo/master/releases/2018-07-31/ppo.owl', output_dir='test/data/output', preprocessor=None, project='test', project_base='projects', reasoner_config=None, split_data_column=None, verbose=True)
+        ns = Namespace(chunk_size=50000, config_dir='test/config', data_file=os.path.join(base_dir, data_file), drop_invalid=True, input_dir='test/data/input', log_file=False, num_processes=4, ontology='test/test-ontology.owl', output_dir='test/data/output', preprocessor=None, project='test', project_base='projects', reasoner_config=None, split_data_column=None, verbose=True)
 
         # Build the Config class
         return Config(**ns.__dict__)
@@ -31,9 +32,10 @@ def test_should_generate_valid_triples(config):
     triplifier = Triplifier(config)
 
     triples = triplifier.triplify(_load_data(config))
+    print(triples)
 
     expected_triples = [
-    '<http://n2t.net/ark:/21547/Anl21> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> "Reproductive"^^<http://www.w3.org/2001/XMLSchema#string>',
+    '<http://n2t.net/ark:/21547/Anl21> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.obolibrary.org/obo/PPO_0002027>',
     '<http://n2t.net/ark:/21547/Anm21> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.obolibrary.org/obo/BCO_0000003>',
     '<http://n2t.net/ark:/21547/Anm21> <http://rs.tdwg.org/dwc/terms/EventID> "1"^^<http://www.w3.org/2001/XMLSchema#integer>',
     '<http://n2t.net/ark:/21547/Anm21> <http://rs.tdwg.org/dwc/terms/decimalLatitude> "-12.99"^^<http://www.w3.org/2001/XMLSchema#float>',
