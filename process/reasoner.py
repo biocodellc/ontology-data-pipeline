@@ -22,7 +22,8 @@ def run_reasoner(input_file, output_file, config_file, ontopilot_path):
     output = str(stdout.decode('utf-8')).replace('writing ','').replace('\n','').replace(CUR_DIR,'').lstrip()
 
     if not os.path.exists(output_file):
-        raise RuntimeError("Failed to perform reasoning on {}".format(input_file) + ".  " + output)
+        #raise RuntimeError("Failed to perform reasoning on {}".format(input_file) + ".  " + output)
+        logging.debug("Failed to perform reasoning on {}".format(input_file) + ".  " + output)
 
     # provide docker friendly output (this way user looks for file in relative path home environment instead of docker mount)
     cleanfilename = re.sub('^%s' % '/process/', '', output_file)
