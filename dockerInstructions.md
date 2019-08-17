@@ -3,10 +3,12 @@ The Dockerfile in the home directory provides the necessary information for buil
 
 ## build:
 Docker is built automatically at docker hub when a commit is pushed to master
-Manual Method uses ```docker build -t ontology-data-pipeline``` 
 
-## update rep:
+## Manual Method uses 
+This section only necessary if the container is not automatically built.
 ```
+docker build -t ontology-data-pipeline
+
 # if necessary:
 docker login --username=jdeck88
 # not sure if we have to do this everytime:
