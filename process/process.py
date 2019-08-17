@@ -34,16 +34,18 @@ class Process(object):
 
     def run(self):
 
-        # clean all directory
+        # empty output directories
         clean_dir(self.config.output_unreasoned_dir)
         clean_dir(self.config.output_reasoned_dir)
-        clean_dir(self.config.output_reasoned_csv_dir)
 
         self._triplify_all()
-
         self._reason_all()
 
-        self._csv2rdf_all()
+        if self.config.reasoned_sparql_exists:
+            clean_dir(self.config.output_reasoned_csv_dir)
+            self._csv2rdf_all()
+        else:
+            logging.warning("Skipping rdf2csv conversion, no SPARQL query found.")
 
     def _reason_all(self):
         num_processes = math.floor(self.config.num_processes / 2)
@@ -190,7 +192,6 @@ def main():
     if args.verbose:
         print("configuring...")
 
-    #config = Config(os.path.join(DEFAULT_BASE_DIR, args.project), **args.__dict__)
     config = Config(**args.__dict__)
 
     process = Process(config)

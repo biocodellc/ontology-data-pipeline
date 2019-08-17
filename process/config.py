@@ -40,16 +40,6 @@ class Config(object):
         for key in kwargs:
             setattr(self, key, kwargs[key])
 
-        #if not self.config_dir:
-        #    self.config_dir = DEFAULT_CONFIG_DIR
-        #if not self.project_base:
-        #    self.project_base = DEFAULT_PROJECT_BASE
-        #if not self.base_dir:
-        #    self.base_dir = os.path.join(DEFAULT_BASE_DIR, self.project)
-#        if not self.ontology:
-#            self.ontology = DEFAULT_ONTOLOGY
-#        if not self.headers:
-#            self.headers = DEFAULT_HEADERS
         if not self.chunk_size:
             self.chunk_size = 50000
 
@@ -317,7 +307,9 @@ class Config(object):
     def _find_sparql(self):
         self.reasoned_sparql = os.path.join(self.config_dir, 'fetch_reasoned.sparql')
 
+        self.reasoned_sparql_exists = True 
         if not os.path.exists(self.reasoned_sparql):
+            self.reasoned_sparql_exists = False
             logging.warning(
                 "did not find fetch_reasoned.sparql in config directory. will not convert reasoned data to csv")
             return
