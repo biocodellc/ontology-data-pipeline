@@ -21,7 +21,7 @@ rm -r /root/.cache
 
 WORKDIR /app
 COPY . /app
-COPY lib /app/lib
+#COPY lib /app/lib
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 CMD [ "python", "./pipeline.py" ]
 
