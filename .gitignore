@@ -5,3 +5,8 @@
 *.spec
 build/*
 dist/*
+# exclude everything
+lib/*
+
+# exception to the rule
+!lib/README.md

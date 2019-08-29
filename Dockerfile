@@ -21,7 +21,11 @@ rm -r /root/.cache
 
 WORKDIR /app
 COPY . /app
-#COPY lib /app/lib
+#Add generally larger-size jars from external repository to the lib directory
+ADD https://repo.biocodellc.com/repository/3rd-party/org/biocode/ontopilot/2017-08-04/ontopilot-2017-08-04.jar /app/lib/
+ADD https://repo.biocodellc.com/repository/3rd-party/org/biocode/jaxb-api/2.2.3/jaxb-api-2.2.3.jar /app/lib/
+ADD https://repo.biocodellc.com/repository/3rd-party/org/biocode/query_fetcher/0.0.1/query_fetcher-0.0.1.jar /app/lib/
+
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 CMD [ "python", "./pipeline.py" ]
 
