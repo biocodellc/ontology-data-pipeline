@@ -36,6 +36,8 @@ docker run -v "$(pwd)":/process -w=/app -ti jdeck88/ontology-data-pipeline \
 ```
 
 ## Configuring Your Environment
+![Ontology Data Pipeline Diagram](https://raw.githubusercontent.com/biocodellc/ontology-data-pipeline/master/pipelineImage.png)
+
 The ontology-data-pipeline operates on a set of configuration files, which you can specify 
 in the configuration directory.
 
@@ -59,7 +61,7 @@ The following text describes the operation of the pipeline and the steps involve
 
     This step uses the [ontopilot](https://github.com/stuckyb/ontopilot) project to perform reasoning on the triplified data in the triplifier step, in conjunction with logic contained in the provided ontology. 
     
-3. Conversion
+3. Data Formatting
 
     This step takes the provided [sparql query](#fetch_reasoned.sparql) and generates csv files for each file outputted
     in the Reasoning step. If no sparql query is found, then this step is skipped.
