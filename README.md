@@ -59,7 +59,7 @@ The following text describes the operation of the pipeline and the steps involve
 
     This step uses the [ontopilot](https://github.com/stuckyb/ontopilot) project to perform reasoning on the triplified data in the triplifier step, in conjunction with logic contained in the provided ontology. 
     
-3. Rdf2Csv
+3. Conversion
 
     This step takes the provided [sparql query](#fetch_reasoned.sparql) and generates csv files for each file outputted
     in the Reasoning step. If no sparql query is found, then this step is skipped.
