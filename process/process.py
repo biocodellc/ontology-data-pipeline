@@ -76,6 +76,10 @@ class Process(object):
             pool.starmap(self._csv2rdf, zip(files))
 
     def _triplify_all(self):
+        # check for incoming data file before triplifying
+        if not os.path.exists(self.config.data_file):
+            raise RuntimeError("cannot find input datafile "+ self.config.data_file)
+        
         num_processes = self.config.num_processes
         data = pd.read_csv(self.config.data_file, header=0, skipinitialspace=True,
                            chunksize=self.config.chunk_size * num_processes)
