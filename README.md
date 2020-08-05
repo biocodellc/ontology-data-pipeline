@@ -13,7 +13,7 @@ A good way to start with the ontology-data-pipeline is to look at applications w
 
 Step 1: [Install docker](https://docs.docker.com/install/)
 
-Step 2: Run the application. On the commandline, you can execute the pipeline, like:
+Step 2: Run the application. On the commandline, you can execute the script like so:
 ```
 # make sure you have the latest docker container
 docker pull jdeck88/ontology-data-pipeline
@@ -21,19 +21,8 @@ docker pull jdeck88/ontology-data-pipeline
 docker run -v "$(pwd)":/process -w=/app -ti jdeck88/ontology-data-pipeline python pipeline.py -h 
 ```
 
-An example script for running the application ...
-```
-# check that we have the latest ...
-docker pull jdeck88/ontology-data-pipeline
+To see a working example example of the application, clone or fork the [Futres Pipeline Repository](https://github.com/futres/fovt-data-pipeline).
 
-docker run -v "$(pwd)":/process -w=/app -ti jdeck88/ontology-data-pipeline \
-    python pipeline.py \
-    -v --drop_invalid \
-    /process/data/data.csv \
-    /process/data/processed \
-    https://raw.githubusercontent.com/futres/fovt/master/ontology/fovt-merged-reasoned.owl \
-    /process/config \
-```
 
 ## Configuring Your Environment
 ![Ontology Data Pipeline Diagram](https://raw.githubusercontent.com/biocodellc/ontology-data-pipeline/master/pipelineImage.png)
