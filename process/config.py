@@ -43,6 +43,11 @@ class Config(object):
         if not self.chunk_size:
             self.chunk_size = 50000
 
+        if not os.path.exists(self.config_dir):
+            raise RuntimeError("cannot find configuration directory "+ self.config_dir)
+        
+
+
         ontopilotjar = os.path.join(os.path.dirname(__file__), '../lib/ontopilot-{}.jar'.format(ONTOPILOT_VERSION))
         jaxbapijar = os.path.join(os.path.dirname(__file__), '../lib/jaxb-api-2.2.3.jar')
         self.ontopilot = ontopilotjar + ":" + jaxbapijar
@@ -76,7 +81,7 @@ class Config(object):
         self.__label_map = LabelMap(self.ontology)
 
         self._parse_headers()
-
+        
         self.lists = {}
         self.rules = []
         #self._add_default_rules()
@@ -162,7 +167,8 @@ class Config(object):
         """
         if file_name not in self.lists:
             # first look in project root
-            file_path = os.path.join(self.project_base, self.project, file_name)
+
+            file_path = os.path.join(file_name)
 
             if not os.path.exists(file_path):
                 # now look in config directory
@@ -185,14 +191,10 @@ class Config(object):
         """
         Parse entity.csv file. Used to define the entities for triplifying
         Expected columns are: alias,concept_uri,unique_key,identifier_root
-        """
+        """        
         file = os.path.join(self.config_dir, 'entity.csv')
-
         if not os.path.exists(file):
-            # look in project base
-            file = os.path.join(self.project_base,self.project,'entity.csv')
-            if not os.path.exists(file):
-                raise RuntimeError("cannot find entity.csv in configuration or project directories")
+            raise RuntimeError("cannot find entity.csv in configuration directory")
 
         with open(file) as f:
             reader = csv.DictReader(f, skipinitialspace=True)
@@ -216,9 +218,7 @@ class Config(object):
         file = os.path.join(self.config_dir, 'mapping.csv')
 
         if not os.path.exists(file):
-            file = os.path.join(self.project_base,self.project,'mapping.csv')
-            if not os.path.exists(file):
-                raise RuntimeError("cannot find mapping.csv in configuration or project directories")
+            raise RuntimeError("cannot find mapping.csv in configuration directory")
 
         with open(file) as f:
             reader = csv.DictReader(f, skipinitialspace=True)
@@ -239,9 +239,7 @@ class Config(object):
         file = os.path.join(self.config_dir, 'relations.csv')
 
         if not os.path.exists(file):
-            file = os.path.join(self.project_base,self.project,'relations.csv')
-            if not os.path.exists(file):
-                raise RuntimeError("cannot find relations.csv in configuration or project directories")
+            raise RuntimeError("cannot find relations.csv in configuration directory")            
 
         with open(file) as f:
             reader = csv.DictReader(f, skipinitialspace=True)
