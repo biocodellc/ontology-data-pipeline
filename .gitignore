@@ -7,6 +7,7 @@ build/*
 dist/*
 # exclude everything
 lib/*
+.vscode/*
 
 # exception to the rule
 !lib/README.md
