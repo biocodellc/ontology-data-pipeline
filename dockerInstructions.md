@@ -7,7 +7,7 @@ Docker is built automatically at docker hub when a commit is pushed to master
 ## Manual Method uses 
 This section only necessary if the container is not automatically built.
 ```
-docker build -t ontology-data-pipeline
+docker build . -t ontology-data-pipeline
 
 # if necessary:
 docker login --username=jdeck88
