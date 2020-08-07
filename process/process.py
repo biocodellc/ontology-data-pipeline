@@ -94,7 +94,9 @@ class Process(object):
 
             # this solution was reworked from the above link.
             # will work even if the length of the dataframe is not evenly divisible by num_processes
-            chunks = [data_frame.ix[data_frame.index[i:i + chunk_size]] for i in
+            #chunks = [data_frame.ix[data_frame.index[i:i + chunk_size]] for i in
+            #          range(0, data_frame.shape[0], chunk_size)]
+            chunks = [data_frame.iloc[data_frame.index[i:i + chunk_size]] for i in
                       range(0, data_frame.shape[0], chunk_size)]
 
             with multiprocessing.Pool(processes=num_processes) as pool:

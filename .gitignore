@@ -8,6 +8,7 @@ dist/*
 # exclude everything
 lib/*
 .vscode/*
+*.pptx
 
 # exception to the rule
 !lib/README.md
