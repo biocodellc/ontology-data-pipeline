@@ -19,11 +19,6 @@ QUERY_FETCHER_REPO_URL = 'http://repo.biocodellc.com/repository/maven-public/org
 
 VALID_RULES = ['RequiredValue', 'ControlledVocabulary', 'UniqueValue', 'Integer', 'Float']
 
-# NOTE: the default ontology used here is located at github.  Be wary of too many connections
-# to this file at git...may want to specify a local filepath for the ontology instead
-#DEFAULT_ONTOLOGY = "https://raw.githubusercontent.com/PlantPhenoOntology/ppo/master/releases/2017-10-20/ppo.owl"
-
-
 class Config(object):
     """
     class containing config values. All config data is accessible as attributes on this class
