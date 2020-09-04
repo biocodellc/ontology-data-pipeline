@@ -99,11 +99,11 @@ The following files are required:
         
     * `unique_key`
     
-        The column used to uniquely identify the entity. Whenever there is a unique value for the property specified by "unique key", a new instance will be created.
+        The column name that is used to uniquely identify the entity. Whenever there is a unique value for the property specified by "unique key", a new instance will be created. e.g. "record_id"
         
     * `identifier_root`
     
-        The identifier root for each unique entity (instance created). This is typically an [BCID](http://biscicol.org) identifier
+        The identifier root for each unique entity (instance created). E.g. urn:observingprocess/ would be the root of urn:observingprocess/record1
     
 ##### <a name="mapping.csv"></a>
 2. `mapping.csv` (found in each project directory)
