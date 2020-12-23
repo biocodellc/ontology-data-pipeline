@@ -10,7 +10,10 @@ def run_reasoner(input_file, output_file, config_file, ontopilot_path):
 
     logging.debug("reasoning on file {}".format(input_file))
 
-    cmd = ['java', '-cp', ontopilot_path, 'Main', '-i', input_file, '-o', output_file, '-c', config_file, 'inference_pipeline']
+    # the java version is unreliable and does not provide useful debugging output
+    #cmd = ['java', '-cp', ontopilot_path, 'Main', '-i', input_file, '-o', output_file, '-c', config_file, 'inference_pipeline']
+    # calling ontopilot works better with better output
+    cmd = ['../ontopilot/bin/ontopilot', '-i', input_file, '-o', output_file, '-c', config_file, 'inference_pipeline']
 
     logging.debug("running reasoner with: ")
     logging.debug(subprocess.list2cmdline(cmd))
