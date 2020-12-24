@@ -1,1 +1,0 @@
-This file exists merely so git creates the "documentation" directory for the test project.
