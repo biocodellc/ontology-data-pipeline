@@ -23,9 +23,9 @@ WORKDIR /app
 COPY . /app
 # Fetch the ontopilot-master 
 ADD https://github.com/stuckyb/ontopilot/archive/master.zip /app/
-RUN unzip ontopilot-master.zip
+RUN unzip master.zip
 RUN mv ontopilot-master ontopilot
-RUN rm ontopilot-master.zip
+RUN rm master.zip
 
 # Add generally larger-size jars from external repository to the lib directory
 ADD https://repo.biocodellc.com/repository/3rd-party/org/biocode/query_fetcher/0.0.1/query_fetcher-0.0.1.jar /app/lib/
