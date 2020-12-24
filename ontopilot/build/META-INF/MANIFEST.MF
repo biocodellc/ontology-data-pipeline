@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.9.4
+Created-By: 1.7.0_60-b19 (Oracle Corporation)
+Main-Class: org.python.util.jython
+Built-By: fwierzbicki
+
+Name: Build-Info
+version: 2.7.0
+hg-build: ${do.checkout}
+oracle: ${oracle.present}
+informix: ${informix.present}
+build-compiler: modern
+jdk-target-version: 1.7
+debug: true
+
