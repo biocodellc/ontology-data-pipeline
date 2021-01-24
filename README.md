@@ -3,11 +3,11 @@
 A flexible, scalable pipeline for integration and alignment of multiple data sources. The code is written to be adaptable to all kinds of data, ontologies ([OWL](https://www.w3.org/OWL/)), or reasoning profiles, and output is compatible with any type of storage technology. 
 
 ## Applications developed to use ontology-data-pipeline
-A good way to start with the ontology-data-pipeline is to look at applications which use this code.  This includes:
+A good way to start with the ontology-data-pipeline is to fork or clone one of the applications which use this code.  This includes:
 
-  * [ppo-data-pipeline](https://github.com/biocodellc/ppo-data-pipeline) a data pipeline for processing plant phenology observations
   * [fovt-data-pipeline](https://github.com/futres/fovt-data-pipeline) a data pipeline for processing vertebrate trait measurements
-
+  * [ppo-data-pipeline](https://github.com/biocodellc/ppo-data-pipeline) a data pipeline for processing plant phenology observations
+  
 
 ## Quick Start
 
@@ -20,8 +20,6 @@ docker pull jdeck88/ontology-data-pipeline
 # run the pipeline help in the docker container
 docker run -v "$(pwd)":/process -w=/app -ti jdeck88/ontology-data-pipeline python pipeline.py -h 
 ```
-
-To see a working example example of the application, clone or fork the [Futres Pipeline Repository](https://github.com/futres/fovt-data-pipeline).
 
 
 ## Configuring Your Environment
@@ -55,29 +53,7 @@ The following text describes the operation of the pipeline and the steps involve
     This step takes the provided [sparql query](#fetch_reasoned.sparql) and generates csv files for each file outputted
     in the Reasoning step. If no sparql query is found, then this step is skipped.
     
-4. Data Loading
 
-    This is a separate cli used for loading reasoned data into elasticsearch and/or blazegraph.
-    
-    `loader.loader` is the main entry point for the application. `loader.py` is a convenience wrapper script for running the
-    app from the source tree.
-
-    * Uploading
-    
-        1. BlazeGraph
-        2. ElasticSearch
-        
-Getting help with the loader.py script:
-```
-docker run -t -v "$(pwd)":/process -w=/app -ti jdeck88/ontology-data-pipeline python loader.py -h
-```
-As an alternative to the commandline, params can be placed in a file, one per
-line, and specified on the commandline like 'loader.py @params.conf'.
-
-An example of running the loading script (ensure proper IP access to tarly.cyverse.org):
-```
-python loader.py --es_input_dir data/npn/output/output_reasoned_csv/ --index npn --drop-existing --alias ppo --host tarly.cyverse.org:80 elasticsearch
-```
 
 ## Config Files
 
@@ -186,6 +162,5 @@ The following files are optional:
    
 ## Developers
 
-The ontology-data-pipeline is designed to be run as a Docker container.  However, you can also run the codebase from sources by 
-checking out this repository and following the instructions at [python instructions](pythonInstructions.md).
+The ontology-data-pipeline is designed to be run as a Docker container.  However, you can also run the codebase from sources by checking out this repository and following the instructions at [python instructions](pythonInstructions.md).
 Information on building the docker container is contained at [docker instructions](dockerInstructions.md).
