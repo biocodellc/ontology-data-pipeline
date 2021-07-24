@@ -13,7 +13,7 @@ def run_reasoner(input_file, output_file, config_file, ontopilot_path):
     # the java version is unreliable and does not provide useful debugging output
     #cmd = ['java', '-cp', ontopilot_path, 'Main', '-i', input_file, '-o', output_file, '-c', config_file, 'inference_pipeline']
     # we call the ontopilot program directly and works better with better debugging output
-    cmd = ['ontopilot/bin/ontopilot', '-i', input_file, '-o', output_file, '-c', config_file, 'inference_pipeline']
+    cmd = ['elk_pipeline/bin/elk_pipeline', '-i', input_file, '-o', output_file, '-c', config_file, 'inference_pipeline']
 
     logging.debug("running reasoner with: ")
     logging.debug(subprocess.list2cmdline(cmd))

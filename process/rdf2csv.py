@@ -9,7 +9,7 @@ import re
 def convert_rdf2csv(input_file, output_dir, sparql_file, query_fetcher_path):
     logging.debug("converting reasoned data to csv for file {}".format(input_file))
 
-    cmd = ['java', '-jar', query_fetcher_path, '-i', input_file, '-inputFormat', 'TURTLE', '-o', output_dir, '-numThreads', '1', '-sparql', sparql_file] 
+    cmd = ['java', '-jar', query_fetcher_path, '-i', input_file, '-inputFormat', 'TURTLE', '-o', output_dir, '-sparql', sparql_file] 
 
     logging.debug("running query_fetcher with: ")
     logging.debug(subprocess.list2cmdline(cmd))

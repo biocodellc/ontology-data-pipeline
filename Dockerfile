@@ -1,5 +1,5 @@
 ### 1. Get Linux
-FROM alpine:3.7
+FROM alpine:3.10.9
 
 ### 2. Get Java via the package manager
 RUN apk update \
@@ -7,7 +7,7 @@ RUN apk update \
 && apk add --no-cache bash \
 && apk add --no-cache --virtual=build-dependencies unzip \
 && apk add --no-cache curl \
-&& apk add --no-cache openjdk8-jre
+&& apk add --no-cache openjdk11-jre
 
 ### 3. Get Python, PIP
 
@@ -21,14 +21,13 @@ rm -r /root/.cache
 
 WORKDIR /app
 COPY . /app
+
 # Fetch the ontopilot-master 
-ADD https://github.com/stuckyb/ontopilot/archive/master.zip /app/
-RUN unzip master.zip
-RUN mv ontopilot-master ontopilot
-RUN rm master.zip
+RUN apk add git
+RUN git clone https://github.com/biocodellc/elk_pipeline.git
 
 # Add generally larger-size jars from external repository to the lib directory
-ADD https://repo.biocodellc.com/repository/3rd-party/org/biocode/query_fetcher/0.0.1/query_fetcher-0.0.1.jar /app/lib/
+ADD https://github.com/biocodellc/query_fetcher/releases/download/0.0.1/query_fetcher-0.0.1.jar /app/lib/
 
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 CMD [ "python", "./pipeline.py" ]
