@@ -1,0 +1,69 @@
+prefix dwc: <http://rs.tdwg.org/dwc/terms/>
+prefix obo: <http://purl.obolibrary.org/obo/>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix owl: <http://www.w3.org/2002/07/owl#> 
+prefix dc: <http://purl.org/dc/elements/1.1/> 
+prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+prefix ppo: <http://www.plantphenology.org/id/>
+prefix urn: <urn:>
+
+# Use the concat/group_concat function to push all plantStructurePresence types into an array within a field.
+# this enables ElasticSearch to index this easily while shrinking output file sizes
+SELECT ?observationID ?individualID ?materialSampleID 
+	?decimalLatitude ?decimalLongitude ?country ?locality ?samplingProtocol ?yearCollected
+	?scientificName ?genus ?specificEpithet ?basisOfRecord ?lifeStage ?sex ?projectID ?individualID 
+	?measurementValue ?measurementUnit ?measurementMethod ?measurementType
+	(group_concat(distinct ?traitTypes;separator='|') as ?traits)
+
+WHERE {    
+
+	# Create a list of traits for organisms -- these will be grouped by in the "GROUP BY" clause
+    ?vertTrait rdf:type ?traitTypes .
+
+	# Do not report namedindividual, not particularly useful in our output
+    FILTER (?traitTypes != <http://www.w3.org/2002/07/owl#NamedIndividual>) .
+
+	# The joins here are largely derived from the relations.csv file
+	# since these can be different for different projects we need to think carefully
+	# how to address joins in this section for the different projects.
+	# Using SPARQL property paths is one possible solution
+	?vertOrg rdf:type <http://https://raw.githubusercontent.com/futres/fovt/master/src/fovt-base.owl/FOVT_0001001> .
+	?measurementDatum <http://purl.obolibrary.org/obo/IAO_0000136> ?vertTrait .
+	?vertTrait obo:RO_0000052 ?vertOrg .
+	?vertTraitObsProc obo:OBI_0000299 ?measurementDatum .
+	?vertOrg obo:OBI_0000295 ?vertTraitObsProc .
+
+	# Observing Process Attributes
+	OPTIONAL {?vertTraitObsProc dwc:eventID ?observationID} .
+	OPTIONAL {?vertTraitObsProc dwc:decimalLatitude ?decimalLatitude} .
+	OPTIONAL {?vertTraitObsProc dwc:decimalLongitude ?decimalLongitude} .
+	OPTIONAL {?vertTraitObsProc dwc:country ?country} .
+	OPTIONAL {?vertTraitObsProc dwc:locality ?locality} .
+	OPTIONAL {?vertTraitObsProc dwc:samplingProtocol ?samplingProtocol} .
+	OPTIONAL {?vertTraitObsProc dwc:year ?yearCollected} .
+
+	# Organism Attributes
+    OPTIONAL {?vertOrg dwc:scientificName ?scientificName} . 
+	OPTIONAL {?vertOrg dwc:genus ?genus} . 
+	OPTIONAL {?vertOrg dwc:specificEpithet ?specificEpithet} . 
+    OPTIONAL {?vertOrg dwc:materialSampleID ?materialSampleID} . 
+	OPTIONAL {?vertOrg dwc:basisOfRecord ?basisOfRecord} . 
+	OPTIONAL {?vertOrg dwc:lifeStage ?lifeStage} . 
+	OPTIONAL {?vertOrg dwc:sex ?sex} . 
+	OPTIONAL {?vertOrg dwc:collectionCode ?projectID} . 
+	OPTIONAL {?vertOrg dwc:individualID ?individualID} . 
+	OPTIONAL {?vertTrait dwc:measurementType ?measurementType} .
+
+	# Scalar Measurement Datum
+	OPTIONAL {?measurementDatum dwc:measurementValue ?measurementValue} .
+	OPTIONAL {?measurementDatum dwc:measurementUnit ?measurementUnit} .
+	OPTIONAL {?measurementDatum dwc:measurementMethod ?measurementMethod} .
+}
+
+GROUP BY ?observationID ?individualID ?materialSampleID 
+	?decimalLatitude ?decimalLongitude ?country ?locality ?samplingProtocol ?yearCollected
+	?scientificName ?genus ?specificEpithet ?basisOfRecord ?lifeStage ?sex ?projectID ?individualID 
+	?measurementValue ?measurementUnit ?measurementMethod ?measurementType
+ORDER BY ASC(?observationID)
+
