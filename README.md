@@ -46,24 +46,32 @@ The following text describes the operation of the pipeline and the steps involve
     
 2. Reasoning
 
-    This step uses the [ROBOT](http://robot.obolibrary.org/) project to perform reasoning on the triplified data in the triplifier step, in conjunction with logic contained in the provided ontology. An example of the use of the ROBOT file is given below:
+    This step uses the [ROBOT](http://robot.obolibrary.org/) project to perform reasoning on the triplified data in the triplifier step, in conjunction with logic contained in the provided ontology. An example of the use of the ROBOT file is given below, calling the robot.jar which is in the `/lib` directory:
 
 ```
-robot.jar reason -r elk --axiom-generators "InverseObjectProperties ClassAssertion" -i input.ttl --include-indirect true --exclude-tautologies structural reduce -o out.ttl
+ java -jar lib/robot.jar reason -r elk \
+    --axiom-generators "InverseObjectProperties ClassAssertion" \
+    -i sample_data/unreasoned_data.ttl \
+    --include-indirect true \
+    --exclude-tautologies structural \
+    reduce \
+    -o sample_data/reasoned_data.ttl
 ```
-In the above example, the reasoner use is ELK, with InverseObjectProperties and ClassAssertion axioms specified.  The input file is `input.ttl`.  We tell the reasoning engine to include indirect inferences, which lets us assert recursive SubClass relationships.  Exclude tautoligies tells the reasoner to not include assertions which will always be true.  The reduce command eliminates redundant assertions.  Finally, the output file is `out.ttl`.   The most critical step of the reasoning process is including the indirect inferences: this is the step that lets us export our end-results to a simple Document Store and not rely on "smart" applications which are able to iterate recursive relationships. Examples included in the test directory.
+In the above example, the reasoner use is ELK, with InverseObjectProperties and ClassAssertion axioms specified.  The input file is `sample_data/unreasoned_data.ttl`.  We tell the reasoning engine to include indirect inferences, which lets us assert recursive SubClass relationships.  Exclude tautoligies tells the reasoner to not include assertions which will always be true.  The reduce command eliminates redundant assertions.  Finally, the output file is `sample_data/reasoned_data.ttl`.   The most critical step of the reasoning process is including the indirect inferences: this is the step that lets us export our end-results to a simple Document Store and not rely on "smart" applications which are able to iterate recursive relationships. Examples included in the test directory.
     
 3. Data Formatting
 
-    This step takes the provided [sparql query](#fetch_reasoned.sparql) and generates csv files for each file outputted
+    This step takes the provided [sparql query](#sample_data/fetch_reasoned.sparql) and generates csv files for each file outputted
     in the Reasoning step using [ROBOT](http://robot.obolibrary.org/). If no sparql query is found, then this step is skipped.
-An example of the data formatting/ querying step is given below:
+An example of the data Formatting step is given below calling the robot.jar which is in the `/lib` directory:
 
 ```
-robot.jar query --input out.ttl --query fetch_reasoned.sparql out.ttl.csv
+java -jar lib/robot.jar query --input sample_data/reasoned_data.ttl \
+    --query sample_data/fetch_reasoned.sparql \
+    sample_data/reasoned_data.ttl.csv
 ```
 
-In the above example, we call the ROBOT query sub-command and give an input file of `out.ttl` (this is the output of the above command), and tell it to use the `fetch_reasoned.sparql` sparql command as a guide to produce the output file `out.ttl.csv`.  Examples included in the test directory.
+In the above example, we call the ROBOT query sub-command and give an input file of `sample_data/reasoned_data.ttl` (this is the output of the above command), and tell it to use the `sample_data/fetch_reasoned.sparql` sparql command as a guide to produce the output file `sample_data/reasoned_data.ttl.csv`.  Examples included in the test directory.
 
     
 
