@@ -37,7 +37,7 @@ The following text describes the operation of the pipeline and the steps involve
     be used to triplify the preprocessed data:
     
     NOTE: Wherever there is a uri expressed in any of the following files, you have the option of using ontology label substitution.
-    If the uri is of the format `{label name here}`, the appropriate uri will be substituted from the provided ontology. See the [OntoPilot Documentation](https://github.com/stuckyb/ontopilot/wiki/Ontology-development#column-names-for-all-ontology-entities) for details term identifier abbreviations.
+    If the uri is of the format `{label name here}`, the appropriate uri will be substituted from the provided ontology. See the [ROBOT](http://robot.obolibrary.org/) for details term identifier abbreviations.
     
     1. [entity.csv](#entity.csv)
     2. [mapping.csv](#mapping.csv)
@@ -46,14 +46,13 @@ The following text describes the operation of the pipeline and the steps involve
     
 2. Reasoning
 
-    This step uses the [ontopilot](https://github.com/stuckyb/ontopilot) project to perform reasoning on the triplified data in the triplifier step, in conjunction with logic contained in the provided ontology. 
+    This step uses the [ROBOT](http://robot.obolibrary.org/) project to perform reasoning on the triplified data in the triplifier step, in conjunction with logic contained in the provided ontology. 
     
 3. Data Formatting
 
     This step takes the provided [sparql query](#fetch_reasoned.sparql) and generates csv files for each file outputted
-    in the Reasoning step. If no sparql query is found, then this step is skipped.
+    in the Reasoning step using [ROBOT](http://robot.obolibrary.org/). If no sparql query is found, then this step is skipped.
     
-
 
 ## Config Files
 
@@ -111,13 +110,6 @@ The following files are required:
     
         The alias of the entity which is the object of this relationship 
         
- The terms in this file come from the source ontology.
-        
-4. `excluded_types.csv` - Used by ontopilot to specify the ontology classes for which instances will NOT be created during reasoning. You can choose to exlude a class or its ancestors or both. This prevents the creation of unneeded instances for root level classes on which no one is likely to query.
-
-5. `reasoner.conf` - ontopilot inferencing configuration file
-
-
 The following files are optional:
 
 ##### <a name="rules.csv"></a>

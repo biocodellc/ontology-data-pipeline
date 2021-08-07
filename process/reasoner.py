@@ -6,14 +6,12 @@ import re
 
 CUR_DIR = os.path.join(os.path.dirname(__file__))
 
-def run_reasoner(input_file, output_file, config_file, ontopilot_path):
+def run_reasoner(input_file, output_file, config_file, robot_path):
 
     logging.debug("reasoning on file {}".format(input_file))
 
     # the java version is unreliable and does not provide useful debugging output
-    #cmd = ['java', '-cp', ontopilot_path, 'Main', '-i', input_file, '-o', output_file, '-c', config_file, 'inference_pipeline']
-    # we call the ontopilot program directly and works better with better debugging output
-    cmd = ['elk_pipeline/bin/elk_pipeline', '-i', input_file, '-o', output_file, '-c', config_file, 'inference_pipeline']
+    cmd = ['java', '-jar', robot_path, 'reason', '-r', 'elk', '--axiom-generators', '"InverseObjectProperties ClassAssertion"', '-i', input_file, '--include-indirect', 'true', '--exclude-tautologies','structural','reduce','-o', output_file]
 
     logging.debug("running reasoner with: ")
     logging.debug(subprocess.list2cmdline(cmd))

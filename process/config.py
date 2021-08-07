@@ -8,15 +8,6 @@ import pandas as pd
 
 from .labelmap import LabelMap
 
-# We use the Sonatype Nexus Repository Manager to store libraries
-#ONTOPILOT_VERSION = '2019-01-15'
-#ONTOPILOT_VERSION = '2017-08-04'
-#ONTOPILOT_REPO_URL = 'http://repo.biocodellc.com/repository/3rd-party/org/biocode/ontopilot/{}/'.format(
-#    ONTOPILOT_VERSION)
-QUERY_FETCHER_VERSION = '0.0.1'
-#QUERY_FETCHER_REPO_URL = 'http://repo.biocodellc.com/repository/maven-public/org/biocode/query_fetcher/{}/'.format(
-#    QUERY_FETCHER_VERSION)
-
 VALID_RULES = ['RequiredValue', 'ControlledVocabulary', 'UniqueValue', 'Integer', 'Float']
 
 class Config(object):
@@ -41,15 +32,7 @@ class Config(object):
         if not os.path.exists(self.config_dir):
             raise RuntimeError("cannot find configuration directory "+ self.config_dir)
         
-
-
-        #ontopilotjar = os.path.join(os.path.dirname(__file__), '../lib/ontopilot-{}.jar'.format(ONTOPILOT_VERSION))
-        #jaxbapijar = os.path.join(os.path.dirname(__file__), '../lib/jaxb-api-2.2.3.jar')
-        #self.ontopilot = ontopilotjar + ":" + jaxbapijar
-        #self.ontopilot_repo_url = ONTOPILOT_REPO_URL
-        self.queryfetcher = os.path.join(os.path.dirname(__file__), '../lib/query_fetcher-{}.jar'.format(QUERY_FETCHER_VERSION))
-        #self.queryfetcher_repo_url = QUERY_FETCHER_REPO_URL
-
+        self.robot = os.path.join(os.path.dirname(__file__), '../lib/robot.jar')
 
         if self.log_file:
             logging.basicConfig(filename=os.path.join(self.output_dir, 'log.txt'), filemode='w')

@@ -60,7 +60,7 @@ class Process(object):
         logging.debug("\trunning csv2reasoner on {}".format(file))
         out_file = os.path.join(self.config.output_reasoned_dir, file.replace('.n3', '.ttl'))
         convert_rdf2csv(os.path.join(self.config.output_reasoned_dir,file),self.config.output_reasoned_csv_dir,
-                        self.config.reasoned_sparql, self.config.queryfetcher)
+                        self.config.reasoned_sparql, self.config.robot)
 
     def _csv2rdf_all(self):
         num_processes = math.floor(self.config.num_processes / 2)
@@ -132,7 +132,7 @@ class Process(object):
     def _reason(self, file, root):
         logging.debug("\trunning reasoner on {}".format(file))
         out_file = os.path.join(self.config.output_reasoned_dir, file.replace('.n3', '.ttl'))
-        run_reasoner(os.path.join(root, file), out_file, self.config.reasoner_config, self.config.ontopilot)
+        run_reasoner(os.path.join(root, file), out_file, self.config.reasoner_config, self.config.robot)
 
 def main():
     parser = argparse.ArgumentParser(
