@@ -46,7 +46,7 @@ The following text describes the operation of the pipeline and the steps involve
     
 2. Reasoning
 
-    This step uses the [ROBOT](http://robot.obolibrary.org/) project to perform reasoning on the triplified data in the triplifier step, in conjunction with logic contained in the provided ontology. An example of the use of the ROBOT file is given below, calling the robot.jar which is in the `/lib` directory:
+    This step uses the [ROBOT](http://robot.obolibrary.org/) project to perform reasoning on the triplified data in the triplifier step, in conjunction with logic contained in the provided ontology. An example of the use of the ROBOT file is given below, calling the robot.jar which is in the `/lib` directory. Please note that the pipeline code calls this command for you and normally you do not need to call this command directly. Here we are illustrating a direct-use of the robot command if you want to explore how this works within the ontology-data-pipeline environment.
 
 ```
  java -jar lib/robot.jar reason -r elk \
@@ -63,7 +63,7 @@ In the above example, the reasoner use is ELK, with InverseObjectProperties and 
 
     This step takes a custom SPARQL query and generates csv files for each file outputted
     in the Reasoning step using [ROBOT](http://robot.obolibrary.org/).  You must write a SPARQL query yourself to format data as you wish it to appear.  You can refer to the example below for a query that turns the sample input (reasoned) file into CSV. If no sparql query is found, then this step is skipped.
-An example of the data Formatting step is given below calling the robot.jar which is in the `/lib` directory:
+An example of the data Formatting step is given below calling the robot.jar which is in the `/lib` directory. Please note that the pipeline code calls this command for you and normally you do not need to call this command directly. Here we are illustrating a direct-use of the robot command if you want to explore how this works within the ontology-data-pipeline environment.
 
 ```
 java -jar lib/robot.jar query --input sample_data/reasoned_data.ttl \
