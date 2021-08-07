@@ -61,8 +61,8 @@ In the above example, the reasoner use is ELK, with InverseObjectProperties and 
     
 3. Data Formatting
 
-    This step takes the provided [sparql query](#sample_data/fetch_reasoned.sparql) and generates csv files for each file outputted
-    in the Reasoning step using [ROBOT](http://robot.obolibrary.org/). If no sparql query is found, then this step is skipped.
+    This step takes a custom SPARQL query and generates csv files for each file outputted
+    in the Reasoning step using [ROBOT](http://robot.obolibrary.org/).  You must write a SPARQL query yourself to format data as you wish it to appear.  You can refer to the example below for a query that turns the sample input (reasoned) file into CSV. If no sparql query is found, then this step is skipped.
 An example of the data Formatting step is given below calling the robot.jar which is in the `/lib` directory:
 
 ```
@@ -71,10 +71,7 @@ java -jar lib/robot.jar query --input sample_data/reasoned_data.ttl \
     sample_data/reasoned_data.ttl.csv
 ```
 
-In the above example, we call the ROBOT query sub-command and give an input file of `sample_data/reasoned_data.ttl` (this is the output of the above command), and tell it to use the `sample_data/fetch_reasoned.sparql` sparql command as a guide to produce the output file `sample_data/reasoned_data.ttl.csv`.  Examples included in the test directory.
-
-    
-
+In the above example, we call the ROBOT query sub-command and give an input file of `sample_data/reasoned_data.ttl` (this is the output of the above command), and tell it to use the `sample_data/fetch_reasoned.sparql` sparql command as a guide to produce the output file `sample_data/reasoned_data.ttl.csv`. 
 ## Config Files
 
 Project configuration files include [`entity.csv`](#entity.csv), [`mapping.csv`](#mapping.csv), [`relations.csv`](#relations.csv), and any files defining controlled vocabularies that we want to map rdf:types to.  The remaining configuration files below are found in the `config` directory.  Together, these are the required configuration files we use for reasoning against the application ontology (e.g. [Plant Phenology Ontology](https://github.com/PlantPhenoOntology/PPO/)). These files configure the data validation, triplifying, reasoning, and rdf2csv converting.
