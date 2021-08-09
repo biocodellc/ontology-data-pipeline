@@ -19,6 +19,43 @@ Step 2: Run the application. On the commandline, you can execute the script like
 docker pull jdeck88/ontology-data-pipeline
 # run the pipeline help in the docker container
 docker run -v "$(pwd)":/process -w=/app -ti jdeck88/ontology-data-pipeline python pipeline.py -h 
+
+usage: pipeline.py [-h] [--drop_invalid] [--log_file]
+                   [--reasoner_config REASONER_CONFIG] [-v] [-c CHUNK_SIZE]
+                   [--num_processes NUM_PROCESSES]
+                   data_file output_dir ontology config_dir
+
+ontology data pipeline command line application.
+
+positional arguments:
+  data_file             Specify the data file to load.
+  output_dir            path of the directory to place the processed data
+  ontology              specify a filepath/url of the ontology to use for
+                        reasoning/triplifying
+  config_dir            Specify the path of the directory containing the
+                        configuration files.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --drop_invalid        Drop any data that does not pass validation, log the
+                        results, and continue the process
+  --log_file            log all output to a log.txt file in the output_dir.
+                        default is to log output to the console
+  --reasoner_config REASONER_CONFIG
+                        optionally specify the reasoner configuration file.
+                        Default is to look for reasoner.config in the
+                        configuration directory
+  -v, --verbose         verbose logging output
+  -c CHUNK_SIZE, --chunk_size CHUNK_SIZE
+                        chunk size to use when processing data. optimal
+                        chunk_size for datasets with less then 200000
+                        recordscan be determined with: num_records / num_cpus
+  --num_processes NUM_PROCESSES
+                        number of process to use for parallel processing of
+                        data. Defaults to cpu_count of the machine
+
+As an alternative to the commandline, params can be placed in a file, one per
+line, and specified on the commandline like 'pipeline.py @params.conf'.
 ```
 
 
