@@ -10,7 +10,7 @@ def convert_rdf2csv(input_file, output_dir, sparql_file, robot_path):
     logging.debug("converting reasoned data to csv for file {}".format(input_file))
     input_filename = os.path.basename(input_file)
     output_pathfile = os.path.join(output_dir,input_filename+'.csv')
-    cmd = ['java', '-jar', robot_path, 'query','--input', input_file, '--query', sparql_file , output_pathfile] 
+    cmd = ['java', '-Xmx2048m', '-jar', robot_path, 'query','--input', input_file, '--query', sparql_file , output_pathfile] 
 
     logging.debug("running robot with: ")
     logging.debug(subprocess.list2cmdline(cmd))
@@ -22,6 +22,7 @@ def convert_rdf2csv(input_file, output_dir, sparql_file, robot_path):
     #filename = str(stdout.decode('utf-8')).replace('writing ','').replace('\n','').lstrip()
 
     if not os.path.isfile(output_pathfile):
+        logging.info("Error message: " + stderr)
         raise RuntimeError("Could not find output file from robot.  You can isolate the process and debug using: " +subprocess.list2cmdline(cmd))
 
 

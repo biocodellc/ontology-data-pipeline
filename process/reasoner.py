@@ -11,7 +11,7 @@ def run_reasoner(input_file, output_file, config_file, robot_path):
     logging.debug("reasoning on file {}".format(input_file))
 
     # the java version is unreliable and does not provide useful debugging output
-    cmd = ['java', '-jar', robot_path, 'reason', '-r', 'elk', '--axiom-generators', '"InverseObjectProperties ClassAssertion"', '-i', input_file, '--include-indirect', 'true', '--exclude-tautologies','structural','reduce','-o', output_file]
+    cmd = ['java', '-Xmx2048m', '-jar', robot_path, 'reason', '-r', 'elk', '--axiom-generators', '"InverseObjectProperties ClassAssertion"', '-i', input_file, '--include-indirect', 'true', '--exclude-tautologies','structural','reduce','-o', output_file]
 
     logging.debug("running reasoner with: ")
     logging.debug(subprocess.list2cmdline(cmd))
@@ -25,6 +25,7 @@ def run_reasoner(input_file, output_file, config_file, robot_path):
     if not os.path.exists(output_file):
         #raise RuntimeError("Failed to perform reasoning on {}".format(input_file) + ".  " + output)
         logging.debug("Failed to perform reasoning on {}".format(input_file) + ".  " + output)
+        logging.debug("Error message: " + stderr)
 
     # provide docker friendly output (this way user looks for file in relative path home environment instead of docker mount)
     cleanfilename = re.sub('^%s' % '/process/', '', output_file)
