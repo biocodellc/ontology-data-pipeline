@@ -57,7 +57,7 @@ class Process(object):
                 pool.starmap(self._reason, zip(files, repeat(root)))
 
     def _csv2rdf(self, file):
-        logging.debug("\trunning csv2reasoner on {}".format(file))
+        logging.debug("\trunning rdf2csv on {}".format(file))
         out_file = os.path.join(self.config.output_reasoned_dir, file.replace('.n3', '.ttl'))
         convert_rdf2csv(os.path.join(self.config.output_reasoned_dir,file),self.config.output_reasoned_csv_dir,
                         self.config.reasoned_sparql, self.config.robot)
