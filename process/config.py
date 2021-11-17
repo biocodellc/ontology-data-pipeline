@@ -238,7 +238,10 @@ class Config(object):
         example, if we encounter "{whole plant phenological stage}",
         it will be converted to "http://purl.obolibrary.org/obo/PPO_0000001".
         """
-        labelre = re.compile(r'(\{[A-Za-z0-9\- _]+\})')
+        #labelre = re.compile(r'(\{[A-Za-z0-9\- _]+\})')
+        #labelre = re.compile(r'(\{[(.*?)]\})')
+        labelre = re.compile(r'(\{[A-Za-z0-9\- _\\(\\)]+\})')
+
         defparts = labelre.split(def_text)
 
         newdef = ''
