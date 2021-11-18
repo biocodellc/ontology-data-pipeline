@@ -25,7 +25,7 @@ def run_reasoner(input_file, output_file, config_file, robot_path):
     if not os.path.exists(output_file):
         #raise RuntimeError("Failed to perform reasoning on {}".format(input_file) + ".  " + output)
         logging.debug("Failed to perform reasoning on {}".format(input_file) + ".  " + output)
-        logging.debug("Error message: " + stderr)
+        logging.debug("Error message: " + stderr.decode(sys.stdout.encoding))
 
     # provide docker friendly output (this way user looks for file in relative path home environment instead of docker mount)
     cleanfilename = re.sub('^%s' % '/process/', '', output_file)
