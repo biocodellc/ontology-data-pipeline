@@ -186,7 +186,7 @@ def main():
         help="chunk size to use when processing data. optimal chunk_size for datasets with less then 200000 records"
              "can be determined with: num_records / num_cpus",
         type=int,
-        default=50000
+        default=10000
     )
     parser.add_argument(
         "--num_processes",

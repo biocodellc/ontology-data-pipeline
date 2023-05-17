@@ -27,7 +27,7 @@ class Config(object):
             setattr(self, key, kwargs[key])
 
         if not self.chunk_size:
-            self.chunk_size = 50000
+            self.chunk_size = 10000
 
         if not os.path.exists(self.config_dir):
             raise RuntimeError("cannot find configuration directory "+ self.config_dir)

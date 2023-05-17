@@ -3,6 +3,7 @@ import logging
 import subprocess
 import os
 import re
+import sys
 
 CUR_DIR = os.path.join(os.path.dirname(__file__))
 
@@ -11,9 +12,9 @@ def run_reasoner(input_file, output_file, config_file, robot_path):
     logging.debug("reasoning on file {}".format(input_file))
 
     # the java version is unreliable and does not provide useful debugging output
-    cmd = ['java', '-Xmx2048m', '-jar', robot_path, 'reason', '-r', 'elk', '--axiom-generators', '"InverseObjectProperties ClassAssertion"', '-i', input_file, '--include-indirect', 'true', '--exclude-tautologies','structural','reduce','-o', output_file]
+    cmd = ['java', '-Xmx8048m', '-jar', robot_path, 'reason', '-r', 'elk', '--axiom-generators', '"InverseObjectProperties ClassAssertion"', '-i', input_file, '--include-indirect', 'true', '--exclude-tautologies','structural','reduce','-o', output_file]
 
-    logging.debug("running reasoner with: ")
+    logging.debug("running reasoner with the following robot command: ")
     logging.debug(subprocess.list2cmdline(cmd))
 
     proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)

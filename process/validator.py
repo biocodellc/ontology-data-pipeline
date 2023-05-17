@@ -26,7 +26,8 @@ class Validator(object):
         self.lock = manager.RLock()
 
         with open(self.config.invalid_data_file, 'w') as f:
-            csv.writer(f).writerow(self.config.headers)
+            f.write('')
+            #csv.writer(f).writerow(self.config.headers)
 
     def validate(self, data_frame):
         return DataValidator(data_frame, self.config, self.unique_values_tracker, self.lock).validate()
@@ -49,6 +50,7 @@ class DataValidator(object):
         self.unique_values_tracker = unique_values_tracker
         self.invalid_data = pd.DataFrame()
         self.lock = lock
+        self.rulevioloation = ''
 
     def validate(self):
         return self._validate_data()
@@ -62,22 +64,32 @@ class DataValidator(object):
             if rule_name == 'requiredvalue':
                 if not self._required_value_rule(rule['columns'], rule['level']):
                     valid = False
+                    self.ruleviolation = rule_name
             elif rule_name == 'uniquevalue':
                 if not self._unique_value_rule(rule['columns'], rule['level']):
                     valid = False
+                    self.ruleviolation = rule_name
             elif rule_name == 'controlledvocabulary':
                 if not self._controlled_vocab_rule(rule['columns'], rule['level'], rule['list']):
                     valid = False
+                    self.ruleviolation = rule_name
             elif rule_name == 'integer':
                 if not self._integer_rule(rule['columns'], rule['level']):
                     valid = False
+                    self.ruleviolation = rule_name
             elif rule_name == 'float':
                 if not self._float_rule(rule['columns'], rule['level']):
                     valid = False
+                    self.ruleviolation = rule_name
 
         if len(self.invalid_data) > 0:
             logging.debug("dropping invalid data")
             with open(self.config.invalid_data_file, 'a') as f:
+                #f.write("Rule violoated: " + self.ruleviolation+"\n")
+                allrows = []
+                for index, row in self.invalid_data.iterrows():
+                    allrows.append(self.ruleviolation + " rule error")
+                self.invalid_data = self.invalid_data.assign(error=allrows)
                 self.invalid_data.to_csv(f, index=False, header=False)
 
             if self.config.drop_invalid:
